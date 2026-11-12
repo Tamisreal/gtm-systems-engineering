@@ -1,6 +1,6 @@
 # Conversation intelligence: call transcript to CRM action
 
-**Evidence status: Synthetic Demonstration.** Twelve invented calls, a fictional seller and fictional competitors. No real transcript, customer or employer data is in this repository.
+**I built this in production with Gong and Salesloft.** Gong supplied the calls; the extracted signals went back into the sales workflow in Salesloft and the CRM. This folder is a clean-room rebuild so the design can be inspected and run: twelve invented calls, a fictional seller and fictional competitors. No real transcript, customer or employer data is in this repository, and the numbers below come from the invented calls.
 
 Call recorders capture what buyers say, and most of it never reaches the CRM. Objections, competitor mentions, budget and timing sit inside recordings that nobody re-listens to, so forecasting, competitive analysis and churn reviews run on rep memory. This project turns a transcript into structured, validated signals and routes each one to an automatic CRM write, a human reviewer, or the bin.
 

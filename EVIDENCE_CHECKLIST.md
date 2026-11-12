@@ -47,4 +47,4 @@ Rule: if a source cannot be produced, the figure stays **Historical / Pending Ve
 
 ## Tools
 
-- [ ] Confirm the depth label for each tool in [technology ecosystem](docs/03-data-architecture/technology-ecosystem.md), especially OpenAI and Salesloft.
+- [ ] Confirm the depth label for each tool in [technology ecosystem](docs/03-data-architecture/technology-ecosystem.md), especially OpenAI.

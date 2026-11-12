@@ -20,7 +20,8 @@ Technologies grouped by the job they do in a GTM stack, with how each one has be
 | Tool | Depth | How |
 |---|---|---|
 | Gong | Built on | Call data as the input to call analysis: competitors, objections with quotes, next steps and whitespace written to the CRM |
-| Salesloft, Outreach | Daily user | Sequencing; personalized first lines and angles written to fields the sequencer reads |
+| Salesloft | Built on | Call signals from Gong pushed back into the sales workflow; personalized first lines and angles written to fields the sequencer reads |
+| Outreach | Daily user | Sequencing |
 | Instantly, EmailBison, HeyReach | Daily user | Cold email at volume and LinkedIn outreach for client programs |
 
 ## GTM intelligence and enrichment

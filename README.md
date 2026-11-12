@@ -13,7 +13,7 @@ I started in analytical roles (Constellation Energy, AECOM), moved into sales (S
 | Result | Evidence |
 |---|---|
 | RouteHero location data: 24,348 commercial-kitchen candidates against 9,464 from the common open alternative in the same area, with 86% phone coverage against about 55% | Measured (engineering) |
-| Call-signal pipeline: every CRM write without a reviewer was correct (precision 1.000), with 59% of signals held for review; that review load is the cost an LLM must cut | Synthetic Demonstration |
+| Built call analysis in production with Gong and Salesloft: sales calls turned into buyer signals (competitors, objections, next steps) and pushed back into the sales workflow | Production work ([rebuild you can run](projects/conversation-intelligence/README.md)) |
 | 69 meetings, 27 opportunities, about $436,834 pipeline ARR from outbound in five months | Historical / Pending Verification |
 | Started and ran an Amazon FBA wholesale business that grossed about $3M a year | [Zero-to-one case study](case-studies/zero-to-one/amazon-wholesale.md) |
 
