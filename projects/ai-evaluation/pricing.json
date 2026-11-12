@@ -1,0 +1,7 @@
+{
+  "as_of": "2026-11-03",
+  "source": "Anthropic published API list prices (USD per million tokens). Prices change: confirm current rates before quoting any cost figure.",
+  "models": {
+    "claude-opus-5-5": {"input_per_mtok": 4.0, "output_per_mtok": 20.0}
+  }
+}

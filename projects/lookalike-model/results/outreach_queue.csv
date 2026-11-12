@@ -1,0 +1,153 @@
+account_id,name,tier,win_probability,why,first_line_signal,play,channel,review,status,send_day
+A0993,Synthetic Account 0993,A,0.813,industry=insurance; uses_salesforce; funded_12m,Hiring 8 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0946,Synthetic Account 0946,A,0.789,industry=logistics; new_revops_leader_90d; uses_salesforce,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0732,Synthetic Account 0732,A,0.785,industry=logistics; uses_salesforce; funded_12m,Hiring 14 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0991,Synthetic Account 0991,A,0.759,industry=logistics; new_revops_leader_90d; uses_salesforce,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0773,Synthetic Account 0773,A,0.755,industry=logistics; uses_salesforce; funded_12m,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0745,Synthetic Account 0745,A,0.745,industry=insurance; uses_salesforce; funded_12m,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0796,Synthetic Account 0796,A,0.712,new_revops_leader_90d; uses_salesforce; funded_12m,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0898,Synthetic Account 0898,A,0.702,industry=logistics; new_revops_leader_90d; hiring_sales_roles,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0884,Synthetic Account 0884,A,0.694,industry=insurance; new_revops_leader_90d; funded_12m,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0711,Synthetic Account 0711,A,0.687,uses_salesforce; funded_12m; industry=manufacturing,Hiring 3 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0873,Synthetic Account 0873,A,0.682,industry=insurance; uses_salesforce; funded_12m,Hiring 5 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0700,Synthetic Account 0700,A,0.674,uses_salesforce; funded_12m; industry=manufacturing,Hiring 6 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0994,Synthetic Account 0994,A,0.65,industry=insurance; uses_salesforce; hiring_sales_roles,Hiring 11 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0855,Synthetic Account 0855,A,0.642,industry=insurance; uses_salesforce; funded_12m,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0965,Synthetic Account 0965,A,0.638,industry=logistics; uses_salesforce; hiring_sales_roles,Hiring 6 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0803,Synthetic Account 0803,A,0.625,industry=logistics; new_revops_leader_90d; hiring_sales_roles,New RevOps leader in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0805,Synthetic Account 0805,A,0.612,uses_salesforce; funded_12m; industry=manufacturing,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0795,Synthetic Account 0795,A,0.61,industry=insurance; uses_salesforce; funded_12m,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0738,Synthetic Account 0738,A,0.595,industry=insurance; uses_salesforce; emp_band=50_1000,Runs Salesforce,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0984,Synthetic Account 0984,A,0.551,industry=logistics; funded_12m; emp_band=50_1000,Raised funding in the last 12 months,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0832,Synthetic Account 0832,A,0.551,industry=logistics; uses_salesforce; emp_band=50_1000,Runs Salesforce,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0780,Synthetic Account 0780,A,0.55,uses_salesforce; industry=manufacturing; emp_band=50_1000,Hiring 4 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0881,Synthetic Account 0881,A,0.541,funded_12m; industry=manufacturing; hiring_sales_roles,Hiring 7 sales roles in the last 90 days,"AE-led, multithreaded, researched by hand",email + call + LinkedIn,AE approves before send,pending_review,1
+A0937,Synthetic Account 0937,B,0.536,uses_salesforce; industry=manufacturing; hiring_sales_roles,Hiring 7 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,1
+A0762,Synthetic Account 0762,B,0.533,uses_salesforce; hiring_sales_roles; industry=manufacturing,Hiring 10 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,1
+A0962,Synthetic Account 0962,B,0.531,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0894,Synthetic Account 0894,B,0.529,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0957,Synthetic Account 0957,B,0.523,industry=logistics; funded_12m; emp_band=50_1000,Hiring 3 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0935,Synthetic Account 0935,B,0.516,uses_salesforce; funded_12m; emp_band=50_1000,Hiring 3 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0908,Synthetic Account 0908,B,0.513,industry=insurance; uses_salesforce; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0830,Synthetic Account 0830,B,0.512,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0733,Synthetic Account 0733,B,0.512,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0986,Synthetic Account 0986,B,0.507,industry=logistics; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0744,Synthetic Account 0744,B,0.505,new_revops_leader_90d; uses_salesforce; hiring_sales_roles,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0900,Synthetic Account 0900,B,0.499,industry=logistics; new_revops_leader_90d; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0759,Synthetic Account 0759,B,0.497,industry=insurance; uses_salesforce; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0825,Synthetic Account 0825,B,0.496,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0712,Synthetic Account 0712,B,0.492,uses_salesforce; industry=manufacturing; emp_band=50_1000,Hiring 4 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0902,Synthetic Account 0902,B,0.489,industry=logistics; uses_salesforce; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0899,Synthetic Account 0899,B,0.487,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0940,Synthetic Account 0940,B,0.484,uses_salesforce; funded_12m; hiring_sales_roles,Hiring 9 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0727,Synthetic Account 0727,B,0.484,new_revops_leader_90d; uses_salesforce; hiring_sales_roles,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0737,Synthetic Account 0737,B,0.483,industry=logistics; new_revops_leader_90d; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0960,Synthetic Account 0960,B,0.483,uses_salesforce; funded_12m; emp_band=50_1000,Raised funding in the last 12 months,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0863,Synthetic Account 0863,B,0.475,industry=insurance; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0851,Synthetic Account 0851,B,0.461,new_revops_leader_90d; funded_12m; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0809,Synthetic Account 0809,B,0.459,industry=insurance; uses_salesforce; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0936,Synthetic Account 0936,B,0.451,industry=insurance; uses_salesforce; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0819,Synthetic Account 0819,B,0.442,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0743,Synthetic Account 0743,B,0.44,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,2
+A0978,Synthetic Account 0978,B,0.425,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0934,Synthetic Account 0934,B,0.422,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0750,Synthetic Account 0750,B,0.42,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0897,Synthetic Account 0897,B,0.42,industry=insurance; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0917,Synthetic Account 0917,B,0.416,industry=logistics; uses_salesforce; region=midwest,Hiring 3 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0788,Synthetic Account 0788,B,0.415,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 5 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0876,Synthetic Account 0876,B,0.414,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0948,Synthetic Account 0948,B,0.414,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0768,Synthetic Account 0768,B,0.409,industry=insurance; emp_band=50_1000; region=northeast,Hiring 4 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0961,Synthetic Account 0961,B,0.407,industry=insurance; emp_band=50_1000; region=midwest,Hiring 4 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0758,Synthetic Account 0758,B,0.403,uses_salesforce; emp_band=50_1000; region=northeast,Hiring 3 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0982,Synthetic Account 0982,B,0.403,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0829,Synthetic Account 0829,B,0.4,uses_salesforce; emp_band=50_1000; region=midwest,Hiring 4 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0969,Synthetic Account 0969,B,0.398,industry=logistics; emp_band=50_1000; region=midwest,,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0800,Synthetic Account 0800,B,0.385,industry=logistics; emp_band=50_1000; region=northeast,,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0772,Synthetic Account 0772,B,0.383,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0871,Synthetic Account 0871,B,0.382,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0798,Synthetic Account 0798,B,0.377,industry=insurance; emp_band=50_1000; region=midwest,,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0896,Synthetic Account 0896,B,0.376,funded_12m; hiring_sales_roles; emp_band=50_1000,Hiring 6 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0834,Synthetic Account 0834,B,0.371,uses_salesforce; industry=manufacturing; emp_band=50_1000,Runs Salesforce,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0921,Synthetic Account 0921,B,0.368,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,"SDR sequence, first line from the strongest signal",email + call,spot-check sample,ready,3
+A0778,Synthetic Account 0778,C,0.367,new_revops_leader_90d; funded_12m; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,3
+A0790,Synthetic Account 0790,C,0.363,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,3
+A0810,Synthetic Account 0810,C,0.357,funded_12m; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,Low-touch nurture,email,none,ready,3
+A0802,Synthetic Account 0802,C,0.357,industry=insurance; emp_band=50_1000; region=northeast,,Low-touch nurture,email,none,ready,3
+A0813,Synthetic Account 0813,C,0.356,industry=insurance; emp_band=50_1000; region=northeast,,Low-touch nurture,email,none,ready,4
+A0954,Synthetic Account 0954,C,0.355,industry=insurance; uses_salesforce; region=midwest,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0988,Synthetic Account 0988,C,0.348,uses_salesforce; funded_12m; hiring_sales_roles,Hiring 8 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0714,Synthetic Account 0714,C,0.347,uses_salesforce; emp_band=50_1000; region=northeast,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0718,Synthetic Account 0718,C,0.339,uses_salesforce; emp_band=50_1000; region=northeast,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0764,Synthetic Account 0764,C,0.339,industry=manufacturing; emp_band=50_1000; region=midwest,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0797,Synthetic Account 0797,C,0.336,uses_salesforce; emp_band=50_1000; region=northeast,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0709,Synthetic Account 0709,C,0.33,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 5 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0724,Synthetic Account 0724,C,0.327,industry=logistics; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,4
+A0816,Synthetic Account 0816,C,0.327,industry=manufacturing; hiring_sales_roles; emp_band=50_1000,Hiring 8 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0838,Synthetic Account 0838,C,0.325,uses_salesforce; emp_band=50_1000; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0943,Synthetic Account 0943,C,0.321,industry=logistics; uses_salesforce; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0933,Synthetic Account 0933,C,0.318,industry=logistics; emp_band=50_1000; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0804,Synthetic Account 0804,C,0.317,industry=insurance; uses_salesforce; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0915,Synthetic Account 0915,C,0.315,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 7 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0774,Synthetic Account 0774,C,0.312,uses_salesforce; emp_band=50_1000; emp_band=lt50,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0907,Synthetic Account 0907,C,0.311,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0997,Synthetic Account 0997,C,0.309,industry=manufacturing; hiring_sales_roles; emp_band=50_1000,Hiring 6 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0704,Synthetic Account 0704,C,0.308,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,4
+A0878,Synthetic Account 0878,C,0.305,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,4
+A0874,Synthetic Account 0874,C,0.305,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0793,Synthetic Account 0793,C,0.301,industry=logistics; uses_salesforce; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,4
+A0955,Synthetic Account 0955,C,0.299,uses_salesforce; emp_band=50_1000; emp_band=lt50,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0952,Synthetic Account 0952,C,0.295,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 6 sales roles in the last 90 days,Low-touch nurture,email,none,ready,4
+A0852,Synthetic Account 0852,C,0.294,new_revops_leader_90d; emp_band=50_1000; region=northeast,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,4
+A0995,Synthetic Account 0995,C,0.29,industry=manufacturing; emp_band=50_1000; region=northeast,,Low-touch nurture,email,none,ready,5
+A0970,Synthetic Account 0970,C,0.29,new_revops_leader_90d; emp_band=50_1000; region=midwest,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,5
+A0880,Synthetic Account 0880,C,0.286,industry=insurance; emp_band=50_1000; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0716,Synthetic Account 0716,C,0.283,hiring_sales_roles; emp_band=50_1000; region=northeast,Hiring 11 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0870,Synthetic Account 0870,C,0.278,industry=logistics; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,5
+A0720,Synthetic Account 0720,C,0.276,industry=manufacturing; emp_band=50_1000; region=midwest,,Low-touch nurture,email,none,ready,5
+A0947,Synthetic Account 0947,C,0.275,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,5
+A0909,Synthetic Account 0909,C,0.274,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,5
+A0973,Synthetic Account 0973,C,0.27,industry=manufacturing; emp_band=50_1000; region=midwest,,Low-touch nurture,email,none,ready,5
+A0767,Synthetic Account 0767,C,0.265,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0782,Synthetic Account 0782,C,0.256,uses_salesforce; funded_12m; emp_band=50_1000,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,5
+A0783,Synthetic Account 0783,C,0.255,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 5 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0823,Synthetic Account 0823,C,0.255,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0914,Synthetic Account 0914,C,0.251,new_revops_leader_90d; uses_salesforce; emp_band=50_1000,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,5
+A0920,Synthetic Account 0920,C,0.251,industry=insurance; funded_12m; region=midwest,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,5
+A0775,Synthetic Account 0775,C,0.245,funded_12m; hiring_sales_roles; emp_band=50_1000,Hiring 14 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0930,Synthetic Account 0930,C,0.244,uses_salesforce; emp_band=50_1000; region=midwest,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0985,Synthetic Account 0985,C,0.244,uses_salesforce; emp_band=50_1000; region=midwest,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0854,Synthetic Account 0854,C,0.243,uses_salesforce; emp_band=50_1000; region=northeast,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0723,Synthetic Account 0723,C,0.242,uses_salesforce; emp_band=50_1000; region=midwest,Runs Salesforce,Low-touch nurture,email,none,ready,5
+A0996,Synthetic Account 0996,C,0.235,industry=manufacturing; emp_band=50_1000; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0831,Synthetic Account 0831,C,0.234,uses_salesforce; funded_12m; emp_band=50_1000,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,5
+A0776,Synthetic Account 0776,C,0.232,industry=manufacturing; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,5
+A0721,Synthetic Account 0721,C,0.229,hiring_sales_roles; emp_band=50_1000; region=northeast,Hiring 6 sales roles in the last 90 days,Low-touch nurture,email,none,ready,5
+A0861,Synthetic Account 0861,C,0.227,industry=manufacturing; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,5
+A0895,Synthetic Account 0895,C,0.221,uses_salesforce; industry=manufacturing; region=midwest,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0968,Synthetic Account 0968,C,0.218,funded_12m; emp_band=50_1000; emp_band=lt50,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,6
+A0945,Synthetic Account 0945,C,0.218,new_revops_leader_90d; uses_salesforce; industry=healthcare,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,6
+A0849,Synthetic Account 0849,C,0.213,emp_band=50_1000; region=midwest; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0837,Synthetic Account 0837,C,0.212,industry=manufacturing; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,6
+A0981,Synthetic Account 0981,C,0.212,industry=manufacturing; emp_band=50_1000; emp_band=lt50,,Low-touch nurture,email,none,ready,6
+A0966,Synthetic Account 0966,C,0.21,uses_salesforce; emp_band=50_1000; region=northeast,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0808,Synthetic Account 0808,C,0.209,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0844,Synthetic Account 0844,C,0.208,funded_12m; industry=manufacturing; region=midwest,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0857,Synthetic Account 0857,C,0.208,funded_12m; emp_band=50_1000; emp_band=lt50,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,6
+A0922,Synthetic Account 0922,C,0.206,emp_band=50_1000; region=midwest; emp_band=lt50,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0905,Synthetic Account 0905,C,0.205,industry=logistics; funded_12m; industry=healthcare,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,6
+A0821,Synthetic Account 0821,C,0.203,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 6 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0860,Synthetic Account 0860,C,0.198,industry=logistics; region=midwest; industry=healthcare,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0729,Synthetic Account 0729,C,0.198,emp_band=50_1000; region=midwest; emp_band=lt50,,Low-touch nurture,email,none,ready,6
+A0828,Synthetic Account 0828,C,0.192,uses_salesforce; hiring_sales_roles; emp_band=50_1000,Hiring 6 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0766,Synthetic Account 0766,C,0.19,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0904,Synthetic Account 0904,C,0.19,uses_salesforce; hiring_sales_roles; region=midwest,Hiring 5 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0846,Synthetic Account 0846,C,0.188,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0820,Synthetic Account 0820,C,0.184,uses_salesforce; emp_band=50_1000; emp_band=lt50,Runs Salesforce,Low-touch nurture,email,none,ready,6
+A0882,Synthetic Account 0882,C,0.18,funded_12m; emp_band=50_1000; emp_band=lt50,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,6
+A0818,Synthetic Account 0818,C,0.18,emp_band=50_1000; region=northeast; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0923,Synthetic Account 0923,C,0.179,emp_band=50_1000; region=midwest; emp_band=lt50,Hiring 3 sales roles in the last 90 days,Low-touch nurture,email,none,ready,6
+A0858,Synthetic Account 0858,C,0.179,funded_12m; emp_band=50_1000; region=midwest,Raised funding in the last 12 months,Low-touch nurture,email,none,ready,6
+A0811,Synthetic Account 0811,C,0.177,emp_band=50_1000; region=midwest; emp_band=lt50,,Low-touch nurture,email,none,ready,6
+A0856,Synthetic Account 0856,C,0.177,new_revops_leader_90d; emp_band=50_1000; region=midwest,New RevOps leader in the last 90 days,Low-touch nurture,email,none,ready,7
+A0785,Synthetic Account 0785,C,0.177,emp_band=50_1000; emp_band=lt50; industry=healthcare,Hiring 4 sales roles in the last 90 days,Low-touch nurture,email,none,ready,7

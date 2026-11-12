@@ -1,0 +1,190 @@
+{
+  "_note": "SYNTHETIC. Every company, person, vendor and line of dialogue below is invented for this demonstration. The seller is a fictional revenue analytics vendor called Acre Analytics. Competitor names (PipeGrid, Forecastly, SignalStack) and the partner tool Ledgerly are fictional.",
+  "calls": [
+    {
+      "call_id": "call_001",
+      "account": "Brightline Logistics",
+      "call_type": "discovery",
+      "call_date": "2026-05-14",
+      "turns": [
+        {"speaker": "rep", "text": "Thanks for making time. What prompted you to take the call?"},
+        {"speaker": "prospect", "text": "Our board wants a pipeline forecast we can stand behind. Right now my team spends every Monday rebuilding the forecast in spreadsheets."},
+        {"speaker": "rep", "text": "How are you handling that today, tooling-wise?"},
+        {"speaker": "prospect", "text": "We looked at PipeGrid last year but it never synced cleanly with our CRM."},
+        {"speaker": "rep", "text": "What would need to be true to make a change this year?"},
+        {"speaker": "prospect", "text": "Budget is already approved for a forecasting tool in Q3, so the money is there."},
+        {"speaker": "rep", "text": "Who else is involved in the decision?"},
+        {"speaker": "prospect", "text": "Our CRO signs off. Can you send over a proposal I can forward to her?"},
+        {"speaker": "rep", "text": "Absolutely, I will have it to you tomorrow."},
+        {"speaker": "prospect", "text": "One more thing, does it support SSO? Security will ask."}
+      ]
+    },
+    {
+      "call_id": "call_002",
+      "account": "Meridian Health Partners",
+      "call_type": "discovery",
+      "call_date": "2026-05-20",
+      "turns": [
+        {"speaker": "rep", "text": "What is going on with pipeline reporting today?"},
+        {"speaker": "prospect", "text": "It is fine. We have a BI analyst who handles it."},
+        {"speaker": "rep", "text": "How long does the weekly pipeline report take?"},
+        {"speaker": "prospect", "text": "A couple of days, and the numbers never match what reps put in the CRM."},
+        {"speaker": "rep", "text": "What would it be worth to fix that?"},
+        {"speaker": "prospect", "text": "Look, the price on your website is more than we spend on our whole CRM."},
+        {"speaker": "rep", "text": "Understood. Most teams compare it against analyst hours."},
+        {"speaker": "prospect", "text": "Maybe. We are not looking to buy anything before next year anyway."},
+        {"speaker": "rep", "text": "Would a case study on payback help?"},
+        {"speaker": "prospect", "text": "Sure, if you have one for a healthcare group."}
+      ]
+    },
+    {
+      "call_id": "call_003",
+      "account": "Copperline Manufacturing",
+      "call_type": "demo",
+      "call_date": "2026-06-02",
+      "turns": [
+        {"speaker": "rep", "text": "Here is the forecast view, rolled up by manager."},
+        {"speaker": "prospect", "text": "This is what we need. How does pricing work for 40 seats?"},
+        {"speaker": "rep", "text": "Per seat with volume tiers. I will send the breakdown."},
+        {"speaker": "prospect", "text": "We run commissions in Ledgerly. Does this talk to it?"},
+        {"speaker": "rep", "text": "Through the API, yes."},
+        {"speaker": "prospect", "text": "Good. I want our CFO, Dana, to see this next week. Can we set that up?"},
+        {"speaker": "prospect", "text": "We are also talking to Forecastly, to be transparent."},
+        {"speaker": "rep", "text": "Appreciate that. What would make the difference for you?"},
+        {"speaker": "prospect", "text": "Whoever gets our reps to trust the numbers."}
+      ]
+    },
+    {
+      "call_id": "call_004",
+      "account": "Tidewater Supply",
+      "call_type": "discovery",
+      "call_date": "2026-06-09",
+      "turns": [
+        {"speaker": "rep", "text": "What is driving the timing on your side?"},
+        {"speaker": "prospect", "text": "We are hiring twelve new reps this quarter and ramp takes forever."},
+        {"speaker": "rep", "text": "How long is ramp today?"},
+        {"speaker": "prospect", "text": "Six months before anyone hits quota."},
+        {"speaker": "rep", "text": "And budget for tooling?"},
+        {"speaker": "prospect", "text": "Money is tight. We got cut 20 percent in January."},
+        {"speaker": "rep", "text": "Would a smaller start help?"},
+        {"speaker": "prospect", "text": "A two-week trial with one team would make it easier to get approval."},
+        {"speaker": "prospect", "text": "I am not the one who signs, though. That is our COO."}
+      ]
+    },
+    {
+      "call_id": "call_005",
+      "account": "Summit Dental Group",
+      "call_type": "renewal",
+      "call_date": "2026-08-18",
+      "turns": [
+        {"speaker": "rep", "text": "Ahead of the renewal, how is adoption going?"},
+        {"speaker": "customer", "text": "Mixed. Since Priya left, nobody really owns the tool on our side."},
+        {"speaker": "rep", "text": "Who took over her responsibilities?"},
+        {"speaker": "customer", "text": "Nobody yet. Logins dropped a lot over the summer."},
+        {"speaker": "customer", "text": "Finance asked me to get a quote from SignalStack before we renew."},
+        {"speaker": "rep", "text": "Understood. What would help you make the case internally?"},
+        {"speaker": "customer", "text": "Something that shows what we actually got out of it this year, in dollars."}
+      ]
+    },
+    {
+      "call_id": "call_006",
+      "account": "Northgate Insurance",
+      "call_type": "qbr",
+      "call_date": "2026-08-25",
+      "turns": [
+        {"speaker": "rep", "text": "How was the quarter on your side?"},
+        {"speaker": "customer", "text": "Very good. The sales team uses it daily and the forecast landed within a few points."},
+        {"speaker": "customer", "text": "Our account management group in Canada wants the same setup."},
+        {"speaker": "rep", "text": "Great, I can scope that this week."},
+        {"speaker": "customer", "text": "We would also want the advanced reporting package if it includes custom dashboards."},
+        {"speaker": "customer", "text": "And we are not interested in switching anything. PipeGrid keeps calling us and we ignore them."}
+      ]
+    },
+    {
+      "call_id": "call_007",
+      "account": "Alder Robotics",
+      "call_type": "discovery",
+      "call_date": "2026-07-07",
+      "turns": [
+        {"speaker": "rep", "text": "What is the main issue you want to solve?"},
+        {"speaker": "prospect", "text": "Our CRM data is a mess. Duplicates everywhere, half the contacts have no title."},
+        {"speaker": "rep", "text": "Is that blocking reporting?"},
+        {"speaker": "prospect", "text": "It is blocking everything. Leadership does not trust any dashboard."},
+        {"speaker": "rep", "text": "Who owns the CRM?"},
+        {"speaker": "prospect", "text": "IT, and they will want to know about data residency and SOC 2 before anything gets connected."},
+        {"speaker": "prospect", "text": "If you can get through security, I think we would move before end of quarter."}
+      ]
+    },
+    {
+      "call_id": "call_008",
+      "account": "Kestrel Software",
+      "call_type": "demo",
+      "call_date": "2026-07-15",
+      "turns": [
+        {"speaker": "prospect", "text": "Before the demo, you should know we are pretty far along with Forecastly."},
+        {"speaker": "rep", "text": "Fair. What made you take this call?"},
+        {"speaker": "prospect", "text": "Their CRM sync breaks every time we add a custom field in Salesforce."},
+        {"speaker": "rep", "text": "We sync custom fields in both directions."},
+        {"speaker": "prospect", "text": "If that is true, send me the integration docs and I will have our admin test it."},
+        {"speaker": "prospect", "text": "Pricing would have to be close to theirs, though."}
+      ]
+    },
+    {
+      "call_id": "call_009",
+      "account": "Riverbend Credit Union",
+      "call_type": "renewal",
+      "call_date": "2026-09-01",
+      "turns": [
+        {"speaker": "rep", "text": "How did this year go?"},
+        {"speaker": "customer", "text": "Good. We would like to add the collections team, about fifteen people."},
+        {"speaker": "customer", "text": "Budget for next year is approved, so we can do the renewal and the add-on together."},
+        {"speaker": "customer", "text": "Can you send the order form this week?"},
+        {"speaker": "customer", "text": "The only ask: an API so our data team can pull raw activity."}
+      ]
+    },
+    {
+      "call_id": "call_010",
+      "account": "Pinecrest Hospitality",
+      "call_type": "discovery",
+      "call_date": "2026-09-10",
+      "turns": [
+        {"speaker": "rep", "text": "How are you forecasting today?"},
+        {"speaker": "prospect", "text": "We are not, really. The VP calls each rep on Friday and writes numbers on a whiteboard."},
+        {"speaker": "rep", "text": "What happens when the number is wrong?"},
+        {"speaker": "prospect", "text": "We missed the last two quarters and nobody saw it coming."},
+        {"speaker": "rep", "text": "Is there budget set aside for fixing it?"},
+        {"speaker": "prospect", "text": "I do not know yet, I would have to ask."},
+        {"speaker": "prospect", "text": "I do not think we need software for this. We need reps to update the CRM."},
+        {"speaker": "rep", "text": "That is fair. Would it help to see how other teams got reps updating it?"},
+        {"speaker": "prospect", "text": "Maybe. Send something on that."}
+      ]
+    },
+    {
+      "call_id": "call_011",
+      "account": "Granite Peak Utilities",
+      "call_type": "qbr",
+      "call_date": "2026-09-22",
+      "turns": [
+        {"speaker": "rep", "text": "Thanks for joining. How is the team finding it?"},
+        {"speaker": "customer", "text": "Usage is low. Most reps went back to spreadsheets."},
+        {"speaker": "customer", "text": "And with the budget freeze, every tool is getting reviewed."},
+        {"speaker": "rep", "text": "What would make it a keeper?"},
+        {"speaker": "customer", "text": "If it fed our commission numbers automatically, people would log in."}
+      ]
+    },
+    {
+      "call_id": "call_012",
+      "account": "Lattice Biotech",
+      "call_type": "discovery",
+      "call_date": "2026-10-05",
+      "turns": [
+        {"speaker": "rep", "text": "What is prompting the search?"},
+        {"speaker": "prospect", "text": "A new CRO started last month and wants a forecasting process in place by next quarter."},
+        {"speaker": "prospect", "text": "She used SignalStack at her last company and liked it."},
+        {"speaker": "rep", "text": "What did she like about it?"},
+        {"speaker": "prospect", "text": "The rollup by region. We would need that, plus SSO."},
+        {"speaker": "prospect", "text": "Send me pricing and I will put it in front of her."}
+      ]
+    }
+  ]
+}

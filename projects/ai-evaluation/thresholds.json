@@ -1,0 +1,15 @@
+{
+  "_note": "Regression floors, set just under the measured rules baseline on 2026-11-12. They stop a change from silently making the extractor worse. They are not quality targets: a production target comes from what a wrong CRM write costs.",
+  "rules": {
+    "micro_f1_min": 0.88,
+    "auto_applied_precision_min": 0.95,
+    "schema_and_grounding_valid_rate_min": 1.0,
+    "review_share_of_kept_max": 0.65
+  },
+  "llm": {
+    "micro_f1_min": 0.919,
+    "auto_applied_precision_min": 0.95,
+    "schema_and_grounding_valid_rate_min": 0.98,
+    "review_share_of_kept_max": 0.40
+  }
+}

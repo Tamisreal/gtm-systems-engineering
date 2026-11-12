@@ -1,0 +1,69 @@
+{
+  "_note": "SYNTHETIC. All companies, people, addresses, phone numbers (555 range) and domains are invented. Records arrive from three systems with different field quality, the way they do in a real stack.",
+  "company_records": [
+    {"source": "crm", "key": "001A", "name": "Northgate Insurance Inc.", "domain": "northgateins.com", "phone": "(713) 555-0142", "address": "500 Main St, Houston, TX"},
+    {"source": "crm", "key": "001B", "name": "Riverbend Credit Union", "domain": "riverbendcu.org", "phone": "713-555-0110", "address": "1200 Westheimer Rd, Houston, TX"},
+    {"source": "crm", "key": "001C", "name": "Summit Dental Group, LLC", "domain": "summitdental.com", "phone": "713.555.0199", "address": "88 Kirby Dr, Houston, TX"},
+    {"source": "crm", "key": "001D", "name": "Copperline Manufacturing", "domain": "copperlinemfg.com", "phone": "281-555-0123", "address": "4100 Industrial Blvd, Pasadena, TX"},
+
+    {"source": "enrichment", "key": "enr-77", "name": "Northgate Insurance", "domain": "https://www.northgateins.com/about", "industry": "Insurance", "employee_band": "501-1000"},
+    {"source": "enrichment", "key": "enr-78", "name": "Summit Dental", "domain": "summit-dental.net", "phone": "+1 713 555 0199", "industry": "Healthcare", "employee_band": "51-200"},
+    {"source": "enrichment", "key": "enr-79", "name": "Copper Line Mfg", "industry": "Manufacturing", "employee_band": "201-500"},
+    {"source": "enrichment", "key": "enr-80", "name": "Lattice Biotech", "domain": "lattice.bio", "industry": "Biotechnology", "employee_band": "51-200"},
+
+    {"source": "places", "key": "pl-301", "name": "Northgate Insurance", "phone": "713 555 0142", "address": "500 Main St, Houston, TX", "lat": 29.7604, "lon": -95.3698, "category": "insurance_agency"},
+    {"source": "places", "key": "pl-302", "name": "Riverbend Credit Union - Westheimer Branch", "domain": "riverbendcu.org", "phone": "713-555-0110", "address": "1200 Westheimer Rd, Houston, TX", "lat": 29.7420, "lon": -95.3900, "category": "credit_union"},
+    {"source": "places", "key": "pl-303", "name": "Riverbend Credit Union - Katy Branch", "domain": "www.riverbendcu.org", "phone": "281-555-0177", "address": "20 Mason Rd, Katy, TX", "lat": 29.7858, "lon": -95.8245, "category": "credit_union"},
+    {"source": "places", "key": "pl-304", "name": "Summit Dental Group", "domain": "summitdental.com", "address": "88 Kirby Dr, Houston, TX", "lat": 29.7370, "lon": -95.4180, "category": "dentist"},
+    {"source": "places", "key": "pl-305", "name": "Summit Dental Studio", "phone": "713-555-0188", "address": "90 Kirby Dr, Houston, TX", "lat": 29.7372, "lon": -95.4183, "category": "dentist"}
+  ],
+  "contacts": [
+    {"source": "crm", "key": "003-1", "domain": "northgateins.com", "full_name": "Maya Chen", "title": "VP Sales Operations", "email": "maya.chen@northgateins.com"},
+    {"source": "enrichment", "key": "enr-c1", "domain": "northgateins.com", "full_name": "Maya Chen", "title": "Vice President, Sales Operations", "email": "Maya.Chen@NorthgateIns.com"},
+    {"source": "crm", "key": "003-2", "domain": "northgateins.com", "full_name": "Luis Ortega", "title": "Chief Revenue Officer", "email": "luis.ortega@northgateins.com"},
+    {"source": "crm", "key": "003-3", "domain": "riverbendcu.org", "full_name": "Ana Patel", "title": "Director of Member Growth", "email": "ana.patel@riverbendcu.org"},
+    {"source": "crm", "key": "003-4", "domain": "summitdental.com", "full_name": "Sam Rivera", "title": "Practice Operations Manager", "email": "sam.rivera@summitdental.com"},
+    {"source": "enrichment", "key": "enr-c2", "domain": "lattice.bio", "full_name": "Jordan Blake", "title": "Chief Revenue Officer", "email": "jordan.blake@lattice.bio"}
+  ],
+  "commercial": {
+    "accounts": [
+      {"domain": "northgateins.com", "owner": "AM-East", "tier": "A", "status": "customer"},
+      {"domain": "riverbendcu.org", "owner": "AM-East", "tier": "B", "status": "customer"},
+      {"domain": "summitdental.com", "owner": "AM-West", "tier": "B", "status": "customer"},
+      {"domain": "copperlinemfg.com", "owner": "AE-South", "tier": "A", "status": "prospect"},
+      {"domain": "lattice.bio", "owner": "AE-South", "tier": "B", "status": "prospect"}
+    ],
+    "products": [
+      {"product_id": "P-FCST", "name": "Forecasting", "family": "core"},
+      {"product_id": "P-RPT", "name": "Advanced Reporting", "family": "add_on"},
+      {"product_id": "P-API", "name": "Data API", "family": "add_on"}
+    ],
+    "services": [
+      {"service_id": "S-IMPL", "name": "Implementation"},
+      {"service_id": "S-ADMIN", "name": "Managed Admin"}
+    ],
+    "contracts": [
+      {"domain": "northgateins.com", "product_id": "P-FCST", "start": "2025-09-01", "end": "2027-08-31", "arr": 48000},
+      {"domain": "riverbendcu.org", "product_id": "P-FCST", "start": "2026-01-01", "end": "2026-12-31", "arr": 30000},
+      {"domain": "summitdental.com", "product_id": "P-FCST", "start": "2025-12-15", "end": "2026-12-14", "arr": 18000}
+    ],
+    "opportunities": [
+      {"opportunity_id": "OPP-1", "domain": "northgateins.com", "name": "Northgate Canada expansion", "stage": "Scoping", "amount": 36000, "close_date": "2026-12-15", "product_id": "P-RPT",
+       "committee": [{"email": "maya.chen@northgateins.com", "role": "champion"}]},
+      {"opportunity_id": "OPP-2", "domain": "copperlinemfg.com", "name": "Copperline new business", "stage": "Demo", "amount": 52000, "close_date": "2027-01-31", "product_id": "P-FCST",
+       "committee": []},
+      {"opportunity_id": "OPP-3", "domain": "lattice.bio", "name": "Lattice new business", "stage": "Discovery", "amount": 30000, "close_date": "2027-02-28", "product_id": "P-FCST",
+       "committee": [{"email": "jordan.blake@lattice.bio", "role": "economic_buyer"}]}
+    ],
+    "intent_signals": [
+      {"domain": "northgateins.com", "type": "expansion_opportunity", "value": "new_region", "observed_at": "2026-08-25", "source": "call:call_006", "confidence": 0.75},
+      {"domain": "summitdental.com", "type": "churn_risk", "value": "champion_left", "observed_at": "2026-08-18", "source": "call:call_005", "confidence": 0.7},
+      {"domain": "summitdental.com", "type": "churn_risk", "value": "competitor_eval", "observed_at": "2026-08-18", "source": "call:call_005", "confidence": 0.8},
+      {"domain": "lattice.bio", "type": "new_leader_in_role", "value": "CRO", "observed_at": "2026-09-05", "source": "enrichment:job_change", "confidence": 0.9}
+    ],
+    "activities": [
+      {"domain": "northgateins.com", "email": "maya.chen@northgateins.com", "type": "meeting", "occurred_at": "2026-08-25", "summary": "QBR"},
+      {"domain": "summitdental.com", "email": "sam.rivera@summitdental.com", "type": "call", "occurred_at": "2026-08-18", "summary": "Renewal check-in"}
+    ]
+  }
+}

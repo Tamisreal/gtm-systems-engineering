@@ -1,0 +1,86 @@
+{
+  "_note": "SYNTHETIC ground truth for projects/conversation-intelligence/data/transcripts.json. Labels were assigned by reading each call for meaning, one (type, value) pair per signal, with the buyer-side turn that carries the evidence. 57 labels across 12 calls.",
+  "labels": {
+    "call_001": [
+      {"type": "pain_point", "value": "manual_reporting", "turn": 1},
+      {"type": "pain_point", "value": "forecast_accuracy", "turn": 1},
+      {"type": "competitor_mention", "value": "PipeGrid", "turn": 3},
+      {"type": "budget", "value": "approved", "turn": 5},
+      {"type": "timing", "value": "next_quarter", "turn": 5},
+      {"type": "buying_signal", "value": "requested_proposal", "turn": 7},
+      {"type": "feature_request", "value": "sso", "turn": 9}
+    ],
+    "call_002": [
+      {"type": "pain_point", "value": "manual_reporting", "turn": 3},
+      {"type": "pain_point", "value": "data_quality", "turn": 3},
+      {"type": "objection", "value": "price", "turn": 5},
+      {"type": "objection", "value": "timing", "turn": 7},
+      {"type": "timing", "value": "later", "turn": 7},
+      {"type": "content_opportunity", "value": "roi_case_study", "turn": 9}
+    ],
+    "call_003": [
+      {"type": "buying_signal", "value": "asked_pricing", "turn": 1},
+      {"type": "feature_request", "value": "commissions_integration", "turn": 3},
+      {"type": "buying_signal", "value": "intro_to_decision_maker", "turn": 5},
+      {"type": "competitor_mention", "value": "Forecastly", "turn": 6}
+    ],
+    "call_004": [
+      {"type": "pain_point", "value": "rep_ramp", "turn": 1},
+      {"type": "budget", "value": "constrained", "turn": 5},
+      {"type": "buying_signal", "value": "trial_request", "turn": 7},
+      {"type": "objection", "value": "authority", "turn": 8}
+    ],
+    "call_005": [
+      {"type": "churn_risk", "value": "champion_left", "turn": 1},
+      {"type": "churn_risk", "value": "low_usage", "turn": 3},
+      {"type": "churn_risk", "value": "competitor_eval", "turn": 4},
+      {"type": "competitor_mention", "value": "SignalStack", "turn": 4},
+      {"type": "content_opportunity", "value": "roi_case_study", "turn": 6}
+    ],
+    "call_006": [
+      {"type": "expansion_opportunity", "value": "new_region", "turn": 2},
+      {"type": "expansion_opportunity", "value": "new_team", "turn": 2},
+      {"type": "expansion_opportunity", "value": "upsell_tier", "turn": 4},
+      {"type": "feature_request", "value": "custom_reports", "turn": 4},
+      {"type": "competitor_mention", "value": "PipeGrid", "turn": 5}
+    ],
+    "call_007": [
+      {"type": "pain_point", "value": "data_quality", "turn": 1},
+      {"type": "objection", "value": "security", "turn": 5},
+      {"type": "content_opportunity", "value": "security_doc", "turn": 5},
+      {"type": "timing", "value": "this_quarter", "turn": 6}
+    ],
+    "call_008": [
+      {"type": "competitor_mention", "value": "Forecastly", "turn": 0},
+      {"type": "feature_request", "value": "salesforce_sync", "turn": 2},
+      {"type": "content_opportunity", "value": "integration_guide", "turn": 4},
+      {"type": "buying_signal", "value": "trial_request", "turn": 4},
+      {"type": "objection", "value": "price", "turn": 5}
+    ],
+    "call_009": [
+      {"type": "expansion_opportunity", "value": "new_team", "turn": 1},
+      {"type": "budget", "value": "approved", "turn": 2},
+      {"type": "buying_signal", "value": "requested_proposal", "turn": 3},
+      {"type": "feature_request", "value": "api_access", "turn": 4}
+    ],
+    "call_010": [
+      {"type": "pain_point", "value": "manual_reporting", "turn": 1},
+      {"type": "pain_point", "value": "forecast_accuracy", "turn": 3},
+      {"type": "objection", "value": "need", "turn": 6},
+      {"type": "content_opportunity", "value": "adoption_guide", "turn": 8}
+    ],
+    "call_011": [
+      {"type": "churn_risk", "value": "low_usage", "turn": 1},
+      {"type": "churn_risk", "value": "budget_cut", "turn": 2},
+      {"type": "budget", "value": "constrained", "turn": 2},
+      {"type": "feature_request", "value": "commissions_integration", "turn": 4}
+    ],
+    "call_012": [
+      {"type": "timing", "value": "next_quarter", "turn": 1},
+      {"type": "competitor_mention", "value": "SignalStack", "turn": 2},
+      {"type": "feature_request", "value": "custom_reports", "turn": 4},
+      {"type": "feature_request", "value": "sso", "turn": 4},
+      {"type": "buying_signal", "value": "asked_pricing", "turn": 5}
+    ]
+  }
+}

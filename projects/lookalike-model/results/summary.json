@@ -1,0 +1,113 @@
+{
+  "label": "SYNTHETIC DEMONSTRATION: invented accounts with a hidden pattern. Not a production result.",
+  "data": {
+    "train": 392,
+    "test": 308,
+    "pool": 300,
+    "train_win_rate": 0.291,
+    "test_win_rate": 0.221,
+    "split": "time-based: first touch before 2026-04-01 trains, on or after tests"
+  },
+  "hidden_core_industries": [
+    "insurance",
+    "logistics",
+    "manufacturing"
+  ],
+  "models_on_test": {
+    "rule_icp": {
+      "auc": 0.583,
+      "precision_top10": 0.387,
+      "lift_top10": 1.75,
+      "lift_top20": 1.68
+    },
+    "lookalike_knn": {
+      "auc": 0.59,
+      "precision_top10": 0.29,
+      "lift_top10": 1.31,
+      "lift_top20": 1.68
+    },
+    "logistic_regression": {
+      "auc": 0.66,
+      "precision_top10": 0.419,
+      "lift_top10": 1.9,
+      "lift_top20": 1.68,
+      "brier": 0.1722
+    }
+  },
+  "calibration_logistic": [
+    {
+      "bin": 1,
+      "n": 62,
+      "mean_predicted": 0.077,
+      "observed": 0.113
+    },
+    {
+      "bin": 2,
+      "n": 61,
+      "mean_predicted": 0.157,
+      "observed": 0.148
+    },
+    {
+      "bin": 3,
+      "n": 62,
+      "mean_predicted": 0.237,
+      "observed": 0.177
+    },
+    {
+      "bin": 4,
+      "n": 61,
+      "mean_predicted": 0.367,
+      "observed": 0.295
+    },
+    {
+      "bin": 5,
+      "n": 62,
+      "mean_predicted": 0.578,
+      "observed": 0.371
+    }
+  ],
+  "top_weights": [
+    [
+      "uses_salesforce",
+      0.45
+    ],
+    [
+      "industry=logistics",
+      0.35
+    ],
+    [
+      "industry=insurance",
+      0.29
+    ],
+    [
+      "industry=software",
+      -0.27
+    ],
+    [
+      "funded_12m",
+      0.27
+    ],
+    [
+      "new_revops_leader_90d",
+      0.26
+    ]
+  ],
+  "leakage_trap": {
+    "test_auc_with_meetings_held": 0.999,
+    "pool_score_spread_with_meetings_held": 0.118,
+    "pool_score_spread_without": 0.789,
+    "note": "meetings_held is 0 for every uncontacted account, so the leaky model's test score says nothing about the pool."
+  },
+  "outreach": {
+    "queued": 152,
+    "by_tier": {
+      "A": 23,
+      "B": 48,
+      "C": 81
+    },
+    "holdout": 10,
+    "suppressed": 31,
+    "no_outreach": 107,
+    "send_days": 7
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "label": "SYNTHETIC DEMONSTRATION: 12 invented calls, 57 hand labels. Not a production result.",
+  "extractor": "rules",
+  "run_date": "2026-11-12",
+  "calls": 12,
+  "truth_labels": 57,
+  "quality_kept": {
+    "tp": 51,
+    "fp": 3,
+    "fn": 6,
+    "precision": 0.944,
+    "recall": 0.895,
+    "f1": 0.919,
+    "macro_f1": 0.909
+  },
+  "quality_auto_applied": {
+    "tp": 22,
+    "fp": 0,
+    "fn": 35,
+    "precision": 1.0,
+    "recall": 0.386,
+    "f1": 0.557
+  },
+  "per_type": {
+    "budget": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "buying_signal": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.857,
+      "f1": 0.923
+    },
+    "churn_risk": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "competitor_mention": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "content_opportunity": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.571
+    },
+    "expansion_opportunity": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "feature_request": {
+      "tp": 8,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "objection": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "pain_point": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.857,
+      "recall": 0.75,
+      "f1": 0.8
+    },
+    "timing": {
+      "tp": 4,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.667,
+      "recall": 1.0,
+      "f1": 0.8
+    }
+  },
+  "structure": {
+    "raw_signals": 54,
+    "schema_and_grounding_valid_rate": 1.0,
+    "rejection_codes": {},
+    "calls_with_errors": 0
+  },
+  "routing": {
+    "auto": 22,
+    "review": 32,
+    "drop": 0,
+    "review_share_of_kept": 0.593
+  },
+  "latency_ms": {
+    "p50": 0.17,
+    "p95": 1.25
+  },
+  "cost": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_usd": 0.0,
+    "usd_per_call": 0.0,
+    "usd_per_correct_signal": 0.0,
+    "pricing_as_of": null
+  },
+  "failures": [
+    {
+      "call_id": "call_001",
+      "kind": "false_negative",
+      "type": "pain_point",
+      "value": "forecast_accuracy",
+      "reason": "wrong_value"
+    },
+    {
+      "call_id": "call_002",
+      "kind": "false_negative",
+      "type": "pain_point",
+      "value": "manual_reporting",
+      "reason": "wrong_value"
+    },
+    {
+      "call_id": "call_002",
+      "kind": "false_negative",
+      "type": "content_opportunity",
+      "value": "roi_case_study",
+      "reason": "missed"
+    },
+    {
+      "call_id": "call_004",
+      "kind": "false_positive",
+      "type": "timing",
+      "value": "this_quarter",
+      "reason": "spurious",
+      "evidence": "We are hiring twelve new reps this quarter and ramp takes forever."
+    },
+    {
+      "call_id": "call_005",
+      "kind": "false_negative",
+      "type": "content_opportunity",
+      "value": "roi_case_study",
+      "reason": "missed"
+    },
+    {
+      "call_id": "call_008",
+      "kind": "false_negative",
+      "type": "buying_signal",
+      "value": "trial_request",
+      "reason": "missed"
+    },
+    {
+      "call_id": "call_009",
+      "kind": "false_positive",
+      "type": "timing",
+      "value": "later",
+      "reason": "spurious",
+      "evidence": "Budget for next year is approved, so we can do the renewal and the add-on together."
+    },
+    {
+      "call_id": "call_010",
+      "kind": "false_negative",
+      "type": "content_opportunity",
+      "value": "adoption_guide",
+      "reason": "missed"
+    },
+    {
+      "call_id": "call_011",
+      "kind": "false_positive",
+      "type": "pain_point",
+      "value": "manual_reporting",
+      "reason": "spurious",
+      "evidence": "Most reps went back to spreadsheets."
+    }
+  ]
+}
