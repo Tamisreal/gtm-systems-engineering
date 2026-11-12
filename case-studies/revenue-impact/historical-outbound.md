@@ -69,5 +69,5 @@ A figure is labeled Measured / Verified only with a complete record from the [im
 ## Related
 
 - [IMPACT.md](../../IMPACT.md)
-- [Evidence checklist](../../EVIDENCE_CHECKLIST.md)
+- [Evidence record](../../EVIDENCE_CHECKLIST.md)
 - [Analytics: attribution](../../docs/06-analytics-and-prediction/README.md)

@@ -21,7 +21,8 @@ Technologies grouped by the job they do in a GTM stack, with how each one has be
 |---|---|---|
 | Gong, Salesloft | Built on | Call recordings as the input to AI call analysis: competitors, objections with quotes, next steps and whitespace written to the CRM. Salesloft also for sequencing, with personalized first lines written to fields the sequencer reads |
 | Outreach | Daily user | Sequencing |
-| Instantly, EmailBison, HeyReach | Daily user | Cold email at volume and LinkedIn outreach for client programs |
+| Smartlead, Instantly | Daily user | Cold email at about 500K emails a month, under 3% bounce |
+| EmailBison, HeyReach | Daily user | Cold email at volume and LinkedIn outreach for client programs |
 
 ## GTM intelligence and enrichment
 

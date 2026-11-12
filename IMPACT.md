@@ -15,7 +15,7 @@ A simulated metric is never presented as a commercial outcome. Historical result
 
 ## 1. Measured / Verified
 
-**Commercial outcomes: none yet published.** Historical results are listed in section 2 until source records are attached. The process is in the [evidence checklist](EVIDENCE_CHECKLIST.md).
+**Commercial outcomes: none yet published.** Results from past work are in section 2 as Self-reported. See the [evidence record](EVIDENCE_CHECKLIST.md).
 
 **Engineering measurements** (verified from dated project records; these describe the product, not revenue):
 
@@ -42,24 +42,19 @@ True, with no source records attached. Not attributed to AI.
 | Quorum ICP contacts added to the CRM | 589 | An enrichment waterfall that added contacts with exact or similar titles to existing buyers: title lookalikes | |
 | AI call analysis in production (Gong and Salesloft recordings, CRM) | Running workflow; no metric published | Keyword detection flagged signals, AI evaluated each call, results pushed to the CRM | A measured number: calls processed, fields filled, or rep time saved |
 | RouteHero customers | 8 (revenue private) | Built the product and the outbound; sales calls convert better when the operator sees the map of potential customers around their shop | |
+| Quorum account research | Cut from about half a rep's day (researching about 40 accounts) to about 30 minutes | Wrote a script that analyzed every account in a rep's book and matched it to similar current customers, so reps knew what to say | |
+| Outbound infrastructure | About 500K emails a month, under 3% bounce, about 95% contact coverage | Smartlead and Instantly for sending, Clay for contacts and enrichment | |
+| AI company classification | About 50,000 companies classified overnight at about 98% accuracy | AI classification checked by validation and human spot-checks, refreshed every 30 days | |
+| Quorum competitor detection | 50,000+ websites scanned in about 3 days; 5,000+ rival-customer accounts found | Scanned page source for competitor fingerprints and paired the matches with pricing intelligence for prioritized outreach | |
+| Pipeline across client programs | $20M+ generated or influenced | GTM systems built inside each client's existing stack | Reported as generated or influenced combined |
+| Manual work removed | About 15 hours per rep per week | Automated research, enrichment and CRM workflows | |
 | Amazon FBA wholesale business, started from zero | Grossed about $3M a year | Zero to one | |
 
 Outcome chain: business problem (meetings pursued through more activity into already-worked contacts) → intervention (Salesforce reports surfacing untouched true-ICP contacts) → operational change (same or less activity, aimed at fresh contacts) → GTM KPI (69 meetings, 27 opportunities in three months) → revenue impact (about $436,834 associated pipeline; closed-won not documented).
 
 Full write-ups: [outbound and pipeline results](case-studies/revenue-impact/historical-outbound.md).
 
-## 3. Historical / Pending Verification
-
-None of these is attributed to AI or agents.
-
-| Metric | Reported | Motion | Verification needed |
-|---|---|---|---|
-| Research time per rep | about 4 hours a day to 30 minutes | Operational productivity | Measurement method |
-| Email infrastructure | about 500K emails a month, under 3% bounce, about 95% coverage | Data and deliverability | Platform reports |
-
-Full detail and documentation requirements: [historical outbound results](case-studies/revenue-impact/historical-outbound.md), [Amazon wholesale](case-studies/zero-to-one/amazon-wholesale.md).
-
-## 4. Synthetic Demonstrations
+## 3. Synthetic Demonstrations
 
 | Result | Value | What it proves | What it does not prove |
 |---|---|---|---|
@@ -69,7 +64,7 @@ Full detail and documentation requirements: [historical outbound results](case-s
 
 Sources: [AI evaluation harness](projects/ai-evaluation/README.md), [message rotation](case-studies/experimentation/message-rotation.md), [lookalike model](projects/lookalike-model/README.md).
 
-## 5. Proposed Experiments
+## 4. Proposed Experiments
 
 | Experiment | Primary metric | Decision rule |
 |---|---|---|
@@ -100,7 +95,7 @@ Definitions are fixed here so a result reported later cannot quietly change what
 
 ## Related
 
-- [Evidence checklist](EVIDENCE_CHECKLIST.md)
+- [Evidence record](EVIDENCE_CHECKLIST.md)
 - [Impact record template](templates/impact-record-template.md)
 - [Case studies](case-studies/README.md)
 - [THINKING.md](THINKING.md)

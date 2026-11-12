@@ -12,5 +12,5 @@ Every page carries an evidence label. Nothing here is promoted to [IMPACT.md](..
 
 ## Related
 
-- [Evidence checklist](../EVIDENCE_CHECKLIST.md)
+- [Evidence record](../EVIDENCE_CHECKLIST.md)
 - [Templates](../templates/)

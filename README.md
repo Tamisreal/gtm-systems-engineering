@@ -13,12 +13,13 @@ I started in analytical roles (Constellation Energy, AECOM), moved into sales (S
 | Result | Evidence |
 |---|---|
 | RouteHero location data: 24,348 commercial-kitchen candidates against 9,464 from the common open alternative in the same area, with 86% phone coverage against about 55% | Measured (engineering) |
+| AI classification of about 50,000 companies overnight at about 98% accuracy, checked by validation and human spot-checks | [Self-reported](IMPACT.md#2-self-reported-results) |
 | Built AI call analysis in production on Gong and Salesloft call recordings: keyword detection plus AI evaluation of each call, with buyer signals (competitors, objections, next steps) pushed to the CRM | Production work ([rebuild you can run](projects/conversation-intelligence/README.md)) |
 | 69 meetings, 27 opportunities and about $436,834 in pipeline in three months as an SDR at FiscalNote, with among the lowest activity on the team: I built Salesforce reports to find true-ICP contacts nobody had contacted | [Self-reported](case-studies/revenue-impact/historical-outbound.md) |
 | Built RouteHero's outbound to grease hood cleaning operators, a market nobody was prospecting: about 8,000 contacts, about 4% reply rate, about 40% of replies positive, about 30% of positive replies to sourced pipeline | [Self-reported](case-studies/revenue-impact/historical-outbound.md#outbound-to-grease-hood-cleaning-operators) |
 | Started and ran an Amazon FBA wholesale business that grossed about $3M a year | [Zero-to-one case study](case-studies/zero-to-one/amazon-wholesale.md) |
 
-Full scorecard, metric definitions and attribution rules: **[IMPACT.md](IMPACT.md)**. What each historical figure still needs: [evidence checklist](EVIDENCE_CHECKLIST.md).
+Full scorecard, metric definitions and attribution rules: **[IMPACT.md](IMPACT.md)**. Every claim about my own work: [evidence record](EVIDENCE_CHECKLIST.md).
 
 | Label | Meaning |
 |---|---|
@@ -113,7 +114,7 @@ Grouped by function, with depth of use stated per tool in [technology ecosystem]
 | Function | Tools |
 |---|---|
 | CRM and systems of record | Salesforce, HubSpot |
-| Engagement and conversation intelligence | Gong, Salesloft, Outreach, Instantly, HeyReach |
+| Engagement and conversation intelligence | Gong, Salesloft, Outreach, Smartlead, Instantly, HeyReach |
 | GTM intelligence and enrichment | Clay, Apollo, Prospeo, ZoomInfo, Serper, Exa, Apify, Overture Maps |
 | AI | Claude, OpenAI |
 | Orchestration | n8n, Zapier |
