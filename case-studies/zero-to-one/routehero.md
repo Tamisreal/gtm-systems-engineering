@@ -1,6 +1,6 @@
 # Zero to one: RouteHero
 
-**Evidence status:** product facts and timeline are **Measured / Verified** from the code repository's dated commit history and design documents. Customer, revenue and conversion outcomes are **Historical / Pending Verification** and are left blank until verified. Questions to close are at the end.
+**Evidence status:** product facts and timeline are **Measured / Verified** from the code repository's dated commit history and design documents. Commercial outcomes are **Self-reported**: 8 customers. Revenue is private and not published.
 
 ## Opportunity identification
 
@@ -46,6 +46,8 @@ Timeline from the commit history:
 
 The commit history shows a move from self-serve (Clerk billing, paywall, sign-up) to a sales-assisted motion (every call to action opens a booking page, pricing discussed on a call) in about four weeks. See [GTM motions](../../docs/01-gtm-foundations/gtm-motions.md) for why that move usually happens: at this price point and with this buyer, a conversation converts where a checkout page does not.
 
+Outbound I built for RouteHero (self-reported): about 8,000 grease hood cleaning contacts, about 4% reply rate, about 40% of replies positive, and about 30% of positive replies converted to sourced pipeline. See [outbound results](../revenue-impact/historical-outbound.md#outbound-to-grease-hood-cleaning-operators).
+
 To verify: what triggered the change (conversion data, buyer feedback, or a judgment call), and what the funnel looked like before and after.
 
 ## Pricing and revenue model
@@ -66,10 +68,15 @@ To verify: current offer, whether it is software, service or both, and any reven
 | Outcome | Value | Status |
 |---|---|---|
 | Discovery coverage versus OSM, Houston | 24,348 versus 9,464 candidates | Measured, development |
-| Customers, revenue, meetings, conversion | | Pending Verification |
+| Customers | 8 | Self-reported |
+| Revenue | Private | Not published |
+| Sales calls | Convert better when the operator sees a map of their potential customers around their shop | Self-reported |
+| Tier A accounts | Convert better for customers: these kitchens care about compliance, real hood cleaning and protecting the equipment in their kitchen | Self-reported, not yet measured as a rate |
 | Funnel data since 2026-10-04 | | Pending: export from PostHog |
 
 ## Lessons learned
+
+- Showing an operator the map of their own market sells better than describing it. Sales calls convert better when the potential customers around their shop are on the screen.
 
 From the record, not reconstructed:
 
@@ -81,11 +88,9 @@ To verify with Tam: the commercial lessons (buyer objections heard, what the fir
 
 ## Verification questions
 
-1. How many operators have used RouteHero, as trial or paid, and since when?
-2. Revenue to date, if any, and the pricing in effect for each customer.
-3. What drove the move from self-serve to call-based selling?
-4. PostHog funnel numbers since 2026-10-04: visitors, booking-page opens, calls booked.
-5. Has any operator entered verified system counts? How many?
+1. What drove the move from self-serve to call-based selling?
+2. PostHog funnel numbers since 2026-10-04: visitors, booking-page opens, calls booked.
+3. Has any operator entered verified system counts? How many?
 
 ## Related
 

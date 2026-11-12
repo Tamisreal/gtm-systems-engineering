@@ -1,6 +1,6 @@
 # GTM Learning Engine
 
-**Evidence status: Synthetic Demonstration.** Repository: https://github.com/Tamisreal/gtm-learning-engine
+**I built these workflows for real:** for RouteHero, for clients, and parts of them at Quorum. This repository rebuilds them on synthetic data so they can be read and run. Repository: https://github.com/Tamisreal/gtm-learning-engine
 
 Nine GTM automations rebuilt from scratch so they can be read, run and inspected: account research, bounce checks, a competitor HTML scan, personalized messaging, proof screenshots, pre-call briefs, call analysis, prospect landing pages and a message experiment that learns. Every line was written fresh against synthetic data (50 accounts, 3 call transcripts, 3 replies). The demonstrations are clean-room rebuilds of workflow patterns, not copies of any employer's or client's implementation, and they contain no proprietary code or data.
 

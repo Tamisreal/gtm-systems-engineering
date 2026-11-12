@@ -1,6 +1,6 @@
 # Conversation intelligence: call transcript to CRM action
 
-**I built this in production with Gong and Salesloft.** Gong supplied the calls; the extracted signals went back into the sales workflow in Salesloft and the CRM. This folder is a clean-room rebuild so the design can be inspected and run: twelve invented calls, a fictional seller and fictional competitors. No real transcript, customer or employer data is in this repository, and the numbers below come from the invented calls.
+**I built this in production with Gong and Salesloft.** The call recordings came from Gong and Salesloft, which both record and store calls. Keyword detection flagged the signals, AI evaluated each call, and the results were pushed to the CRM. Real calls cannot be published, so this folder rebuilds the same design: keyword rules, an optional AI step, and the push to the CRM. The rebuild runs on twelve invented calls, a fictional seller and fictional competitors. No real transcript, customer or employer data is in this repository, and the numbers below come from the invented calls.
 
 Call recorders capture what buyers say, and most of it never reaches the CRM. Objections, competitor mentions, budget and timing sit inside recordings that nobody re-listens to, so forecasting, competitive analysis and churn reviews run on rep memory. This project turns a transcript into structured, validated signals and routes each one to an automatic CRM write, a human reviewer, or the bin.
 
@@ -62,7 +62,7 @@ These scores are inflated by construction: the same person wrote the calls, the 
 
 ## What would change in production
 
-- **Source:** transcripts from the call recorder's API or webhook (Gong, for example), redacted for PII before extraction, with retention limits.
+- **Source:** transcripts from the call recorder's API or webhook (Gong or Salesloft), redacted for PII before extraction, with retention limits.
 - **Thresholds:** per signal type, moved by reviewer data. If reviewers accept nearly all of the 0.6 to 0.8 band for competitor mentions, that band moves to auto for that type only.
 - **Outcome metric:** not extraction F1 but what the signals change: competitor field fill rate on open opportunities, the share of churned accounts that had a churn signal 60 or more days before, and time from expansion signal to AM task.
 - **When not to use an LLM:** competitor names, SSO and SOC 2 are dictionary lookups. The model earns its cost only on paraphrase, such as "the numbers never match what reps put in the CRM", which the rules miss.

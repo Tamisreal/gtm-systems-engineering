@@ -1,4 +1,8 @@
-# GTM ontology: a domain model for accounts, sites, people and revenue
+# Account data model (GTM ontology)
+
+How a company, its branches or chapters, the people at each, and their deals and contracts connect, and how to tell when two records are the same company.
+
+This is the structure behind my Quorum expansion work: national organizations and their state chapters, and how they bought from each other and from Quorum ([write-up](../../case-studies/revenue-impact/historical-outbound.md#quorum-expansion-whitespace-through-parent-and-child-accounts)).
 
 **Evidence status: Synthetic Demonstration.** Invented companies and people. The modeling patterns (company versus location, domain then phone then name-and-distance matching, a review queue for probabilistic matches) are the same ones used in [RouteHero](../routehero/README.md).
 

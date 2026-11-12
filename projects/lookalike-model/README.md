@@ -18,6 +18,10 @@ flowchart LR
     Q --> O["Outcomes"] -. "retrain, compare with holdout" .-> W
 ```
 
+## In practice
+
+**Self-reported.** At Quorum, companies in the same industry with the same titles cared about the same things. For example, two companies in tech or construction that each had a government affairs person, especially one focused on state and local policy, were very likely to care about data center policy. That pattern drove targeting and messaging, and the [589 contacts added through a title waterfall](../../case-studies/revenue-impact/historical-outbound.md#quorum-589-icp-contacts-added-through-a-title-waterfall) applied it at the contact level. This demo turns the same idea into a model that can be scored, tested and checked for leakage, on invented data.
+
 ## Where it starts: the revenue target
 
 The model exists to close part of a revenue gap. Working backward from the target (see [start from the company's revenue target](../../docs/01-gtm-foundations/README.md#start-from-the-companys-revenue-target)) gives the number of qualified opportunities needed. Raising win and reply rates by targeting better accounts is usually cheaper than sending more volume. That makes this model one of the levers, and the outcome it must move is qualified opportunities per account worked, not AUC.

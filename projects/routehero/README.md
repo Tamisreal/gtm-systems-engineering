@@ -1,6 +1,6 @@
 # RouteHero: territory intelligence for field-service sales
 
-**Evidence status: Live application** (source private). Engineering measurements below are from development and are labeled as such. Commercial outcomes are **Historical / Pending Verification** and are not reported here until verified.
+**Evidence status: Live application** (source private). Engineering measurements below are from development and are labeled as such. Commercial outcomes are **Self-reported**: 8 customers. Revenue is private and not published.
 
 - Live application: https://routepro-mu.vercel.app/ (built under the working name RoutePro)
 - Company site: https://routehero.io/
@@ -104,7 +104,7 @@ Not yet measured, and needed before any outcome claim:
 
 - **Classifier precision:** a labeled sample of locations checked by hand (is there a serviceable kitchen?), reported as precision and recall by category.
 - **System-count error:** estimate versus verified counts from completed jobs, by category. The feedback path exists; the sample does not yet.
-- **Tier validity:** do Tier A accounts convert to meetings and contracts at a higher rate than Tier B and C? This is the test that decides whether the score earns its weights.
+- **Tier validity as a rate:** customers report that Tier A accounts convert better, because those kitchens care about compliance, real hood cleaning and protecting the equipment in their kitchen (self-reported). The next step is to measure it: meetings and contracts per 100 accounts called, by tier.
 
 ## Business applications
 

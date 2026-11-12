@@ -13,8 +13,9 @@ I started in analytical roles (Constellation Energy, AECOM), moved into sales (S
 | Result | Evidence |
 |---|---|
 | RouteHero location data: 24,348 commercial-kitchen candidates against 9,464 from the common open alternative in the same area, with 86% phone coverage against about 55% | Measured (engineering) |
-| Built call analysis in production with Gong and Salesloft: sales calls turned into buyer signals (competitors, objections, next steps) and pushed back into the sales workflow | Production work ([rebuild you can run](projects/conversation-intelligence/README.md)) |
-| 69 meetings, 27 opportunities, about $436,834 pipeline ARR from outbound in five months | Historical / Pending Verification |
+| Built AI call analysis in production on Gong and Salesloft call recordings: keyword detection plus AI evaluation of each call, with buyer signals (competitors, objections, next steps) pushed to the CRM | Production work ([rebuild you can run](projects/conversation-intelligence/README.md)) |
+| 69 meetings, 27 opportunities and about $436,834 in pipeline in three months as an SDR at FiscalNote, with among the lowest activity on the team: I built Salesforce reports to find true-ICP contacts nobody had contacted | [Self-reported](case-studies/revenue-impact/historical-outbound.md) |
+| Built RouteHero's outbound to grease hood cleaning operators, a market nobody was prospecting: about 8,000 contacts, about 4% reply rate, about 40% of replies positive, about 30% of positive replies to sourced pipeline | [Self-reported](case-studies/revenue-impact/historical-outbound.md#outbound-to-grease-hood-cleaning-operators) |
 | Started and ran an Amazon FBA wholesale business that grossed about $3M a year | [Zero-to-one case study](case-studies/zero-to-one/amazon-wholesale.md) |
 
 Full scorecard, metric definitions and attribution rules: **[IMPACT.md](IMPACT.md)**. What each historical figure still needs: [evidence checklist](EVIDENCE_CHECKLIST.md).
@@ -22,7 +23,8 @@ Full scorecard, metric definitions and attribution rules: **[IMPACT.md](IMPACT.m
 | Label | Meaning |
 |---|---|
 | Measured / Verified | Source record, definition and attribution method attached |
-| Historical / Pending Verification | Self-reported; source records not yet attached |
+| Self-reported | A real result I can describe and defend; source records not attached |
+| Historical / Pending Verification | Reported figure still missing definitions or sources |
 | Synthetic Demonstration | Measured on invented data; proves a method, not a business result |
 | Proposed Experiment | Designed with a fixed decision rule; not yet run |
 | Exploratory Research | Investigation with known validity problems |
@@ -39,12 +41,12 @@ Full scorecard, metric definitions and attribution rules: **[IMPACT.md](IMPACT.m
 
 | Project | Status | Business problem | Evidence |
 |---|---|---|---|
-| [RouteHero](projects/routehero/README.md) | Live application ([app](https://routepro-mu.vercel.app/), [site](https://routehero.io/)) | Field-service operators cannot see which nearby sites are worth the most to call first | Data-source measurements, four decision records, scoring logic from the code |
+| [RouteHero](projects/routehero/README.md) | Live application, 8 customers ([app](https://routepro-mu.vercel.app/), [site](https://routehero.io/)) | Field-service operators cannot see which nearby sites are worth the most to call first | Data-source measurements, four decision records, scoring logic from the code |
 | [GTM Learning Engine](projects/gtm-learning-engine/README.md) | Public repo, synthetic data | Signal-based outbound that learns which message wins per segment | Runnable rebuild of nine workflows |
 | [Conversation intelligence](projects/conversation-intelligence/README.md) | Runnable demo | Buyer signals stay trapped in call recordings | Validated, grounded extraction with review routing and idempotent CRM operations |
 | [AI evaluation](projects/ai-evaluation/README.md) | Runnable demo | AI demos that nobody measures | Precision, recall, failure classes, review load, latency, cost, regression gates |
 | [Lookalike and propensity model](projects/lookalike-model/README.md) | Runnable demo | Static ICPs are written from memory, not from who bought | Learned model beats the written ICP (AUC 0.66 vs 0.58), leakage trap, tiered outreach queue with suppression and a holdout |
-| [GTM ontology](projects/gtm-ontology/README.md) | Runnable demo | Duplicate and mis-modeled accounts break routing, territory and AI answers | Identity resolution with lineage, semantic metrics, graph view |
+| [Account data model](projects/gtm-ontology/README.md) | Runnable demo | Duplicate and mis-modeled accounts break routing, territory and AI answers | Identity resolution with lineage, semantic metrics, graph view |
 
 Secondary: [SPX range study](research/spx-forecasting/README.md), exploratory research kept as a worked example of data leakage.
 
