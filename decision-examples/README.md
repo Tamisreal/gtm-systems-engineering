@@ -1,28 +1,28 @@
 # Decision examples
 
-How decisions get made, written down where they can be checked later. Real decisions are recorded as architecture decision records (ADRs) with dates and the evidence behind them. Hypothetical scenarios are kept separate and labeled.
+How I make decisions, written down so anyone can check them later. Each big decision gets a decision record (engineers call these ADRs, short for architecture decision records). Each record has a date and the reasons behind the choice.
 
-## Architecture decision records (real)
+## Architecture decision records
 
-| ADR | Decision | Evidence |
+| Record | Decision | Based on |
 |---|---|---|
-| [0001](adr/0001-routehero-data-source.md) | Overture Maps as RouteHero's canonical location source; Google Places and Yelp rejected on license terms | Vendor terms read and data measured, 2026-09-12 |
-| [0002](adr/0002-routehero-tenant-isolation.md) | Three-layer tenant isolation: app context, row-level security, transaction-scoped setting | Live application design |
-| [0003](adr/0003-routehero-dedupe-review-queue.md) | Probabilistic matches go to review below 0.9 confidence | Live application design |
-| [0004](adr/0004-routehero-remove-circular-factor.md) | Remove contract value from the score; reset tier thresholds from the measured distribution | 2,785 real accounts scored |
-| [0005](adr/0005-deterministic-first.md) | Deterministic code first, LLM last | Synthetic eval in this repo |
+| [0001](adr/0001-routehero-data-source.md) | Overture Maps (a free, open map dataset) is RouteHero's one official source for business locations. Google Places and Yelp were rejected because their license terms forbid how RouteHero needs to use the data | Vendor terms read and data measured, 2026-09-12 |
+| [0002](adr/0002-routehero-tenant-isolation.md) | Three separate safeguards keep each customer account's data private: the app checks, the database itself blocks one customer from seeing another's data, and the customer setting expires after each request | How the live app is built |
+| [0003](adr/0003-routehero-dedupe-review-queue.md) | When two records are a likely match but not certain (under 0.9 confidence), a person reviews them before they are merged | How the live app is built |
+| [0004](adr/0004-routehero-remove-circular-factor.md) | Remove contract value from the account score, then reset the tier cutoffs based on how the real scores actually spread out | 2,785 real accounts scored |
+| [0005](adr/0005-deterministic-first.md) | Use plain code with fixed rules first, and an AI model (LLM) only as a last resort | Test results in this repo |
 
-New records use the [ADR template](../templates/adr-template.md). The "Observed results" section stays empty until there is data.
+New records use the [decision record template](../templates/adr-template.md). The "Observed results" section stays empty until there is real data.
 
-## Hypothetical scenarios
+## Scenarios
 
-[scenarios.md](scenarios.md): eight labeled scenarios (low reply rates, CRM data quality, enrichment vendor selection, custom buying signals, introducing an AI agent, retention, forecasting, build versus buy), each run through problem, investigation, options, hypothesis, implementation, measurement and decision, including when an agent is the wrong tool.
+[scenarios.md](scenarios.md): eight common sales and marketing problems (low reply rates, messy CRM data, picking a data vendor, building your own buying signals, adding an AI agent, keeping customers, forecasting, and building software versus buying it). Each one walks through the problem, the investigation, the options, a testable guess, the work, how to measure it, and the final decision. Each also says when an AI agent is the wrong tool.
 
 ## Failure analysis
 
-[failure-analysis.md](failure-analysis.md): real failures with detection, root cause, remediation, prevention, monitoring and lessons, followed by labeled hypothetical failure modes.
+[failure-analysis.md](failure-analysis.md): things that went wrong. For each one: how it was spotted, the real cause, the fix, how to stop it happening again, what to watch, and the lesson. Then a list of common ways these systems break.
 
 ## Related
 
-- [THINKING.md](../THINKING.md)
+- [How I think](../README.md)
 - [Build vs buy vs extend](../docs/03-data-architecture/build-buy-extend.md)

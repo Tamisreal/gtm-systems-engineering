@@ -4,9 +4,9 @@ How a company, its branches or chapters, the people at each, and their deals and
 
 This is the structure behind my Quorum expansion work: national organizations and their state chapters, and how they bought from each other and from Quorum ([write-up](../../case-studies/revenue-impact/historical-outbound.md#quorum-expansion-whitespace-through-parent-and-child-accounts)).
 
-**Evidence status: Synthetic Demonstration.** Invented companies and people. The modeling patterns (company versus location, domain then phone then name-and-distance matching, a review queue for probabilistic matches) are the same ones used in [RouteHero](../routehero/README.md).
+Runs on sample companies and people. The patterns are the same ones used in [RouteHero](../routehero/README.md): keeping the company separate from its locations, matching records by website domain first, then phone, then name and distance, and a review queue where a person checks matches the system is unsure about.
 
-Most GTM data problems are identity problems. The same customer shows up as three CRM accounts, one per branch. Enrichment attaches the headquarters address to every site. A territory report counts a holding company where the work happens at forty kitchens. AI assistants answer from whichever duplicate they retrieve. This project is a small, runnable model of the entities and relationships that prevent that.
+Most GTM data problems are really "which record is which company" problems. The same customer shows up as three CRM accounts, one per branch. A data vendor attaches the headquarters address to every site. A territory report counts one holding company when the work happens at forty kitchens. AI assistants answer from whichever duplicate they happen to find. This project is a small model you can run, showing the records and links between them that prevent all of that.
 
 ## The model
 
@@ -27,35 +27,37 @@ erDiagram
     SOURCE_RECORD }o--|| COMPANY : "lineage"
 ```
 
-The separation that matters most: **company and location are facts about the world; account, opportunity, customer and contract are facts about our relationship with it.** A buying-committee role belongs to a contact on one deal, not to the contact. Service is modeled as its own table for implementation or managed-service lines. Full DDL with comments: [schema.sql](schema.sql).
+How to read the diagram: each box is a type of record, and each line shows how two types connect (for example, one company has many locations).
+
+The most important split: **company and location are facts about the world. Account, opportunity, customer and contract are facts about our relationship with it.** A buying-committee role belongs to a contact on one deal, not to the contact everywhere. Service (implementation or managed-service work) has its own table. The full database setup, with comments: [schema.sql](schema.sql).
 
 ## Identity resolution
 
-Thirteen company records from three systems (CRM, enrichment, places data) resolve into five companies and five locations ([ontology/resolve.py](ontology/resolve.py)):
+Identity resolution means working out which records are the same company. Here, thirteen company records from three systems (CRM, a data vendor, and map listings) come together as five companies and five locations ([ontology/resolve.py](ontology/resolve.py)):
 
 | Evidence | Decision | Example in the data |
 |---|---|---|
-| Same normalized domain | auto merge | `https://www.northgateins.com/about` and `northgateins.com` |
-| Same E.164 phone | auto merge | Summit Dental on two different domains, one phone number |
-| Same domain, different address | new location on the same company | two Riverbend Credit Union branches |
-| Similar name, under 0.25 miles apart, similarity below 0.92 | review | "Summit Dental Studio" next door to "Summit Dental Group": a different business in the same strip mall |
-| Similar name, no location to compare | review, never auto | "Copper Line Mfg" versus "Copperline Manufacturing" (0.98 similar, still reviewed) |
+| Same website domain, once cleaned up | merge automatically | `https://www.northgateins.com/about` and `northgateins.com` |
+| Same phone number, in one standard format (E.164) | merge automatically | Summit Dental on two different domains, one phone number |
+| Same domain, different address | add a new location to the same company | two Riverbend Credit Union branches |
+| Similar name, under 0.25 miles apart, names less than 92% alike | a person reviews | "Summit Dental Studio" next door to "Summit Dental Group": a different business in the same strip mall |
+| Similar name, no location to compare | a person reviews, never automatic | "Copper Line Mfg" versus "Copperline Manufacturing" (98% alike, still reviewed) |
 
-Every decision, including matches the code chose not to make, is stored in `match_decision`. Every raw record is stored in `source_record` with the canonical entity it became, so any field can be traced to its source.
+Every decision is saved in `match_decision`, including matches the code chose not to make. Every original record is saved in `source_record`, along with the official record it became, so any field can be traced back to where it came from.
 
-**Field survivorship** is explicit, one owner per field: the CRM owns the name, enrichment owns industry and headcount, places data owns coordinates and category. A source can fill an empty field it owns and never overwrites a field another source owns.
+**Which source wins for each field** is written down, one owner per field. The CRM owns the name. The data vendor owns industry and headcount. Map listings own coordinates and category. A source can fill an empty field it owns, and it never overwrites a field another source owns.
 
 ## What it answers
 
 From [ontology/queries.py](ontology/queries.py):
 
-- **Account 360:** company, sites, contacts, open opportunities, signals, metrics and source lineage in one call. This is what an AE, an AM or an AI assistant should read instead of raw CRM rows.
-- **Territory planning:** every resolved site within a radius, nearest first.
-- **Whitespace:** products with no active contract and no open opportunity.
-- **Buying committee gaps:** required roles (economic buyer, champion, technical evaluator) nobody is mapped to.
-- **Renewals at risk:** contracts ending within 120 days on accounts with a churn signal. In the demo this is fed by signals from the conversation intelligence calls.
-- **Semantic layer:** `active_arr`, `open_pipeline` and `location_count` each have one definition and one SQL statement. A dashboard and an AI assistant asking "what is this account's ARR" get the same answer because they call the same function.
-- **Graph view:** [ontology/graph.py](ontology/graph.py) projects one account into subject, predicate, object triples and Mermaid.
+- **Account 360 (the full account view):** company, sites, contacts, open opportunities, signals, metrics and where each piece of data came from, in one request. This is what an AE, an AM or an AI assistant should read instead of raw CRM rows.
+- **Territory planning:** every confirmed site within a set distance, nearest first.
+- **Whitespace:** products the account has no active contract for and no open opportunity on.
+- **Buying committee gaps:** required roles (economic buyer, champion, technical evaluator) with nobody assigned.
+- **Renewals at risk:** contracts ending within 120 days on accounts with a churn signal. In the demo, those signals come from the conversation intelligence calls.
+- **Semantic layer (one definition per metric):** `active_arr`, `open_pipeline` and `location_count` each have one definition and one SQL query. A dashboard and an AI assistant asking "what is this account's ARR" get the same answer, because they use the same calculation.
+- **Graph view:** [ontology/graph.py](ontology/graph.py) turns one account into simple "thing, relationship, thing" statements and a Mermaid diagram.
 
 ## Run it
 
@@ -67,13 +69,13 @@ python -m unittest discover -s tests -t .
 
 ## What this is and is not
 
-- **It is a relational model with a graph projection.** It is not a knowledge graph in the formal sense: no ontology language (OWL, RDF schema), no triple store, no inference. For most GTM questions a relational model with clean keys answers faster and is easier to govern. A graph database earns its cost when questions are mostly multi-hop traversal ("which of our champions previously worked at this prospect's competitors").
-- **Normalization is US-only** for phone numbers, and name similarity is character-based. Production would add address standardization, a business-name alias table, and match thresholds tuned on reviewer decisions.
-- **Thresholds are judgment, not measured.** The 0.92 and 0.75 cutoffs are starting points. The measurement that should move them is the reviewer's accept rate per band.
+- **It is a standard table-based database, with a way to view it as a graph.** It is not a formal knowledge graph: no ontology language (OWL, RDF schema), no special graph store, no automatic reasoning. For most GTM questions, plain tables with clean IDs answer faster and are easier to manage. A graph database is worth its cost when most questions follow long chains of links ("which of our champions previously worked at this prospect's competitors").
+- **Phone number cleanup works for US numbers only**, and name matching compares letters, not meaning. A real build would add address cleanup, a table of other names each business goes by, and match cutoffs tuned on reviewer decisions.
+- **The cutoffs are judgment calls, not measured.** The name-similarity cutoffs of 0.92 and 0.75 (92% and 75% alike) are starting points. What should move them is how often reviewers accept matches in each range.
 
 ## How it supports AI reasoning
 
-An assistant asked "should we push expansion at Northgate?" should not search raw notes. It should receive the account 360 as structured context: one canonical company, active ARR from the semantic layer, the champion on the expansion deal, the missing economic buyer, and the call signal with its source. Grounding the model in resolved entities is what keeps it from blending two Summit Dentals into one answer.
+Say an assistant is asked "should we push expansion at Northgate?" It should not search raw notes. It should get the full account view as organized information: one official company record, active ARR from the shared metric definition, the champion on the expansion deal, the missing economic buyer, and the call signal with its source. Giving the AI records that are already matched up is what stops it from blending two Summit Dentals into one answer.
 
 ## Related
 

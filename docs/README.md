@@ -1,6 +1,6 @@
 # Knowledge base
 
-Reference material connecting GTM concepts to engineering decisions and measurable outcomes. Each section links to the projects in this repository that put it into practice.
+Plain-English explainers on go-to-market (GTM) topics: how companies find, win, and keep customers. Each page connects a sales or marketing idea to the systems that support it and the numbers that show whether it works. Each section links to the projects in this repository that put the idea into practice.
 
 | Section | Files |
 |---|---|
@@ -16,4 +16,4 @@ Reference material connecting GTM concepts to engineering decisions and measurab
 ## Related
 
 - [Main README](../README.md)
-- [THINKING.md](../THINKING.md)
+- [How I think](../README.md)

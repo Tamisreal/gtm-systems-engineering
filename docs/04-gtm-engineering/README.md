@@ -1,10 +1,16 @@
 # GTM engineering
 
-GTM engineering is the work of turning revenue strategy into systems that run every day: enrichment, signals, scoring, routing, orchestration and the CRM automation that connects them. The job is less about any single tool and more about making each step measurable, explainable and cheap enough to run at volume. This page covers the main building blocks, how to implement them, and how to tell whether they are working.
+GTM (go-to-market) engineering turns a revenue strategy into systems that run every day. That includes enrichment (filling in missing company and contact facts), buying signals, scoring, routing, coordinating outreach, and the CRM automation that ties them together. The CRM is the customer relationship management system, such as Salesforce or HubSpot.
+
+The job is less about any one tool. It is about making each step measurable, easy to explain, and cheap enough to run at high volume. This page covers the main building blocks, how to build them, and how to tell whether they work.
 
 ## Governing principle: deterministic code first, LLM last
 
-Use code for anything that can be expressed as a rule, a lookup or a formula. Use an LLM only where the input is language or the category is ambiguous: reading a job post, classifying a website into an industry, summarizing a call. Scores, routing decisions and CRM writes come from code, not from a model. This keeps decisions reproducible, auditable and cheap, and it means a model change cannot silently reassign a territory.
+"Deterministic" code is plain code with fixed rules: the same input always gives the same answer. An LLM (large language model) is the type of AI behind ChatGPT and Claude.
+
+Use plain code for anything you can write as a rule, a lookup or a formula. Use an LLM only when the input is human language or the category is fuzzy: reading a job post, sorting a website into an industry, summarizing a call. Scores, routing decisions and CRM updates come from code, not from AI.
+
+This keeps decisions repeatable, checkable and cheap. It also means an AI model update cannot quietly reassign someone's territory.
 
 | Task | Use | Why |
 |---|---|---|
@@ -16,25 +22,27 @@ Use code for anything that can be expressed as a rule, a lookup or a formula. Us
 | Assign an owner | Code | Must be auditable |
 | Draft a first-line personalization | LLM, human or rules gate before send | Language; irreversible action |
 
+"Normalize" means cleaning a value into one standard form. "Structured output" means the AI answers in fixed fields that code can read. ICP is the ideal customer profile. "Auditable" means anyone can check afterward why it happened.
+
 ## Enrichment
 
-Enrichment fills missing firmographic and contact data (industry, headcount, tech stack, verified email, direct phone) from external providers.
+Enrichment fills in missing company facts (industry, headcount, the software they use) and contact details (checked email, direct phone) from outside data providers.
 
-**Waterfall enrichment** queries providers in sequence and stops at the first acceptable result. Order providers by expected cost per found record, not by list price per lookup:
+**Waterfall enrichment** asks providers one at a time and stops at the first good answer. Put providers in order of what it really costs to get a result, not the sticker price per lookup:
 
 ```
 cost_per_found(provider) = price_per_lookup / hit_rate
 cost_per_verified_contact = total_enrichment_spend / verified_contacts
 ```
 
-A provider charging twice as much per lookup can be cheaper per found record if its hit rate on your segment is more than twice as high. Hit rate varies by segment (enterprise SaaS vs local service businesses), so measure it per segment on a sample before fixing the order.
+Hit rate is the share of lookups where the provider actually has the answer. A provider that charges twice as much per lookup can still be cheaper per result if it finds more than twice as many. Hit rates differ by segment (large software companies vs local service businesses), so test each provider on a sample from your segment before setting the order.
 
-Implementation pattern:
+How to build it:
 
-1. Normalize the input (domain, name, location) and check the cache first.
-2. Call providers in order; validate each result (email verification status, phone parse, title match) before accepting it.
-3. Store the winning value with `source`, `fetched_at` and `confidence`; store misses too, so you do not pay to ask again tomorrow.
-4. Set a re-enrichment interval per field (titles change faster than headquarters).
+1. Clean up the input (domain, name, location) into a standard form, and check saved results first (the cache), so you never pay twice.
+2. Call providers in order. Check each answer before accepting it: is the email verified, does the phone number parse, does the job title match?
+3. Save the winning value with its source (`source`), when it was fetched (`fetched_at`) and how sure you are (`confidence`). Save misses too, so you do not pay to ask again tomorrow.
+4. Set how often each field gets refreshed. Job titles change faster than headquarters addresses.
 
 | Metric | Formula |
 |---|---|
@@ -43,11 +51,11 @@ Implementation pattern:
 | Cost per verified contact | total spend / verified contacts |
 | Bounce rate on enriched emails | bounces / sends to enriched addresses |
 
-Drop a provider when its incremental coverage no longer justifies its cost. Check data licensing before writing provider data to a shared store; see [governance](../07-governance-and-operations/README.md#data-licensing). Tools: Clay for waterfall orchestration, direct provider APIs for high volume, a cache table in Postgres or the warehouse.
+Drop a provider when the extra records it finds no longer justify its cost. Check the provider's license terms before saving its data anywhere shared; see [governance](../07-governance-and-operations/README.md#data-licensing). Tools: Clay to run the waterfall, direct provider APIs (the connection points vendors offer to other software) for high volume, and a cache table in Postgres or the data warehouse (the central database that holds a copy of all company data).
 
 ## Buying signals
 
-A buying signal is an observable event that raises the probability an account will buy in the near term.
+A buying signal is something you can observe that makes it more likely an account will buy soon.
 
 | Signal | Type | Source examples | Typical reason it matters |
 |---|---|---|---|
@@ -59,17 +67,19 @@ A buying signal is an observable event that raises the probability an account wi
 | Product usage spike or seat cap hit | First-party | Product database | Expansion readiness |
 | Competitor's pricing-page change | Third-party | Page-change monitoring | Possible churn trigger for their customers |
 
-First-party signals (your website, product, email engagement) are cheaper and usually stronger but limited to accounts that already know you. Third-party signals reach net-new accounts but are noisier and shared with every competitor buying the same feed.
+Technographic vendors track what software companies use. Reverse IP matches a website visitor's internet address to their company. Churn means a customer leaving.
 
-**Signal decay.** A signal's value falls with age. Model it explicitly:
+First-party signals come from your own website, product and email. They are cheaper and usually stronger, but they only cover accounts that already know you. Third-party signals come from outside sources. They reach brand-new accounts, but they are noisier, and every competitor buying the same data feed sees them too.
+
+**Signal decay.** A signal loses value as it gets older. Model that directly:
 
 ```
 signal_weight(t) = base_weight * 0.5 ** (days_since_observed / half_life_days)
 ```
 
-Half-lives are assumptions to test, not facts: a pricing-page visit may be stale in days, a new executive hire may matter for a few months. Fit them from data once you have outcomes: compare meeting rate by signal age bucket.
+The half-life is how many days until a signal is worth half as much. Treat half-lives as guesses to test, not facts. A pricing-page visit may go stale in days. A new executive hire may matter for a few months. Once you have results, set them from data: compare meeting rates by how old the signal was.
 
-What goes wrong: counting the same event from two feeds twice (dedupe on account + signal type + window), stale signals triggering outreach, and signals that correlate with nothing. Test each signal with a holdout before it gets a weight. See [the GTM learning engine](../../projects/gtm-learning-engine/README.md).
+What goes wrong: the same event counted twice because two feeds reported it (merge duplicates on account + signal type + time window), old signals triggering outreach, and signals that predict nothing. Test each signal against a holdout (a comparison group that gets no outreach) before giving it any weight. See [the GTM learning engine](../../projects/gtm-learning-engine/README.md).
 
 ## Account scoring vs lead scoring
 
@@ -79,9 +89,9 @@ What goes wrong: counting the same event from two feeds twice (dedupe on account
 | Intent | Is it in market now? | Third-party signals, research activity | Weeks |
 | Engagement | Is it engaging with us? | Web visits, email replies, meetings, product usage | Days |
 
-Lead scoring rates individual people, which made sense when one person filled one form. B2B purchases involve a buying group, so account scoring (fit + intent + aggregated engagement across contacts) is usually the better unit for prioritization, with person-level scoring kept for choosing who to contact within the account.
+Lead scoring rates individual people. That made sense when one person filled out one form. B2B purchases involve a buying group, so account scoring is usually the better way to set priorities. It combines fit, intent, and engagement added up across all contacts at the account. Person-level scoring is still useful for picking who to contact inside the account.
 
-**Explainable, factor-based scoring.** Each factor contributes points, and the contributions are stored, not only the total. A rep should be able to see "62 = industry match 20 + size band 15 + hiring surge 18 + pricing visits 9".
+**Explainable, factor-based scoring.** Each factor adds points, and the points from each factor are saved, not only the total. A rep should be able to see "62 = industry match 20 + size band 15 + hiring surge 18 + pricing visits 9."
 
 ```python
 FACTORS = {
@@ -96,9 +106,9 @@ def score(account):
     return sum(contributions.values()), contributions   # persist both
 ```
 
-Weights above are illustrative. Start with weights a team can reason about, then calibrate against outcomes (logistic regression on historical opportunities is a reasonable second step; keep the output in points so it stays explainable).
+The weights above are a starting point. Begin with weights the team can reason about. Then tune them against real results. A reasonable second step is a simple statistical model (logistic regression) trained on past opportunities. Keep its output in points, so it stays easy to explain.
 
-**Tier thresholds come from the measured distribution.** Do not pick "A = 80+" by intuition; scores cluster, and an intuitive cut can put 2 percent or 40 percent of accounts in Tier A. Pick tiers by capacity and percentile:
+**Tier thresholds come from the measured distribution.** Do not pick "A = 80+" by gut feel. Scores bunch together, and a gut-feel cutoff can put 2 percent or 40 percent of accounts in Tier A. Set tiers by rep capacity and by percentile (where an account ranks against all the others). The query below finds the score at the top 10% and top 30% cutoffs:
 
 ```sql
 SELECT
@@ -108,14 +118,16 @@ FROM account_score
 WHERE scored_at = (SELECT MAX(scored_at) FROM account_score);
 ```
 
-If reps can work 300 Tier A accounts and the universe is 3,000, the top decile is the right cut. Then validate: conversion to opportunity should fall monotonically from Tier A to C. If it does not, the factors are wrong, not the thresholds. [RouteHero](../../projects/routehero/README.md) applies this pattern to local business locations.
+If reps can work 300 Tier A accounts and there are 3,000 accounts in total, the top 10% is the right cutoff. Then check it: the rate of turning into an opportunity should drop steadily from Tier A to B to C. If it does not, the factors are wrong, not the cutoffs. [RouteHero](../../projects/routehero/README.md) applies this method to local business locations.
 
 ## Territory intelligence
 
-Territory design assigns accounts to reps so each territory has comparable potential and workable travel or coverage. For field sales and location-based businesses, this is a geospatial problem.
+Territory design assigns accounts to reps so each territory has similar potential and workable travel or coverage. For field sales and location-based businesses, this is a map problem.
 
-- **Radius queries:** all target locations within N km of a rep's base.
-- **Polygon queries:** all locations inside a drawn territory, a ZIP or county boundary, or a drive-time isochrone.
+- **Radius queries:** all target locations within a set distance of a rep's base.
+- **Polygon queries:** all locations inside a drawn area, such as a territory, a ZIP code or county boundary, or the area reachable within a set drive time.
+
+The queries below use PostGIS, an add-on that gives the Postgres database map and distance features. The first finds Tier A locations within 40 km of a rep. The second finds every location inside a territory's boundary.
 
 ```sql
 -- PostGIS: Tier A locations within 40 km of a rep's base
@@ -135,26 +147,28 @@ territory_potential = sum(score_i * expected_value_i) for accounts in territory
 imbalance = max(potential) / min(potential)
 ```
 
-Rebalance until imbalance is within an agreed tolerance, subject to constraints (existing relationships stay with their owner, travel time caps). What goes wrong: geocoding errors placing locations in the wrong state, moving accounts mid-deal, and territories that look balanced on paper but ignore rep capacity. Measure with pipeline per territory and quota attainment spread after one or two quarters.
+Move accounts until the gap between the richest and poorest territory is within an agreed limit. Respect the constraints: existing relationships stay with their owner, and travel time has a cap.
+
+What goes wrong: address errors that place a location in the wrong state, moving accounts in the middle of a deal, and territories that look balanced on paper but ignore how much each rep can handle. After one or two quarters, measure pipeline per territory and how widely quota results vary between reps.
 
 ## Campaign orchestration
 
-Orchestration coordinates which accounts get which touches, in which channel, in what order, without collisions.
+Orchestration coordinates which accounts get which touches, in which channel, in what order, without two campaigns colliding.
 
 Rules that prevent most problems:
 
-- One active outbound motion per contact at a time; check enrollment across tools, not only within one sequencer.
-- Suppression check immediately before every send, not only at list build: customers, open opportunities, recent opt-outs, competitors, do-not-contact.
-- Every campaign has an experiment design: hypothesis, primary metric, holdout or comparison group, sample size and stop date.
-- Every touch is logged to the CRM with a campaign id so Layer 5 attribution works.
+- Each contact is in only one active outbound program at a time. Check across all tools, not just inside one email sequencer.
+- Check the do-not-contact list right before every send, not only when the list is built. Exclude customers, open deals, recent opt-outs, competitors and anyone marked do-not-contact.
+- Every campaign is set up as a test: what you expect to happen, the main number you will judge it by, a comparison group, a sample size and an end date.
+- Every touch is logged in the CRM with a campaign ID, so the reporting layer (Layer 5 in the [architecture layers](../03-data-architecture/architecture-layers.md)) can credit the right campaign.
 
-Tools: sequencers (Salesloft, Outreach, Instantly) execute; an orchestration layer (n8n, Workato or code) decides who enters and when.
+Tools: sequencers (Salesloft, Outreach, Instantly) send the messages. A separate coordinating tool (n8n, Workato or custom code) decides who goes in and when.
 
 ## CRM automation
 
-Good candidates: field stamping (first-touch date, stage-entry dates), lead-to-account matching, task creation on signals, data hygiene jobs. Poor candidates: anything a rep must understand but cannot see the logic of.
+Good things to automate: stamping dates (first-touch date, the date a deal entered each stage), matching leads to existing accounts, creating tasks when a signal fires, and routine data cleanup. Bad things to automate: anything a rep needs to understand but cannot see the logic behind.
 
-Keep automation in as few places as possible. When Salesforce Flow, Apex, a managed package and an external workflow all update `Account.OwnerId`, nobody can explain an owner change. Maintain an inventory: automation name, trigger, fields written, owner, last reviewed.
+Keep automation in as few places as possible. If Salesforce Flow, custom Salesforce code (Apex), an installed add-on and an outside workflow tool all change the account owner field, nobody can explain why an owner changed. Keep a list of every automation: its name, what triggers it, which fields it changes, who owns it, and when it was last reviewed.
 
 ## Sales routing
 
@@ -164,20 +178,22 @@ Keep automation in as few places as possible. When Salesforce Flow, Apex, a mana
 | Territory | Assign by geography, segment or industry | Field sales, specialized segments | Uneven load if territories are unbalanced |
 | Account-based | Route to the existing account owner | Any motion with named accounts | Requires good lead-to-account matching |
 
-Most mature setups combine them: if the account has an owner, route there; else apply territory rules; else round robin within the matched pool. Skip reps who are out of office or at capacity, and log the rule that fired.
+SMB means small and mid-sized business. "Homogeneous reps" means reps who all handle the same kind of deal.
 
-**SLA and speed to lead.**
+Most mature setups combine all three. If the account already has an owner, send it there. If not, apply territory rules. If that still leaves several reps, take turns among them. Skip reps who are out of office or at capacity, and log which rule made the decision.
+
+**SLA and speed to lead.** An SLA (service level agreement) is an agreed deadline, such as "every inbound lead gets a human reply within 15 minutes."
 
 ```
 speed_to_lead = first_human_touch_at - lead_created_at
 sla_attainment = leads touched within SLA / leads routed
 ```
 
-Measure the median and the 90th percentile; a good median can hide a tail of leads nobody called. Alert on breaches while they can still be fixed, not in a weekly report.
+Look at the typical case (median) and the slow cases (90th percentile). A good median can hide a group of leads nobody called. Send alerts while a missed deadline can still be fixed, not in a weekly report.
 
 ## Opportunity management
 
-Stages are useful only if each has exit criteria that can be checked.
+Deal stages are only useful if each one has exit rules you can check.
 
 | Stage | Exit criteria (example) |
 |---|---|
@@ -187,11 +203,11 @@ Stages are useful only if each has exit criteria that can be checked.
 | Negotiation | Legal or procurement engaged, redlines in progress |
 | Closed won / lost | Signed, or loss reason recorded from a fixed list |
 
-Enforce with validation rules (required fields per stage) and stamp stage-entry dates so you can compute stage conversion and velocity. Watch for stage skipping and opportunities parked past a threshold age in one stage.
+Enforce the rules in the CRM by making certain fields required at each stage. Record the date each deal enters each stage, so you can calculate how many deals move forward and how fast. Watch for deals that skip stages, and deals that sit in one stage too long.
 
 ## Customer health scoring
 
-Health predicts retention and expansion. Build it like account scoring: explainable factors, stored contributions.
+A health score predicts whether a customer will stay and grow. Build it like account scoring: clear factors, with each factor's points saved.
 
 | Factor | Example measure |
 |---|---|
@@ -201,21 +217,21 @@ Health predicts retention and expansion. Build it like account scoring: explaina
 | Relationship | Executive sponsor engaged in last 90 days |
 | Commercial | Days to renewal, payment issues |
 
-Validate the score by checking that lower health bands churn at higher rates on historical data. If they do not, the factors need work before anyone acts on the score.
+Check the score on past data: customers with lower health should have left at higher rates. If they did not, fix the factors before anyone acts on the score.
 
 ## Expansion intelligence
 
-Whitespace is the revenue available inside existing customers.
+Whitespace is the revenue still available inside existing customers.
 
 ```
 whitespace(account) = sum over products not owned of (product_fit(account, product) * list_value(product, account_size))
 ```
 
-`product_fit` comes from the same factor approach: does the account's profile and usage pattern match customers who bought that product? Rank accounts by whitespace times health (unhealthy accounts are retention conversations, not upsell ones). Route the result to account managers with the reasons attached. Measure expansion pipeline created and win rate on whitespace-sourced opportunities against a comparison group.
+`product_fit` uses the same factor approach as scoring: does this account's profile and usage look like customers who bought that product? Rank accounts by whitespace times health. Unhealthy accounts need a retention conversation, not an upsell. Send the results to account managers with the reasons attached. Measure the expansion pipeline created, and the win rate on these opportunities, against a comparison group.
 
 ## Workflow observability
 
-Every automated workflow should write a run log.
+Observability means being able to see what ran, what failed and why. Every automated workflow should write a run log, one row per run:
 
 ```sql
 CREATE TABLE workflow_run (
@@ -240,21 +256,23 @@ CREATE TABLE workflow_run (
 | Cost per outcome | spend / meetings or opportunities created | Trends up over weeks |
 | Yield | records_out / records_in | Drops sharply (often an upstream schema change) |
 
-Alert on silence, not only on errors: a webhook that stops arriving produces no failures.
+An upstream schema change means a source system renamed or restructured its data fields.
+
+Alert on silence, not only on errors. If a webhook (a message one system sends another the moment something happens) stops arriving, nothing fails, so no error alert ever fires.
 
 ## How to test GTM systems
 
-- Unit-test scoring and routing rules with fixture accounts whose correct outcome is known.
-- Replay last week's events through a changed workflow in a staging environment and diff the decisions.
-- Use a Salesforce sandbox or HubSpot test portal for CRM writes; never test sends against real prospects.
-- For LLM steps, keep a labeled evaluation set and run it on every prompt or model change. See [AI evaluation](../../projects/ai-evaluation/README.md).
+- Test scoring and routing rules with sample accounts whose correct result you already know.
+- Run last week's activity through a changed workflow in a test environment, and compare the decisions with the old version.
+- Test CRM updates in a Salesforce sandbox or a HubSpot test account. Never test sending on real prospects.
+- For AI steps, keep a set of examples with known correct answers, and rerun it every time the prompt or the AI model changes. See [AI evaluation](../../projects/ai-evaluation/README.md).
 
 ## What would change the approach
 
-- Low volume, high deal value: fewer automations, more research per account; scoring matters less than account selection.
-- High-velocity inbound: speed to lead and routing dominate; invest there first.
-- Product-led motion: first-party usage signals outweigh third-party intent.
-- Thin budget: cut enrichment depth and keep public-data qualification first; enrich only accounts that pass fit.
+- Few deals, each worth a lot: fewer automations and more research per account. Choosing the right accounts matters more than scoring.
+- Lots of fast inbound leads: speed to lead and routing matter most. Invest there first.
+- Product-led sales (customers find and try the product themselves): your own product usage signals matter more than outside intent data.
+- Tight budget: spend less on enrichment. Qualify accounts with free public data first, and only pay to enrich accounts that pass the fit check.
 
 ## Related
 

@@ -1,10 +1,9 @@
 # ADR NNNN: Short decision title
 
-Use one record per decision that would be expensive to reverse. Copy this file to `decision-examples/adr/NNNN-short-name.md`.
+A decision record (ADR) template. Write one record for each decision that would be expensive to undo. Copy this file to `decision-examples/adr/NNNN-short-name.md`.
 
-- **Status:** proposed | accepted | superseded by ADR NNNN
+- **Status:** proposed | accepted | replaced by ADR NNNN
 - **Date:** YYYY-MM-DD
-- **Evidence status:** Measured / Verified | Historical / Pending Verification | Synthetic Demonstration | Proposed Experiment | Exploratory Research
 
 ## Context
 
@@ -12,15 +11,15 @@ What is happening, and why does a decision have to be made now?
 
 ## Business objective
 
-The outcome this decision serves, stated as a metric where possible (for example: cost per discovered location, time to first qualified meeting, wrong CRM writes per week).
+The result this decision is meant to deliver, written as a number to track where possible (for example: cost per location found, time to first qualified meeting, wrong CRM updates per week).
 
 ## Existing architecture
 
-What is already in place and must keep working. Systems of record, owners, contracts and integrations that constrain the choice.
+What is already in place and must keep working: the systems that hold the official data, who owns them, contracts, and connections to other tools that limit the choice.
 
 ## Constraints
 
-Budget, time, licensing, security, team skills, vendor terms, data availability.
+Budget, time, licensing, security, team skills, vendor terms, what data is available.
 
 ## Options considered
 
@@ -32,7 +31,7 @@ Budget, time, licensing, security, team skills, vendor terms, data availability.
 
 ## Decision criteria
 
-The criteria, in priority order, agreed before choosing.
+The criteria, in order of importance, agreed before choosing.
 
 ## Chosen approach
 
@@ -46,15 +45,15 @@ What is given up.
 
 ## Risks
 
-What could go wrong, how likely, how it would be detected.
+What could go wrong, how likely it is, and how you would notice.
 
 ## Validation plan
 
-The measurement that will show whether the decision was right, with a date to check it.
+The measurement that will show whether the decision was right, and the date to check it.
 
 ## Observed results
 
-Filled in after the validation date. Leave empty until there is data. Never pre-fill.
+Fill this in after the check date. Leave it empty until there is data. Never fill it in ahead of time.
 
 ## Reconsideration triggers
 

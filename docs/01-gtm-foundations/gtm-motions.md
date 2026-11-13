@@ -1,12 +1,14 @@
 # GTM motions
 
-A GTM motion is the repeatable path a buyer takes from first contact to signed contract, and the cost structure that path implies. This page compares the common motions, gives the metrics and formulas that tell you whether each one is working, and shows where GTM engineering connects them. Most companies run two or more motions at once, and most revenue leakage happens at the handoffs between them.
+A go-to-market (GTM) motion is the repeatable path a buyer takes from first contact to signed contract, plus the costs that path brings with it. This page compares the common motions. For each one it gives the numbers that show whether it is working, and it shows where systems connect one motion to the next.
+
+Most companies run two or more motions at once. Most lost revenue happens at the handoffs between them.
 
 ## Comparison
 
-ACV and cycle ranges below are **illustrative planning ranges**, not benchmarks. Your own closed-won data should replace them.
+ACV means annual contract value. The ACV and sales cycle ranges below are rough planning ranges, not industry benchmarks. Replace them with your own won-deal data.
 
-| Motion | ACV range (illustrative) | Sales cycle (illustrative) | Buyers | Primary channels | Unit-economics constraint | What engineering connects |
+| Motion | ACV range | Sales cycle | Buyers | Primary channels | Unit-economics constraint | What engineering connects |
 |---|---|---|---|---|---|---|
 | SMB acquisition | Under $15k | Days to 4 weeks | Owner or single manager | Outbound email, calling, paid search, marketplaces | CAC must stay low, so rep time per deal is capped | List building at volume, routing, sequencer to CRM sync |
 | Mid-market | $15k to $100k | 1 to 4 months | 2 to 5 people, department head as economic buyer | Outbound, inbound, events, partners | Rep capacity: each AE carries a limited number of active deals | Tiering, multi-threading data, stage hygiene |
@@ -16,9 +18,11 @@ ACV and cycle ranges below are **illustrative planning ranges**, not benchmarks.
 | Sales-assisted conversion | Mid-range, often $5k to $50k | Weeks | User already in product plus a buyer | Product signals routed to sales | Sales time must go only to accounts likely to convert | PQL routing, account matching, alert context for reps |
 | Sales-led | Mid-market to enterprise | Months | Committee | Outbound, inbound demo requests, partners | Pipeline coverage and win rate decide the cost of each closed deal | Forecasting, conversation intelligence, CRM data quality |
 
+Terms used in the table: SMB is small and mid-sized business. CAC is customer acquisition cost. AE is account executive. CRM is the customer relationship management system (such as Salesforce or HubSpot). A sequencer is the tool that sends a series of outreach emails. A PQL (product-qualified lead) is a user or account whose product usage suggests they are ready to talk to sales. SEO is search engine optimization.
+
 ## SMB acquisition
 
-High volume, low ACV, short cycle. The business problem is cost per closed deal: a rep who spends three hours on a $6,000 deal and closes one in four has spent twelve hours per customer before onboarding.
+Many deals, small contract values, short cycles. The business problem is the cost of each closed deal. Picture a rep who spends three hours on each $6,000 deal and closes one in four. That rep has spent twelve hours per customer before onboarding even starts.
 
 **Metrics**
 
@@ -30,11 +34,13 @@ High volume, low ACV, short cycle. The business problem is cost per closed deal:
 | Speed to lead | Median of (first rep touch time - inbound timestamp) |
 | Early churn | Customers churned in first 90 days / customers acquired in the cohort |
 
-**Engineering connection:** automated list building from public sources, deterministic routing, sequencer events written back to the CRM, and a close-to-onboarding handoff that requires no rep data entry. Early churn feeds back into ICP criteria so the list stops including accounts that leave in 90 days.
+ARPA means average revenue per account. A cohort is a group of customers who signed up in the same period.
+
+**Engineering connection:** build prospect lists automatically from public sources. Route leads with fixed rules written in plain code. Write email activity from the sequencer back into the CRM. Hand closed deals to onboarding without the rep typing anything in. Customers who leave in the first 90 days feed back into the ICP (ideal customer profile), so the list stops including accounts like them.
 
 ## Mid-market
 
-The business problem is rep capacity. An AE can only run a limited number of active cycles, so every unqualified opportunity displaces a qualified one.
+The business problem is rep capacity. An AE can only run so many active deals at once. Every weak opportunity takes a slot a strong one could have used.
 
 **Metrics**
 
@@ -46,11 +52,11 @@ The business problem is rep capacity. An AE can only run a limited number of act
 | Multi-threading rate | Opportunities with 3+ engaged contacts / open opportunities |
 | Sales velocity | (Opportunities x win rate x ACV) / cycle length |
 
-**Engineering connection:** A/B/C tiering that decides which accounts get AE time, enforced stage exit criteria in the CRM, and contact discovery that fills the buying committee before a deal is single-threaded.
+**Engineering connection:** A/B/C tiering decides which accounts get AE time. The CRM enforces clear rules for when a deal can move to the next stage. Contact research fills in the rest of the buying group before a deal depends on a single person.
 
 ## Enterprise
 
-The business problem is risk over a long cycle. A deal can be lost late to procurement, security review or a reorganization, and each month of cycle length is a month of salary without revenue.
+The business problem is risk over a long cycle. A deal can be lost late to procurement, a security review or a reorganization. Every month of sales cycle is another month of salary with no revenue.
 
 **Metrics**
 
@@ -62,11 +68,11 @@ The business problem is risk over a long cycle. A deal can be lost late to procu
 | Forecast accuracy | 1 - abs(forecast - actual) / actual |
 | Account penetration | Business units or sites under contract / total business units or sites |
 
-**Engineering connection:** account hierarchies (parent, subsidiary, site) so penetration can be measured, buying committee records tied to opportunities, and call analysis that pulls security, legal and budget-timing signals into the CRM before they become late surprises.
+**Engineering connection:** store how accounts relate to each other (parent company, subsidiary, site) so you can measure how much of each customer you have won. Link buying-group contacts to each opportunity. Review calls for security, legal and budget-timing concerns and record them in the CRM, before they turn into late surprises.
 
 ## Self-serve
 
-The business problem is converting users with no human contact while keeping infrastructure and support costs below revenue.
+The business problem is turning users into paying customers with no human contact, while keeping hosting and support costs below revenue.
 
 **Metrics**
 
@@ -78,11 +84,13 @@ The business problem is converting users with no human contact while keeping inf
 | Month-1 revenue retention | Revenue from cohort in month 2 / revenue from cohort in month 1 |
 | Payback (months) | Acquisition cost per paid user / (monthly revenue per paid user x gross margin %) |
 
-**Engineering connection:** a single event definition for "activated", billing events joined to product events, and lifecycle messaging triggered by product state instead of a calendar.
+The activation event is the first action that shows a user got real value from the product.
+
+**Engineering connection:** agree on one definition of "activated." Connect billing records to product usage records. Send lifecycle emails based on what the user has done in the product, not on a fixed calendar.
 
 ## Product-led growth
 
-PLG uses the product as the primary acquisition channel. The business problem is identifying which free or low-tier accounts are worth a sales conversation, because revenue concentrates in a small share of accounts.
+PLG uses the product itself as the main way to win customers. The business problem is spotting which free or low-tier accounts are worth a sales conversation. Most of the revenue comes from a small share of accounts.
 
 **Metrics**
 
@@ -94,11 +102,13 @@ PLG uses the product as the primary acquisition channel. The business problem is
 | Natural rate of growth (approximate) | Share of new ARR from self-serve or product-sourced accounts |
 | Net revenue retention | (Starting ARR + expansion - contraction - churn) / starting ARR |
 
-**Engineering connection:** product events land in the warehouse, users are resolved to accounts by email domain and workspace, and accounts are scored on fit plus usage. This identity resolution step is the hard part: personal email signups and multiple workspaces per company break naive matching.
+ARR is annual recurring revenue. Contraction is customers cutting their spend. Churn is customers leaving.
+
+**Engineering connection:** product usage data flows into the data warehouse (the central database that holds a copy of all company data). Each user is matched to their company by email domain and workspace. Each company is then scored on fit plus usage. The matching step is the hard part. People who sign up with personal email, and companies with several workspaces, break simple matching.
 
 ## Sales-assisted conversion
 
-This is the bridge between PLG or self-serve and sales. A rep engages an account already using the product, typically to move it to a team or annual plan. The business problem is precision: if reps get too many weak alerts they ignore all of them.
+This is the bridge between product-led or self-serve and sales. A rep contacts an account that already uses the product, usually to move it to a team plan or an annual contract. The business problem is accuracy. If reps get too many weak alerts, they ignore all of them.
 
 **Metrics**
 
@@ -112,6 +122,8 @@ This is the bridge between PLG or self-serve and sales. A rep engages an account
 
 **Engineering connection, PQL routing:**
 
+The flow below reads left to right. Usage data goes into the warehouse. Users are matched to accounts. Each account gets a fit score and a usage score. If both pass the rule, the account's details are copied back into the CRM ("reverse ETL" means sending data from the warehouse back into a working tool). Then the alert goes to the right person.
+
 ```text
 product events -> warehouse -> user-to-account resolution -> fit score (ICP) + usage score
   -> PQL rule (fit >= threshold AND usage event in last 7 days)
@@ -119,11 +131,11 @@ product events -> warehouse -> user-to-account resolution -> fit score (ICP) + u
   -> route: owned account -> owner alert; unowned + tier A -> AE queue; tier C -> stay self-serve
 ```
 
-The alert should include why it fired (which events, which users, plan limits hit), so the rep can open with context instead of a generic check-in.
+The alert should say why it fired: which actions, which users, which plan limits they hit. Then the rep can open with real context instead of a generic check-in.
 
 ## Sales-led
 
-The rep runs the process from first meeting to signature. The business problem is predictability: leadership needs to know how much pipeline converts and when.
+The rep runs the process from first meeting to signature. The business problem is predictability. Leadership needs to know how much pipeline will close, and when.
 
 **Metrics**
 
@@ -135,7 +147,7 @@ The rep runs the process from first meeting to signature. The business problem i
 | Forecast accuracy | 1 - abs(forecast - actual) / actual |
 | Quota attainment distribution | Share of reps at 0-50%, 50-100%, 100%+ of quota |
 
-**Engineering connection:** stage definitions with exit criteria, structured loss reasons, and conversation intelligence that writes objections, competitors and timing from calls into CRM fields so forecasts rely on evidence rather than rep sentiment.
+**Engineering connection:** define each deal stage with clear exit rules. Record loss reasons from a fixed list. Use call-analysis software (conversation intelligence) to pull objections, competitors and timing from calls into CRM fields. Then forecasts rest on what buyers actually said, not on how a rep feels about the deal.
 
 ## Where GTM engineering connects motions
 
@@ -149,7 +161,9 @@ The rep runs the process from first meeting to signature. The business problem i
 | Churn signal to retention | Support, calls, product | Customer success | Risk found after the cancellation notice | Risk scoring with lead time before renewal date |
 | SMB to mid-market upgrade | Self-serve billing | AE | Growing accounts stay on a low plan | Fit re-scoring as firmographics change |
 
-The common thread is a shared account identity across product, CRM, billing and support. Without it, each motion optimizes its own funnel and the handoffs leak.
+Identity resolution means working out which records are the same company or person. Suppression means a shared do-not-contact list. Firmographics are basic company facts such as industry and size.
+
+The common thread is one shared record of each account across the product, CRM, billing and support tools. Without it, each team improves its own funnel, and revenue leaks at the handoffs.
 
 ## Related
 

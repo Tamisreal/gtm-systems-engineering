@@ -1,6 +1,8 @@
 # Build vs buy vs extend
 
-Companies are never greenfield. They already pay for a CRM, a sequencer, a call recorder and data vendors, and their people already know how to use them. The default is to extend what exists, buy where a mature product solves the problem, and build only where the result is a real differentiator or fills a gap no tool covers.
+No company starts from scratch. Every company already pays for a CRM (customer relationship management system), an email sequencer, a call recorder and data vendors, and its people already know how to use them.
+
+So the default order is: extend what already exists. Buy when a mature product already solves the problem. Build only when the result truly sets the company apart, or fills a gap no tool covers.
 
 ## The three options
 
@@ -10,9 +12,11 @@ Companies are never greenfield. They already pay for a CRM, a sequencer, a call 
 | Buy | Adopt a product built for the job | A dedicated call recorder instead of recording calls by hand |
 | Build | Write and own custom software | A territory engine scoring physical sites by job size and distance, which no CRM does |
 
+A webhook is a message one system sends another the moment something happens. An enrichment column is a field filled in automatically from a data vendor.
+
 ## Evaluation criteria
 
-Score each option 1 to 5 per criterion, weight by what matters for this decision, and write the weights down before scoring.
+Score each option from 1 to 5 on each criterion below. Decide how much each criterion matters for this decision, and write those weights down before you start scoring, so the scores cannot be bent toward a favorite.
 
 | Criterion | Questions to answer |
 |---|---|
@@ -28,7 +32,9 @@ Score each option 1 to 5 per criterion, weight by what matters for this decision
 | User experience | Will reps use it inside the tools they already have open? |
 | Organizational adoption | Who has to change how they work, and who owns it after launch? |
 
-A simple rule of thumb: build scores well only when differentiation and data ownership are high, and a buyable product does not exist or would own data you need to keep.
+An API is the doorway a system offers for other systems to read and write its data. Data residency means which country the data is stored in. SOC 2 is a standard security audit for software vendors.
+
+A simple rule of thumb: building only wins when two things are true. It must set the company apart, and owning the data must matter. On top of that, either no product exists to buy, or the product would hold data you need to keep.
 
 ## Example decisions
 
@@ -41,12 +47,14 @@ A simple rule of thumb: build scores well only when differentiation and data own
 | Call signal extraction | Extend the call recorder's data with a pipeline into the CRM | The recorder already captures calls; the gap is structured fields, review and CRM writes. See [conversation intelligence](../../projects/conversation-intelligence/README.md) |
 | Lead routing exceptions | Extend native routing | Build only the exception, not a routing service. See [scenario 8](../../decision-examples/scenarios.md#8-custom-development-versus-existing-saas) |
 
+A few terms from the table: an ADR (architecture decision record) is a short document explaining one technical decision and why it was made. "Auth" is login and access control. "Tenants" are the separate customer companies sharing one app, each seeing only its own data.
+
 ## What would change the recommendation
 
-- A vendor price increase that flips total cost of ownership.
-- A license or terms change that removes the right to store data.
-- A requirement that becomes a competitive differentiator, which moves a buy toward a build.
-- Loss of the person who maintains a custom build, with no documented handoff, which moves a build toward a buy.
+- A vendor raises its price enough to change the total cost comparison.
+- A license or terms change removes the right to store the data.
+- Something becomes a real competitive advantage, which pushes a "buy" toward "build."
+- The person who maintains a custom build leaves without handing it over properly, which pushes a "build" toward "buy."
 
 ## Related
 

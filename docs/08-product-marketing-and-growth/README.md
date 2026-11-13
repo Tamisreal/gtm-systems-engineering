@@ -1,10 +1,10 @@
 # Product marketing as structured data
 
-Product marketing produces the decisions that every GTM system depends on: who to target, what to say, what proof to show and how to beat specific competitors. When those decisions live in slide decks, they drift away from what sequencers, ad platforms and reps actually use. This section treats each product marketing artifact as a dataset with owners, keys and versions, so the message a prospect receives can be traced back to a positioning decision and measured.
+Product marketing makes the decisions every GTM system depends on: who to target, what to say, what proof to show, and how to beat specific competitors. When those decisions live in slide decks, they drift away from what the sequencer, the ad platforms and the reps actually use. This section treats each product marketing output as a table of data, with an owner, an ID for each row, and a version history. Then the message a prospect receives can be traced back to a positioning decision, and its results can be measured.
 
 ## The core idea
 
-Every product marketing output should answer: what table does this become, what system reads it, and how do we know if it worked?
+For every product marketing output, ask three questions: what table does this become, which system reads it, and how do we know if it worked?
 
 ```mermaid
 flowchart LR
@@ -18,18 +18,18 @@ flowchart LR
     H --> B
 ```
 
-The loop closes when outcomes (qualified meetings, win rate by segment) update the message table and the ICP definition.
+The loop closes when results (qualified meetings, win rate by segment) feed back into the message table and the ICP definition.
 
 ## ICP development
 
-**What it is.** A testable definition of the accounts most likely to buy, succeed and expand. Written as filters a database can execute, not adjectives.
+**What it is.** The ICP (ideal customer profile) is a testable definition of the accounts most likely to buy, succeed and expand. It is written as filters a database can run, not as adjectives.
 
 **How to build it.**
 
-1. Pull closed-won and closed-lost accounts from the last several quarters, plus retained and churned customers.
-2. Join firmographic (industry, headcount, revenue band, geography), technographic (stack), and situational attributes (hiring, funding, recent leadership change).
-3. Compare win rate, sales cycle length, ACV and net retention across attribute values.
-4. Write the ICP as rules with tiers.
+1. Pull closed-won and closed-lost accounts from the last several quarters, plus customers who stayed and customers who left.
+2. Add company facts (industry, headcount, revenue band, location), the tools they use, and what is happening at the company (hiring, funding, a recent leadership change).
+3. Compare win rate, sales cycle length, average contract value (ACV) and net retention across those attributes.
+4. Write the ICP as rules, grouped into tiers.
 
 ```yaml
 icp_version: 2026-11-01
@@ -47,13 +47,13 @@ exclude:
   - employees < 20
 ```
 
-**What can go wrong.** Building from closed-won only (survivorship: you learn who you sold to, not who was best to sell to). Small samples per attribute. Defining ICP by who reps enjoyed selling to. Test the ICP by checking whether tier 1 accounts convert at a higher rate than tier 2 on accounts not used to build it.
+**What can go wrong.** Building only from closed-won deals: you learn who you sold to, not who was best to sell to (survivorship bias). Too few deals behind each attribute. Defining the ICP by who reps enjoyed selling to. To test the ICP, check whether tier 1 accounts convert better than tier 2 on accounts that were not used to build it.
 
-**Measure.** Win rate, cycle length, ACV and 12-month retention by tier. A useful ICP shows a clear gradient across tiers.
+**Measure.** Win rate, cycle length, ACV and 12-month retention by tier. A useful ICP shows a clear step down from tier to tier.
 
 ## Buyer personas
 
-Personas in a GTM system are roles with attributes a sequencer and a rep can use: title patterns, seniority, function, the decisions they own, their top problems in their words, and the objections they raise.
+In a GTM system, a persona is a buyer role described in fields that a sequencer and a rep can use: title patterns, seniority, function, the decisions they own, their top problems in their own words, and the objections they raise.
 
 | persona_id | title_patterns | owns_decision | top_pain | common_objection |
 |---|---|---|---|---|
@@ -61,13 +61,13 @@ Personas in a GTM system are roles with attributes a sequencer and a rep can use
 | cro | "CRO", "Chief Revenue", "VP Sales" | Budget, headcount | Forecast misses | "Not a priority this quarter" |
 | marketing_ops | "Marketing Ops", "MOps" | Lead routing, attribution | Leads lost in handoff | "Our MAP already does this" |
 
-Source the pain and objection columns from call transcripts and win/loss interviews, coded into a fixed taxonomy, not from brainstorming. Title patterns become the matching rules for contact enrichment and persona assignment.
+Fill the pain and objection columns from call transcripts and win/loss interviews, sorted into a fixed set of categories, not from brainstorming. The title patterns become the matching rules that assign each contact to a persona.
 
 ## Positioning
 
-A positioning canvas makes positioning a set of explicit choices. One common structure has five components:
+A positioning canvas turns positioning into a set of clear choices. One common version has five parts:
 
-| Component | Question | Example (illustrative) |
+| Component | Question | Example |
 |---|---|---|
 | Competitive alternatives | What would the buyer do if this product did not exist? | Spreadsheets plus a part-time analyst; a BI tool; the CRM's native reports |
 | Unique attributes | What does this product have that the alternatives lack? | Stage history captured as events; forecast accuracy tracked per rep |
@@ -75,19 +75,19 @@ A positioning canvas makes positioning a set of explicit choices. One common str
 | Target segment | Who cares most about that value? | Series B to D SaaS with 15 or more AEs and a new revenue leader |
 | Market category | What frame makes the value obvious? | Revenue analytics, not BI |
 
-Write positioning per segment when segments have different alternatives. A mid-market buyer's alternative is a spreadsheet; an enterprise buyer's is an incumbent platform. Same product, different positioning.
+Write separate positioning for each segment when segments have different alternatives. A mid-market buyer's alternative is a spreadsheet. An enterprise buyer's alternative is a platform they already own. Same product, different positioning.
 
 ## Messaging: the message house
 
-A message house organizes what is said:
+A message house organizes what you say:
 
 - **Roof:** one positioning statement per segment.
-- **Pillars:** three or so value themes, each tied to a unique attribute.
-- **Foundation:** proof for each pillar: customer evidence, product capability, third-party validation, demonstrable data.
+- **Pillars:** about three value themes, each tied to a unique attribute.
+- **Foundation:** proof for each pillar: customer evidence, product capability, outside validation, or data you can demonstrate.
 
-The failure mode is pillars with no proof. A claim without evidence should not ship to a sequencer.
+The common failure is pillars with no proof. A claim without evidence should not go into a sequencer.
 
-**From message house to table.** The operational artifact is a message matrix keyed by segment and persona:
+**From message house to table.** The working version is a message matrix, with one row per segment and persona combination:
 
 | segment | persona | pain | proof_point_id | message_variant_id | opening_line | cta |
 |---|---|---|---|---|---|---|
@@ -95,11 +95,11 @@ The failure mode is pillars with no proof. A claim without evidence should not s
 | saas_mm | revops_lead | untrusted_reporting | pp_014 | mv_032 | Opens on hiring signal | 15-min teardown |
 | saas_mm | cro | forecast_miss | pp_007 | mv_040 | Opens on board forecast | Benchmark review |
 
-Each row maps to sequencer custom fields (`{{pain_line}}`, `{{proof_line}}`, `{{cta}}`) so copy changes are data changes, not template rewrites. `proof_point_id` references a proof table with source, approval status and expiry date, so an outdated customer reference stops being sent when it expires. `message_variant_id` is the join key into the experiment log.
+Each row maps to custom fields in the sequencer (`{{pain_line}}`, `{{proof_line}}`, `{{cta}}`). So changing copy means changing a row of data, not rewriting templates. `proof_point_id` points to a proof table that records the source, approval status and expiry date, so an outdated customer reference stops going out when it expires. `message_variant_id` links each message to its results in the experiment log.
 
 ## Competitive intelligence
 
-**Detecting competitor usage.**
+**Detecting competitor usage.** Ways to tell which competitor tools an account uses:
 
 | Signal | Method | Reliability |
 |---|---|---|
@@ -108,6 +108,8 @@ Each row maps to sequencer custom fields (`{{pain_line}}`, `{{proof_line}}`, `{{
 | Job posts | Tools named in requirements ("experience with X required") | Moderate: may describe aspiration or legacy |
 | Call mentions | Extract competitor names from transcripts with evidence quotes | High when grounded; needs entity normalization |
 | Review sites and community posts | Mentions by employees of the account | Low to moderate, sparse |
+
+The first method reads a company's website code and looks for each competitor's tracking scripts. The second reads public domain settings that reveal which email and security vendors a company uses. The code below shows the first method:
 
 ```python
 SIGNATURES = {
@@ -119,13 +121,13 @@ def detect(html: str) -> list[str]:
             if any(re.search(p, html) for p in pats)]
 ```
 
-Store detections with `account_id, competitor, source, evidence, detected_at` so they can expire and be re-verified. The [GTM learning engine](../../projects/gtm-learning-engine/README.md) includes a competitor HTML scan. Respect site terms and robots rules when fetching.
+Store each detection with `account_id, competitor, source, evidence, detected_at`, so it can expire and be checked again. The [GTM learning engine](../../projects/gtm-learning-engine/README.md) includes a competitor website scan. Follow each site's terms and its robots.txt rules (the file that tells automated tools what they may fetch) when collecting pages.
 
-**Battlecards as data.** One row per competitor x topic: their claim, our counter, proof point, landmine question to ask, when we lose to them. Version and date each row. Track battlecard usage (opened before a call) against win rate in deals where that competitor was present, while noting that correlation here is confounded by rep skill.
+**Battlecards as data.** One row per competitor and topic: their claim, our answer, the proof point, a question that exposes their weakness, and when we tend to lose to them. Date and version each row. Track whether reps open the battlecard before a call, and compare that against win rate in deals with that competitor. Keep in mind that stronger reps may also be the ones who open battlecards, which muddies the comparison.
 
 ## Product launches
 
-A tiered launch framework sets effort by impact so every release does not get the same treatment.
+A tiered launch framework matches effort to impact, so every release does not get the same treatment.
 
 | Tier | Criteria | Assets | Channels | Enablement |
 |---|---|---|---|---|
@@ -133,11 +135,11 @@ A tiered launch framework sets effort by impact so every release does not get th
 | 2 | Major feature affecting a segment's buying decision | Feature page, message rows, demo clip | Customer email, in-app, social | Recorded walkthrough, FAQ |
 | 3 | Improvement or fix | Release note | Changelog, in-app | Release note in enablement channel |
 
-Data to capture: launch ID on every asset and campaign, so pipeline and adoption can be filtered by launch. Measure tier 1 launches on pipeline created in segments the launch targets, compared against a pre-launch baseline and, where possible, against segments not targeted.
+Data to capture: put a launch ID on every asset and campaign, so pipeline and adoption can be filtered by launch. Judge tier 1 launches on pipeline created in the segments the launch targets. Compare that against the period before launch and, where possible, against segments the launch did not target.
 
 ## Win/loss analysis
 
-**Structured reasons.** Free-text "closed lost reason" fields are unanalyzable. Use a two-level taxonomy (primary category, specific reason) with a required evidence field.
+**Structured reasons.** A free-text "closed lost reason" field cannot be analyzed. Use two levels of categories (a main reason and a specific reason), and require evidence.
 
 ```text
 primary: [product_gap, price, competitor, no_decision, timing, relationship, implementation_risk]
@@ -147,28 +149,28 @@ evidence: quote or note, required
 source: [rep_entry, buyer_interview, call_transcript]
 ```
 
-**Sample bias.** Rep-entered reasons skew toward external causes (price, timing) over sales execution. Buyer interviews have selection bias: buyers who agree to talk differ from those who do not. Mitigate by interviewing a fixed share of both wins and losses, using a neutral interviewer, and comparing rep-entered reasons to interview findings on the same deals. Disagreement rate between the two is itself a useful metric.
+**Sample bias.** Reasons entered by reps lean toward outside causes (price, timing) and away from how the deal was sold. Buyer interviews have their own bias: buyers who agree to talk are different from those who do not. To reduce both, interview a fixed share of wins and losses, use a neutral interviewer, and compare rep-entered reasons with interview findings on the same deals. How often the two disagree is a useful number in itself.
 
-**Measure.** Reason distribution by segment and quarter, win rate against each competitor, and the share of losses with a product gap that maps to a roadmap item.
+**Measure.** Reason breakdown by segment and quarter, win rate against each competitor, and the share of losses caused by a product gap that is on the roadmap.
 
 ## Market segmentation
 
-Segments must be mutually exclusive, collectively exhaustive and assignable from data you have. "Innovative mid-market companies" fails the third test.
+Segments must not overlap, must cover every account, and must be assignable from data you actually have. "Innovative mid-market companies" fails the third test.
 
-Common GTM segmentation axes: company size (employees or revenue band), industry, geography, motion (new logo vs expansion), and buying situation (greenfield, replacing incumbent, consolidating tools). Encode segment assignment as a deterministic function in the data layer so every system (CRM, sequencer, BI) uses the same segment for the same account. See [data architecture](../03-data-architecture/README.md) and the [GTM ontology](../../projects/gtm-ontology/README.md).
+Common ways to segment in GTM: company size (employees or revenue band), industry, geography, motion (new customer vs expansion), and buying situation (first purchase, replacing an existing tool, or consolidating tools). Assign segments with one fixed rule in the data layer, so every system (CRM, sequencer, BI) puts the same account in the same segment. See [data architecture](../03-data-architecture/README.md) and the [GTM ontology](../../projects/gtm-ontology/README.md).
 
-Size each segment: accounts in segment x expected win rate x expected ACV gives a rough revenue potential, which sets coverage and channel investment.
+Size each segment: number of accounts x expected win rate x expected ACV gives a rough revenue potential. That sets how much coverage and channel spend each segment gets.
 
 ## Sales enablement
 
-Enablement is the delivery layer for everything above. Treat it as a system with measurable adoption:
+Enablement is how everything above reaches the reps. Treat it as a system whose use you can measure:
 
-- Content mapped to segment, persona and stage, so the CRM can surface the right asset on the opportunity record.
-- Talk tracks derived from the message matrix, so reps and sequences say the same thing.
+- Content tagged by segment, persona and stage, so the CRM can show the right asset on the opportunity record.
+- Talk tracks built from the message matrix, so reps and email sequences say the same thing.
 - Certification on tier 1 launches, tracked per rep.
-- Usage data: which assets are opened, shared with prospects and present in won deals.
+- Usage data: which assets get opened, shared with prospects, and appear in won deals.
 
-Measure enablement on behavior change (talk track adoption detected in call transcripts, ramp time for new reps), then on outcomes (stage conversion for certified vs not-yet-certified reps, with the caveat that early certifiers may be stronger reps).
+Measure enablement first on behavior change (talk tracks showing up in call transcripts, faster ramp for new reps), then on results (stage conversion for certified vs not-yet-certified reps). Keep in mind that reps who certify early may simply be stronger reps.
 
 ## Messaging experimentation
 
@@ -176,15 +178,15 @@ Message tests are where positioning meets evidence.
 
 **Design.**
 
-- Test within a segment: ICP tier x persona (or seniority). A message that wins for one persona can lose for another.
-- Change one element per test (opening line, proof point, CTA), or the result cannot be attributed.
-- Primary metric: qualified meetings per delivered email. Replies and opens are diagnostic only.
-- Fixed retirement rule: retire a variant when it is worse than the current leader at a set confidence threshold (for example, 95%) and only after a minimum sample (for example, 400 delivered per variant). Both values are set before launch. The [GTM learning engine](../../projects/gtm-learning-engine/README.md) uses 95% confidence after 400 delivered.
-- Always keep a challenger running against the leader so the system keeps learning and catches decay.
+- Test within one segment: ICP tier x persona (or seniority). A message that wins with one persona can lose with another.
+- Change one thing per test (opening line, proof point, call to action). Otherwise you cannot tell what caused the result.
+- Main metric: qualified meetings per delivered email. Use replies and opens only to diagnose problems.
+- Fixed retirement rule: retire a version when it is worse than the current leader at a set confidence level (for example, 95%), and only after a minimum sample (for example, 400 delivered per version). Set both numbers before launch. The [GTM learning engine](../../projects/gtm-learning-engine/README.md) uses 95% confidence after 400 delivered.
+- Always keep a challenger running against the leader, so the system keeps learning and notices when the leader starts to wear out.
 
-Note on minimum samples: with low meeting base rates, 400 delivered per arm will only detect large differences. The minimum sample is a floor against retiring on noise, not a guarantee of detecting small effects. See the sample size formula in [analytics and prediction](../06-analytics-and-prediction/README.md).
+A note on minimum samples: when meetings are rare, 400 delivered per version can only detect large differences. The minimum is a floor that stops you from retiring a message on noise. It does not guarantee you will catch small differences. See the sample size formula in [analytics and prediction](../06-analytics-and-prediction/README.md).
 
-**Experiment log schema.**
+**Experiment log schema.** The fields recorded for every test:
 
 ```text
 experiment_id, segment, persona, element_tested, control_variant_id, challenger_variant_id,
@@ -193,9 +195,9 @@ delivered_control, delivered_challenger, meetings_control, meetings_challenger,
 decision (retire_control | retire_challenger | inconclusive), decided_at, notes
 ```
 
-The log is the institutional memory. Without it, teams rerun the same losing test every year.
+The log is the team's memory. Without it, teams rerun the same losing test every year.
 
-**What can go wrong.** Deliverability differences between arms (different sending domains or send times) masquerade as message effects. Seasonality across a long test. Segment leakage when contacts are misclassified. Novelty effects where a new message wins early and fades.
+**What can go wrong.** Differences in inbox delivery between versions (different sending domains or send times) look like message effects. Seasons change during a long test. Contacts get put in the wrong segment. A new message wins early only because it is new, then fades.
 
 ## Systems and ownership
 
@@ -209,16 +211,16 @@ The log is the institutional memory. Without it, teams rerun the same losing tes
 | Win/loss reasons | Sales ops with product marketing | CRM fields plus interview table | Roadmap, positioning, battlecards | Monthly review |
 | Experiment log | Growth or GTM engineering | Warehouse table | Message matrix updates, quarterly review | Per decision |
 
-Every consumer reads the current version through a sync job, not a copy pasted into a tool. When product marketing updates a row, the sequencer field updates on the next sync.
+Every tool reads the current version through an automatic sync, not a copy someone pasted in. When product marketing updates a row, the sequencer field updates on the next sync.
 
 **How to test the data model.**
 
-- Every active message variant references an approved, unexpired proof point.
+- Every active message version points to an approved proof point that has not expired.
 - Every account maps to exactly one segment and at most one ICP tier.
-- Every persona title pattern matches a sample of real titles, and no common title matches two personas.
+- Every persona title pattern matches a sample of real job titles, and no common title matches two personas.
 - Every live sequencer step maps to a `message_variant_id` that exists in the experiment log.
 
-These are assertions that can run as scheduled data tests, failing loudly when someone edits a tool directly.
+These checks can run automatically on a schedule and fail loudly when someone edits a tool directly.
 
 ## Measuring product marketing impact
 
@@ -231,13 +233,13 @@ These are assertions that can run as scheduled data tests, failing loudly when s
 | Is enablement adopted? | Talk track presence in transcripts; asset use in won deals | Adoption is not effect |
 | Did the launch work? | Pipeline in targeted segments vs baseline and untargeted segments | Seasonality and concurrent campaigns |
 
-Report these with sample sizes. A win rate of 50% on four deals is not a finding.
+Report these with the number of deals or sends behind them. A 50% win rate on four deals is not a finding.
 
 ## What would change the approach
 
-- Very small TAM (a few hundred target accounts) makes statistical message testing impractical. Use qualitative signal (call recordings, buyer interviews) and account-level judgment instead.
-- Product-led motions shift measurement from meetings to activation and conversion events, and the message matrix extends to in-product copy.
-- Long enterprise cycles make win/loss the slower but more reliable feedback, with meetings as the leading indicator.
+- A very small total market (a few hundred target accounts) makes statistical message testing impractical. Use qualitative signals (call recordings, buyer interviews) and account-by-account judgment instead.
+- Product-led sales motions shift measurement from meetings to product signups and upgrade events, and the message matrix extends to the copy inside the product.
+- Long enterprise sales cycles make win/loss the slower but more reliable feedback, with meetings as the early signal.
 
 ## Related
 
@@ -250,4 +252,4 @@ Report these with sample sizes. A win rate of 50% on four deals is not a finding
 - [Data architecture](../03-data-architecture/README.md)
 - [GTM engineering](../04-gtm-engineering/README.md)
 - [Analytics and prediction](../06-analytics-and-prediction/README.md)
-- [Thinking](../../THINKING.md)
+- [Thinking](../../README.md)

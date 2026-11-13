@@ -1,8 +1,21 @@
 # Revenue bowtie stages
 
-This page is the stage-by-stage reference for the [revenue bowtie](README.md). For each of the nine stages and the knot, it answers what the stage is for, what data and systems it depends on, how to measure it, where it usually breaks, and what to build. Each stage also states where an AI agent is the wrong tool, because most GTM problems are data and rules problems first.
+This page walks through each stage of the [revenue bowtie](README.md) in detail. For each of the nine stages, plus the knot where the contract is signed, it covers: what the stage is for, what data and tools it needs, how to measure it, where it usually breaks, and what to build.
 
-Every stage uses the same structure so they can be compared side by side. Numbers in examples are illustrative.
+Each stage also says where an AI agent is the wrong tool. An AI agent is software that uses an AI model to make its own decisions and take actions. Most GTM problems are data problems and rules problems first, and plain code with fixed rules solves them better.
+
+Every stage uses the same layout, so you can compare them side by side.
+
+A few terms used throughout this page:
+
+- **CRM**: the customer relationship management system, such as Salesforce or HubSpot.
+- **Warehouse**: the central database that holds a copy of all company data.
+- **Sequencer**: the tool that sends a series of outreach emails.
+- **LLM**: large language model, the type of AI behind tools like ChatGPT and Claude.
+- **SQL**: the standard language for asking a database questions. "Plain SQL" means a fixed, repeatable calculation.
+- **Reverse ETL**: copying data from the warehouse back into working tools such as the CRM.
+- **CS platform**: the tool customer success teams use to track account health.
+- **CPQ** (configure, price, quote): the tool that builds quotes from an approved price list.
 
 ## Contents
 
@@ -21,18 +34,18 @@ Every stage uses the same structure so they can be compared side by side. Number
 
 ## 1. Market intelligence and ICP
 
-Deciding which accounts exist, which ones fit, and which ones deserve effort now. It matters because every downstream rate (reply, meeting, win, retention) is capped by list quality. A perfect sequence sent to the wrong accounts still fails.
+This stage decides which accounts exist, which ones fit, and which ones deserve effort right now. ICP means ideal customer profile. List quality sets the ceiling on every later rate: reply, meeting, win and retention. A perfect email sequence sent to the wrong accounts still fails.
 
 **Business objectives**
-- Produce a countable, deduplicated universe of SAM accounts.
-- Score each account on fit and timing, and assign an A/B/C tier.
-- Estimate contract value per account so territories and targets reflect potential.
+- Build a countable list of every account in the SAM (serviceable addressable market: the accounts you can actually serve), with duplicates merged.
+- Score each account on fit and timing, and give it an A, B or C tier.
+- Estimate a contract value for each account, so territories and targets reflect real potential.
 
-**Stakeholders:** RevOps, sales leadership, marketing, finance (targets), product marketing (ICP definition).
+**Stakeholders:** RevOps (revenue operations), sales leadership, marketing, finance (targets), product marketing (ICP definition).
 
-**Required data:** firmographics (industry, size, locations), technographics, triggers (hiring, funding, new sites), closed-won and churn history by account.
+**Required data:** firmographics (basic company facts: industry, size, locations), technographics (the software a company runs), triggers (recent changes such as hiring, funding or new sites), and won-deal and lost-customer history by account.
 
-**Systems:** data vendors and public sources, warehouse, scoring jobs, CRM account object, territory map.
+**Systems:** data vendors and public sources, the warehouse, scheduled scoring jobs, the CRM account record, the territory map.
 
 **Metrics**
 
@@ -45,45 +58,47 @@ Deciding which accounts exist, which ones fit, and which ones deserve effort now
 | Duplicate rate | Accounts sharing a resolved identity / total accounts |
 
 **Common bottlenecks**
-- ICP written from opinion, never checked against closed-won data.
-- Location and parent-child relationships missing, so multi-site accounts look small.
-- Vendor data stale or inconsistent across sources.
+- The ICP is written from opinion and never checked against won deals.
+- Locations and parent-company links are missing, so a company with many sites looks small.
+- Vendor data is out of date, or different sources disagree.
 
 **Root-cause questions**
-- Do tier A accounts actually win more often and at higher ACV than tier B?
-- Which traits do churned accounts share that the ICP does not exclude?
-- Is the account universe bounded by real data or by what one vendor sells?
+- Do tier A accounts actually win more often, and at a higher ACV (annual contract value), than tier B?
+- What do lost customers have in common that the ICP does not exclude?
+- Is the account list based on real data, or only on what one vendor happens to sell?
 
 **GTM engineering opportunities**
-- Bottom-up account universe built from public sources, resolved to one record per company.
-- Scoring job that recomputes tiers when triggers or firmographics change.
-- Estimated contract value per account from the pricing unit (for example locations x price).
+- Build the account list from the ground up using public sources, with one record per company.
+- Run a scoring job that recalculates tiers whenever triggers or company facts change.
+- Estimate contract value for each account from the pricing unit (for example, locations x price).
 
 **AI and automation opportunities**
-- LLM classification of unstructured website text into industry or service type when no standard code exists, measured against a labeled sample.
-- Extraction of location counts or services from web pages.
-- **Not an agent:** counting accounts, applying fit thresholds and computing tier scores are deterministic SQL. An LLM in that loop adds cost and run-to-run variance with no accuracy gain.
+- Use an LLM to sort companies into an industry or service type from their website text, when no standard code exists. Check its accuracy against a sample that a person has labeled by hand.
+- Pull location counts or services from web pages.
+- **Not an agent:** counting accounts, applying fit rules and calculating tier scores are plain SQL. Putting an LLM in that loop adds cost and gives different answers on different runs, with no gain in accuracy.
 
 **Example architecture**
+
+Data from public sources and vendors lands in a staging area. Duplicate records are matched and merged. Each account gets a fit score and a trigger score, then a tier, and the result is copied to the CRM and the territory map.
 
 ```text
 public sources + vendor data -> staging -> identity resolution -> account table
   -> fit score + trigger score -> tier (A/B/C) -> CRM sync + territory map
 ```
 
-**Validation:** backtest tiers against the last 12 months of closed-won and closed-lost; check score distribution per tier; hand-review a random sample of 50 records.
+**Validation:** test the tiers against the last 12 months of won and lost deals (a backtest). Check how scores spread out within each tier. Have a person review a random sample of 50 records.
 
 **Data-quality considerations**
-- Match on domain plus normalized name plus address, not name alone.
-- Record source and fetched date per field so stale values can be found.
+- Match records on website domain plus cleaned-up company name plus address, not on name alone.
+- Record where each field came from and when, so old values can be found.
 
-**Security and governance:** respect source terms of use; keep personal data out of account-level tables; document scoring logic so tier changes are explainable.
+**Security and governance:** follow each data source's terms of use. Keep personal data out of account-level tables. Write down how scoring works, so anyone can explain why a tier changed.
 
 **Failure modes**
-- Score becomes a proxy for company size and stops predicting wins.
-- Tiers are computed once and never refreshed.
+- The score turns into a stand-in for company size and stops predicting wins.
+- Tiers are calculated once and never refreshed.
 
-**Business impact:** higher win rate and lower CAC from the same rep capacity, because effort concentrates on accounts that convert.
+**Business impact:** a higher win rate and lower CAC (customer acquisition cost) with the same number of reps, because effort goes to the accounts that convert.
 
 **Related projects:** [RouteHero](../../projects/routehero/README.md), [GTM ontology](../../projects/gtm-ontology/README.md)
 
@@ -91,16 +106,16 @@ public sources + vendor data -> staging -> identity resolution -> account table
 
 ## 2. Awareness and demand generation
 
-Getting target accounts to know the company exists and to associate it with a specific problem. It matters because cold outreach to an account that has never heard of you converts worse, and inbound only arrives from accounts that already know you.
+This stage gets target accounts to know the company exists and to link it to a specific problem. Cold outreach to an account that has never heard of you converts worse. And inbound interest only comes from accounts that already know you.
 
 **Business objectives**
-- Reach ICP accounts with a message tied to a trigger or a known problem.
-- Generate engagement that can be measured per account, not only per channel.
-- Protect sending reputation and brand while operating at volume.
+- Reach ICP accounts with a message tied to a recent change or a known problem.
+- Create engagement that can be measured for each account, not only for each channel.
+- Protect email sending reputation and brand while working at volume.
 
-**Stakeholders:** marketing, SDR or BDR team, product marketing, RevOps.
+**Stakeholders:** marketing, the SDR or BDR team (sales and business development reps who book meetings), product marketing, RevOps.
 
-**Required data:** tiered account list, contacts with verified emails, triggers, message variants, engagement events (opens are unreliable, replies and clicks are better), deliverability data.
+**Required data:** the tiered account list, contacts with checked email addresses, triggers, message versions, engagement data (email opens are unreliable; replies and clicks are better), and deliverability data (whether emails reach the inbox).
 
 **Systems:** sequencer, marketing automation, ad platforms, web analytics, website visitor identification, CRM.
 
@@ -115,24 +130,24 @@ Getting target accounts to know the company exists and to associate it with a sp
 | Cost per engaged account | Program cost / engaged ICP accounts |
 
 **Common bottlenecks**
-- Generic messaging sent to everyone in the list.
-- Domain reputation damaged by unverified lists or volume spikes.
-- Engagement tracked per contact, so account-level interest is invisible.
+- The same generic message goes to everyone on the list.
+- The sending domain's reputation is damaged by unchecked lists or sudden jumps in volume.
+- Engagement is tracked per person, so interest across a whole account is invisible.
 
 **Root-cause questions**
-- Is a low reply rate a list problem, a message problem or a deliverability problem?
-- Which message variants produce positive replies, not just replies?
+- Is a low reply rate caused by the list, the message, or emails not reaching the inbox?
+- Which message versions produce positive replies, not just any replies?
 - Are the engaged accounts in the ICP, or is the content attracting the wrong buyers?
 
 **GTM engineering opportunities**
-- Signal-triggered sequences: a trigger event starts outreach with a message tied to that trigger.
-- Message experiments with a fixed sample size, where losing variants are retired automatically.
-- Account-level engagement rollup across email, web and ads.
+- Signal-triggered sequences: when a trigger happens, outreach starts with a message about that trigger.
+- Message tests with a sample size set in advance, where losing versions are retired automatically.
+- One engagement total per account, combining email, web and ads.
 
 **AI and automation opportunities**
-- Drafting a first line from account research, with human review on tier A.
-- Classifying replies (positive, objection, referral, out of office, unsubscribe).
-- **Not an agent:** suppression lists, send limits, unsubscribe handling and domain warmup rules must be deterministic. An agent should never decide who to contact outside the approved list or bypass an opt-out.
+- Draft a first line from account research, with a person reviewing it for tier A accounts.
+- Sort replies into types: positive, objection, referral, out of office, unsubscribe.
+- **Not an agent:** do-not-contact lists, sending limits, unsubscribe handling and domain warmup rules must be plain code with fixed rules. An agent should never decide to contact someone outside the approved list, or skip past an opt-out.
 
 **Example architecture**
 
@@ -141,19 +156,19 @@ trigger detected -> account in tier A/B? -> contacts verified -> variant assigne
   -> sequencer -> reply classified -> CRM activity + experiment results table
 ```
 
-**Validation:** A/B tests with a pre-set minimum sample per variant; reply classifier checked against hand labels; seed-inbox tests for placement.
+**Validation:** run A/B tests with a minimum sample size per version set in advance. Check the reply sorter against replies a person labeled by hand. Send to test inboxes (seed inboxes) to see whether mail lands in the inbox or in spam.
 
 **Data-quality considerations**
-- Verify emails before sending; track verification date.
-- Deduplicate contacts across sequencer and marketing automation so nobody gets two programs at once.
+- Check email addresses before sending, and record when each was checked.
+- Merge duplicate contacts across the sequencer and marketing automation, so nobody gets two programs at once.
 
-**Security and governance:** comply with CAN-SPAM, GDPR and CASL where they apply; honor opt-outs across every system; log which message each contact received.
+**Security and governance:** follow email and privacy laws where they apply (CAN-SPAM in the US, GDPR in the EU, CASL in Canada). Honor opt-outs in every system. Log which message each contact received.
 
 **Failure modes**
-- Optimizing for reply rate and getting more negative replies.
-- AI-written copy that is generic at scale and reads as automated.
+- Chasing a higher reply rate and getting more negative replies.
+- AI-written copy that sounds generic at scale and reads as automated.
 
-**Business impact:** more qualified conversations per contact reached, which lowers the volume needed in the conversion economics table.
+**Business impact:** more qualified conversations per contact reached. That lowers the volume needed in the conversion economics table on the [GTM foundations](../01-gtm-foundations/README.md) page.
 
 **Related projects:** [GTM learning engine](../../projects/gtm-learning-engine/README.md)
 
@@ -161,18 +176,18 @@ trigger detected -> account in tier A/B? -> contacts verified -> variant assigne
 
 ## 3. Acquisition
 
-Turning engagement into a booked, held meeting with the right person at an ICP account. It matters because this is where marketing and SDR activity becomes a sales cost, and slow or wrong routing wastes demand already paid for.
+This stage turns engagement into a booked meeting that actually happens, with the right person at an ICP account. This is where marketing and SDR activity becomes a sales cost. Slow or wrong routing wastes demand the company already paid for.
 
 **Business objectives**
 - Book meetings with ICP buyers, not just anyone who replies.
-- Route every inbound and reply to the right owner fast.
-- Keep show rate high so AE calendars are not wasted.
+- Send every inbound lead and reply to the right owner, fast.
+- Keep the show rate high, so AE (account executive) calendars are not wasted.
 
 **Stakeholders:** SDRs, AEs, marketing ops, RevOps.
 
-**Required data:** lead and contact records, account ownership, territory assignments, tier, meeting outcomes, response timestamps.
+**Required data:** lead and contact records, account ownership, territory assignments, tier, meeting outcomes, response times.
 
-**Systems:** forms, scheduler, routing engine, sequencer, CRM, dialer.
+**Systems:** forms, scheduler, routing engine (the rules that decide who gets each lead), sequencer, CRM, dialer.
 
 **Metrics**
 
@@ -185,24 +200,24 @@ Turning engagement into a booked, held meeting with the right person at an ICP a
 | ICP meeting share | Meetings with ICP accounts / meetings held |
 
 **Common bottlenecks**
-- Inbound leads not matched to existing accounts, so they route to the wrong rep.
-- Meetings booked with non-buyers to hit an activity target.
-- No-shows with no automated reminder or reschedule path.
+- Inbound leads are not matched to accounts already in the CRM, so they go to the wrong rep.
+- Meetings get booked with people who are not buyers, just to hit an activity target.
+- No-shows get no automatic reminder or way to reschedule.
 
 **Root-cause questions**
-- How long does an inbound lead wait before a human responds, at the median and the 90th percentile?
+- How long does an inbound lead wait for a human reply? Look at the typical case (median) and the slow cases (90th percentile).
 - What share of meetings are with accounts outside the ICP?
-- Do no-shows cluster by source, persona or time between booking and meeting?
+- Do no-shows cluster by source, persona, or the gap between booking and meeting?
 
 **GTM engineering opportunities**
-- Lead-to-account matching on email domain and company name before routing.
-- Territory and tier-based routing with round robin inside a pod.
-- Geographic prospect discovery for field or local motions, so reps work dense clusters.
+- Match each lead to an existing account by email domain and company name before routing it.
+- Route by territory and tier, taking turns among reps inside a team (round robin).
+- Find prospects by location for field or local sales, so reps work tight clusters of accounts.
 
 **AI and automation opportunities**
-- Pre-meeting account brief generated from public sources and CRM history.
-- Reply intent detection to book meetings from positive replies faster.
-- **Not an agent:** routing is a rules engine problem. Ownership, territory and round-robin logic must be deterministic and auditable so reps trust it. An agent choosing owners creates disputes nobody can resolve.
+- Generate a pre-meeting account brief from public sources and CRM history.
+- Detect reply intent, so positive replies turn into booked meetings faster.
+- **Not an agent:** routing is a rules problem. Ownership, territory and round-robin logic must be fixed rules that anyone can check, so reps trust it. An agent choosing owners creates disputes nobody can settle.
 
 **Example architecture**
 
@@ -211,19 +226,19 @@ form fill / positive reply -> lead-to-account match -> owner lookup (territory, 
   -> scheduler link or direct book -> reminder sequence -> meeting outcome to CRM
 ```
 
-**Validation:** audit a sample of routed leads weekly for correct owner; measure speed to lead before and after changes; compare show rate by source.
+**Validation:** check a sample of routed leads each week for the correct owner. Measure speed to lead before and after changes. Compare show rate by source.
 
 **Data-quality considerations**
-- Normalize company names and domains before matching.
-- Record meeting outcome as a required field (held, no-show, rescheduled, disqualified).
+- Clean up company names and domains into a standard form before matching.
+- Make meeting outcome a required field (held, no-show, rescheduled, disqualified).
 
-**Security and governance:** routing rules versioned and reviewed when territories change; access to lead data scoped by role.
+**Security and governance:** keep a history of routing rule changes and review the rules when territories change. Limit access to lead data by role.
 
 **Failure modes**
-- Routing loop or unassigned queue that nobody monitors.
-- Meeting counts rise while ICP meeting share falls.
+- Leads bounce between owners in a loop, or pile up in an unassigned queue nobody watches.
+- Meeting counts go up while the share of ICP meetings goes down.
 
-**Business impact:** lower cost per qualified meeting and faster response on paid demand, which raises the share of inbound that converts.
+**Business impact:** lower cost per qualified meeting and faster response to paid demand. More of the inbound interest turns into pipeline.
 
 **Related projects:** [RouteHero](../../projects/routehero/README.md), [GTM learning engine](../../projects/gtm-learning-engine/README.md)
 
@@ -231,18 +246,18 @@ form fill / positive reply -> lead-to-account match -> owner lookup (territory, 
 
 ## 4. Qualification and conversion
 
-Deciding whether a meeting is a real opportunity and moving it to a signed contract. It matters because AE time is the most expensive resource in a sales-led motion, and forecast quality depends on what happens here.
+This stage decides whether a meeting is a real opportunity, then moves it to a signed contract. AE time is the most expensive resource in a sales-led team, and forecast quality depends on what happens here.
 
 **Business objectives**
-- Qualify fast and disqualify early.
-- Multi-thread into the buying committee.
-- Forecast accurately and close at planned price.
+- Qualify fast, and disqualify early.
+- Build relationships with several people in the buying group (multi-threading).
+- Forecast accurately, and close at the planned price.
 
 **Stakeholders:** AEs, sales managers, sales engineers, finance, RevOps, deal desk.
 
-**Required data:** opportunity stage history, amount, close date, contacts and roles, call transcripts, competitor mentions, loss reasons, discounts.
+**Required data:** opportunity stage history, amount, close date, contacts and their roles, call transcripts, competitor mentions, loss reasons, discounts.
 
-**Systems:** CRM, conversation intelligence, CPQ, e-signature, forecasting tool.
+**Systems:** CRM, conversation intelligence (software that records and analyzes sales calls), CPQ, e-signature, forecasting tool.
 
 **Metrics**
 
@@ -256,26 +271,28 @@ Deciding whether a meeting is a real opportunity and moving it to a signed contr
 | Discount depth | (List price - sold price) / list price |
 
 **Common bottlenecks**
-- Stages defined by rep feeling instead of exit criteria.
-- CRM fields empty because reps do not update them.
-- Loss reasons free-text or set to "other".
+- Stages are set by how the rep feels, not by clear exit rules.
+- CRM fields are empty because reps do not update them.
+- Loss reasons are typed in freely or set to "other."
 
 **Root-cause questions**
 - At which stage do lost deals stall, and for how many days?
-- Which objections and competitors appear in lost deals but not in won deals?
-- Is win rate low across all reps, or concentrated in a few?
+- Which objections and competitors show up in lost deals but not in won deals?
+- Is win rate low for every rep, or only for a few?
 
 **GTM engineering opportunities**
-- Stage exit criteria enforced by required fields.
-- Call transcripts converted to structured fields: objections, competitors, budget, timing.
-- Stage-duration alerts when a deal exceeds the won-deal median for its stage.
+- Enforce stage exit rules with required fields.
+- Turn call transcripts into structured CRM fields: objections, competitors, budget, timing.
+- Alert when a deal sits in a stage longer than won deals usually do.
 
 **AI and automation opportunities**
-- Extracting signals from call transcripts into CRM fields, with precision and recall measured on a labeled set.
-- Drafting follow-up emails and mutual action plans from call notes.
-- **Not an agent:** forecast numbers should come from a statistical model and stage data, not LLM judgment. An agent should not change stage, amount or close date without rep confirmation, because those fields drive commission and the board forecast.
+- Pull signals from call transcripts into CRM fields. Measure accuracy against a set of calls a person labeled by hand.
+- Draft follow-up emails and mutual action plans (a shared timeline with the buyer) from call notes.
+- **Not an agent:** forecast numbers should come from a statistical model and stage data, not from an LLM's judgment. An agent should not change stage, amount or close date without the rep confirming, because those fields drive commission and the board forecast.
 
 **Example architecture**
+
+Each call is recorded and transcribed. Software pulls out signals and rates how confident it is. Confident answers go straight into the CRM. Uncertain ones go to the rep to check.
 
 ```text
 call recording -> transcript -> signal extractor -> confidence check
@@ -283,19 +300,19 @@ call recording -> transcript -> signal extractor -> confidence check
   -> stage and forecast reports
 ```
 
-**Validation:** extractor evaluated with precision, recall and F1 per field; forecast accuracy tracked per quarter; spot-check CRM fields against transcripts.
+**Validation:** score the extractor on each field. Precision asks: of what it flagged, how much was right? Recall asks: of what was really there, how much did it catch? F1 combines the two into one number. Track forecast accuracy each quarter. Spot-check CRM fields against transcripts.
 
 **Data-quality considerations**
-- Keep stage history as timestamped events, not only current stage.
-- Use picklists for loss reason and competitor, not free text.
+- Keep every stage change as a dated entry, not only the current stage.
+- Use dropdown lists (picklists) for loss reason and competitor, not free text.
 
-**Security and governance:** call recording consent per jurisdiction; transcripts contain personal and commercial data, so restrict access and set retention.
+**Security and governance:** get call-recording consent as each location's law requires. Transcripts contain personal and business data, so limit access and set how long they are kept.
 
 **Failure modes**
-- Extracted signals written without confidence thresholds, polluting CRM data.
-- Pipeline inflated by opportunities that never met exit criteria.
+- Signals are written to the CRM with no confidence check, filling it with bad data.
+- Pipeline is padded with opportunities that never met the exit rules.
 
-**Business impact:** higher win rate, shorter cycles and forecasts finance can plan hiring against.
+**Business impact:** a higher win rate, shorter cycles, and forecasts that finance can plan hiring around.
 
 **Related projects:** [Conversation intelligence](../../projects/conversation-intelligence/README.md), [GTM learning engine](../../projects/gtm-learning-engine/README.md), [AI evaluation](../../projects/ai-evaluation/README.md)
 
@@ -303,15 +320,15 @@ call recording -> transcript -> signal extractor -> confidence check
 
 ## The knot: closed-won (commitment)
 
-The point where the customer signs and the account moves from sales to post-sale teams. It matters because everything the buyer was promised, and everything sales learned, must survive the handoff. Most onboarding problems start here.
+This is the point where the customer signs and the account moves from sales to the post-sale teams. Everything the buyer was promised, and everything sales learned, has to survive the handoff. Most onboarding problems start here.
 
 **Business objectives**
 - Record the contract accurately: products, quantities, price, term, renewal date.
-- Hand off goals, stakeholders and commitments in structured form.
+- Hand off goals, contacts and commitments in a structured form.
 
-**Stakeholders:** AE, customer success manager, onboarding lead, finance, legal.
+**Stakeholders:** AE, customer success manager (CSM), onboarding lead, finance, legal.
 
-**Required data:** signed contract terms, buyer's success criteria, stakeholders and roles, technical requirements, special terms.
+**Required data:** signed contract terms, the buyer's definition of success, contacts and their roles, technical requirements, special terms.
 
 **Systems:** CPQ, contract system, CRM, billing, CS platform.
 
@@ -323,11 +340,11 @@ The point where the customer signs and the account moves from sales to post-sale
 | Booking accuracy | Contracts matching billing setup / total contracts |
 | Time to kickoff | Median of (kickoff date - signature date) |
 
-**Engineering opportunity:** closed-won triggers creation of the customer, contract and onboarding records from CPQ data, with a handoff form that blocks stage change until required fields are filled.
+**Engineering opportunity:** when a deal is marked closed-won, automatically create the customer, contract and onboarding records from the CPQ data. Use a handoff form that blocks the stage change until required fields are filled in.
 
-**Not an agent:** contract terms come from CPQ and the signed document, not from an LLM reading the PDF. Billing setup must be deterministic and reconciled.
+**Not an agent:** contract terms come from CPQ and the signed document, not from an LLM reading the PDF. Billing setup must follow fixed rules and be checked against the contract.
 
-**Failure mode:** promises made in late-stage calls never reach onboarding.
+**Failure mode:** promises made on late-stage calls never reach onboarding.
 
 **Related projects:** [GTM ontology](../../projects/gtm-ontology/README.md)
 
@@ -335,16 +352,16 @@ The point where the customer signs and the account moves from sales to post-sale
 
 ## 5. Customer onboarding
 
-Getting a new customer from signature to first measurable value. It matters because the time between paying and getting value is when buyers start to doubt the decision, and slow onboarding delays any revenue tied to usage.
+This stage gets a new customer from signature to the first real, measurable value. The time between paying and getting value is when buyers start to doubt their decision. Slow onboarding also delays any revenue tied to usage.
 
 **Business objectives**
-- Reach first value inside a defined window.
-- Complete setup, integrations and training on schedule.
+- Reach first value inside an agreed time window.
+- Finish setup, integrations and training on schedule.
 - Confirm the success criteria agreed during the sale.
 
-**Stakeholders:** onboarding or implementation team, CSM, customer admin and champion, support, AE.
+**Stakeholders:** onboarding or implementation team, CSM, the customer's admin and champion, support, AE.
 
-**Required data:** contract scope, success criteria, onboarding milestones, integration status, product setup events.
+**Required data:** contract scope, success criteria, onboarding milestones, integration status, product setup activity.
 
 **Systems:** CS platform or project tracker, product analytics, CRM, support tool.
 
@@ -358,24 +375,24 @@ Getting a new customer from signature to first measurable value. It matters beca
 | Early support load | Support tickets in first 30 days / accounts onboarded |
 
 **Common bottlenecks**
-- No agreed definition of "first value".
-- Customer-side dependencies (IT access, data exports) not tracked.
-- Onboarding starts without the sales context.
+- Nobody agreed on what "first value" means.
+- Tasks waiting on the customer (IT access, data exports) are not tracked.
+- Onboarding starts without the context sales gathered.
 
 **Root-cause questions**
 - Which milestone takes longest, and is the delay on our side or the customer's?
-- Do accounts with slow onboarding churn at higher rates?
-- Were the success criteria captured at the knot, or invented after signing?
+- Do accounts with slow onboarding leave at higher rates?
+- Were the success criteria captured at signing, or made up afterward?
 
 **GTM engineering opportunities**
-- Onboarding plan created automatically from contract products.
-- Milestone completion detected from product events instead of manual checkboxes.
-- Stalled-milestone alerts to the CSM with customer-side blockers listed.
+- Create the onboarding plan automatically from the products in the contract.
+- Mark milestones complete from product activity instead of manual checkboxes.
+- Alert the CSM when a milestone stalls, listing what the customer still owes.
 
 **AI and automation opportunities**
-- Summarizing sales calls into an onboarding brief.
-- Drafting customer-facing status updates from milestone data.
-- **Not an agent:** account provisioning, permissions and integration setup are deterministic workflows. Errors there break customer access or data, so they need tested scripts, not autonomous actions.
+- Summarize sales calls into an onboarding brief.
+- Draft customer status updates from milestone data.
+- **Not an agent:** setting up accounts, permissions and integrations are fixed workflows. Mistakes there break customer access or data, so they need tested scripts, not an agent acting on its own.
 
 **Example architecture**
 
@@ -388,19 +405,19 @@ flowchart LR
     D -- no --> F["First value reached"]
 ```
 
-**Validation:** compare time to first value across cohorts; confirm milestone events match what CSMs report in a sample.
+**Validation:** compare time to first value across cohorts (groups of customers who started in the same period). Check a sample to confirm product activity matches what CSMs report.
 
 **Data-quality considerations**
-- One customer record linked to the CRM account, billing account and product workspace.
-- Milestone dates recorded as events, not overwritten fields.
+- Keep one customer record linked to the CRM account, the billing account and the product workspace.
+- Record milestone dates as new entries, not by overwriting a field.
 
-**Security and governance:** customer data imported during setup must follow the contract's data processing terms; admin access logged.
+**Security and governance:** customer data brought in during setup must follow the contract's data-handling terms. Log admin access.
 
 **Failure modes**
-- "Onboarding complete" marked without the customer reaching value.
-- Handoff data ignored because it lives in a different tool.
+- Onboarding is marked "complete" before the customer gets value.
+- Handoff notes are ignored because they live in a different tool.
 
-**Business impact:** shorter time to value lowers early churn and moves usage-based revenue forward.
+**Business impact:** a shorter time to value lowers early churn (customers leaving) and brings usage-based revenue in sooner.
 
 **Related projects:** [GTM ontology](../../projects/gtm-ontology/README.md)
 
@@ -408,18 +425,18 @@ flowchart LR
 
 ## 6. Adoption and activation
 
-Customers using the product in the way that predicts retention. It matters because a signed contract with low usage is a renewal risk, and usage is the earliest leading indicator the business has.
+This stage is about customers using the product in the ways that predict they will stay. A signed contract with low usage is a renewal risk. Usage is the earliest warning sign the business has.
 
 **Business objectives**
-- Define the activation event that predicts retention.
-- Raise the share of purchased seats or capacity in active use.
+- Define the activation event: the action that predicts a customer will stay.
+- Raise the share of purchased seats or capacity actually in use.
 - Spread usage across features and teams.
 
 **Stakeholders:** product, CSMs, growth, support, account managers.
 
-**Required data:** product events with user and account IDs, seat counts, plan entitlements, feature usage, support tickets.
+**Required data:** product activity tagged with user and account IDs, seat counts, what each plan includes, feature usage, support tickets.
 
-**Systems:** product analytics, warehouse, CS platform, reverse ETL to CRM.
+**Systems:** product analytics, the warehouse, CS platform, reverse ETL to the CRM.
 
 **Metrics**
 
@@ -432,24 +449,24 @@ Customers using the product in the way that predicts retention. It matters becau
 | Health score coverage | Accounts with a current health score / active accounts |
 
 **Common bottlenecks**
-- Activation defined as "logged in" instead of an outcome event.
-- Product users not linked to CRM accounts.
-- Usage visible to product but not to account owners.
+- Activation is defined as "logged in" instead of a real result.
+- Product users are not linked to CRM accounts.
+- The product team can see usage, but account owners cannot.
 
 **Root-cause questions**
-- Which early behaviors separate retained accounts from churned accounts?
+- Which early behaviors separate customers who stay from customers who leave?
 - Are low-usage accounts missing a feature, a trained user or an integration?
-- Does seat usage rate drop before renewal, and how far ahead?
+- Does seat usage drop before renewal, and how far ahead?
 
 **GTM engineering opportunities**
-- Activation event chosen by comparing retained and churned cohorts.
-- User-to-account identity resolution so usage rolls up correctly.
-- Usage summaries synced to CRM account records for owners.
+- Choose the activation event by comparing customers who stayed with customers who left.
+- Match each user to their company, so usage adds up correctly per account.
+- Copy usage summaries onto CRM account records so owners can see them.
 
 **AI and automation opportunities**
-- In-product guidance triggered by state (feature not used after N days).
-- Summarizing an account's usage trend for a CSM review.
-- **Not an agent:** the activation definition and health score are SQL over event data. They must be stable and reproducible so trends mean something. Changing them by LLM judgment breaks comparisons over time.
+- Show in-product tips based on what the user has done (for example, a feature not used after N days).
+- Summarize an account's usage trend for a CSM review.
+- **Not an agent:** the activation definition and the health score are plain SQL over usage data. They must stay stable and repeatable so trends mean something. Letting an LLM change them breaks comparisons over time.
 
 **Example architecture**
 
@@ -458,19 +475,19 @@ product events -> warehouse -> user-to-account resolution -> activation flag + s
   -> health score -> reverse ETL to CRM and CS platform -> owner view
 ```
 
-**Validation:** check that the activation event actually predicts retention in a held-out cohort; reconcile active user counts against billing seat counts.
+**Validation:** check that the activation event really predicts staying, using a group of customers held back from the analysis. Compare active user counts with the seat counts in billing.
 
 **Data-quality considerations**
-- Event naming and schema versioned; renamed events break history.
-- Exclude internal and test users from usage metrics.
+- Keep a history of event names and their structure. Renaming an event breaks the history.
+- Leave internal and test users out of usage numbers.
 
-**Security and governance:** usage data is customer data; aggregate before syncing to sales tools; follow privacy terms on user-level tracking.
+**Security and governance:** usage data is customer data. Roll it up to account level before sending it to sales tools. Follow privacy terms on tracking individual users.
 
 **Failure modes**
-- Health score that is green for every account until it churns.
-- Usage metric gamed by automated logins or integrations.
+- A health score that shows green for every account right up until it cancels.
+- Usage numbers inflated by automated logins or integrations.
 
-**Business impact:** earlier warning on at-risk accounts and identified expansion candidates, both measurable in GRR and NRR.
+**Business impact:** earlier warning on at-risk accounts and a clear list of accounts ready to grow. Both show up in GRR and NRR (gross and net revenue retention, defined on the [bowtie overview](README.md)).
 
 **Related projects:** [GTM ontology](../../projects/gtm-ontology/README.md), [Conversation intelligence](../../projects/conversation-intelligence/README.md)
 
@@ -478,16 +495,16 @@ product events -> warehouse -> user-to-account resolution -> activation flag + s
 
 ## 7. Retention and renewals
 
-Keeping the revenue already under contract. It matters because churned ARR has to be replaced before any growth counts, and churn reduces the base that expansion grows from.
+This stage keeps the revenue already under contract. ARR (annual recurring revenue) lost to churn has to be replaced before any growth counts. Churn also shrinks the base that expansion grows from.
 
 **Business objectives**
-- Find churn risk early enough to act.
-- Renew on time at or above current price.
-- Capture structured churn reasons that feed back to the ICP.
+- Spot churn risk early enough to act.
+- Renew on time, at or above the current price.
+- Record churn reasons from a fixed list, and feed them back to the ICP.
 
 **Stakeholders:** CSMs, account managers, support, finance, product, executive sponsors.
 
-**Required data:** renewal dates, contract value, usage trend, support tickets and sentiment, call transcripts, stakeholder changes, payment history.
+**Required data:** renewal dates, contract value, usage trend, support tickets and their tone, call transcripts, contact changes, payment history.
 
 **Systems:** CS platform, billing, CRM, support tool, conversation intelligence.
 
@@ -502,24 +519,24 @@ Keeping the revenue already under contract. It matters because churned ARR has t
 | Save rate | At-risk accounts renewed / at-risk accounts flagged |
 
 **Common bottlenecks**
-- Risk found when the cancellation notice arrives.
-- Champion leaves and nobody notices.
-- Churn reason recorded as free text or not at all.
+- Risk is only discovered when the cancellation notice arrives.
+- The champion leaves and nobody notices.
+- Churn reason is typed in freely, or not recorded at all.
 
 **Root-cause questions**
-- How many days before renewal did the first risk signal appear, and who saw it?
-- Do churned accounts share ICP traits, onboarding delays or a product gap?
+- How many days before renewal did the first warning sign appear, and who saw it?
+- Do lost customers share ICP traits, onboarding delays or a product gap?
 - Is churn concentrated in one segment, cohort or product?
 
 **GTM engineering opportunities**
-- Risk score combining usage trend, support volume, stakeholder change and call signals.
-- Renewal queue ordered by ARR at risk and days to renewal.
-- Champion change detection from email bounces and contact data updates.
+- A risk score that combines usage trend, support volume, contact changes and call signals.
+- A renewal list sorted by ARR at risk and days until renewal.
+- Spot when a champion leaves, from bounced emails and contact data updates.
 
 **AI and automation opportunities**
-- Extracting churn-risk signals from call transcripts and support tickets.
-- Summarizing an account's history for a renewal review.
-- **Not an agent:** an agent should not send retention offers, approve discounts or change contract terms. Those carry financial authority and need a human. The risk score itself should be a model or rules with known inputs, so a CSM can see why an account is flagged.
+- Pull churn-risk signals from call transcripts and support tickets.
+- Summarize an account's history for a renewal review.
+- **Not an agent:** an agent should not send retention offers, approve discounts or change contract terms. Those involve money and need a person to sign off. The risk score itself should be a model or a set of rules with known inputs, so a CSM can see why an account is flagged.
 
 **Example architecture**
 
@@ -529,19 +546,19 @@ usage trend + support tickets + call signals + contact changes
   -> CSM play -> outcome (renewed, contracted, churned + reason) -> ICP feedback
 ```
 
-**Validation:** measure the risk score's precision and recall on past renewals; compare risk lead time before and after changes.
+**Validation:** measure the risk score's precision (of accounts flagged, how many were really at risk) and recall (of accounts really at risk, how many were flagged) on past renewals. Compare risk lead time before and after changes.
 
 **Data-quality considerations**
-- Renewal date and ARR must match billing, reconciled monthly.
-- Churn reason from a fixed picklist with an optional note.
+- Renewal date and ARR must match billing. Check them against each other every month.
+- Churn reason comes from a fixed dropdown list, with an optional note.
 
-**Security and governance:** support and call data contain personal information; restrict access; keep audit logs of who changed renewal terms.
+**Security and governance:** support and call data contain personal information, so limit access. Keep a log of who changed renewal terms.
 
 **Failure modes**
-- Risk score flags so many accounts that CSMs ignore it.
-- Saves achieved through discounts that reduce GRR anyway.
+- The risk score flags so many accounts that CSMs ignore it.
+- Accounts are saved with discounts that lower GRR anyway.
 
-**Business impact:** each point of GRR kept compounds across every future year of that cohort.
+**Business impact:** each point of GRR kept adds up across every future year of that cohort.
 
 **Related projects:** [Conversation intelligence](../../projects/conversation-intelligence/README.md), [GTM ontology](../../projects/gtm-ontology/README.md), [AI evaluation](../../projects/ai-evaluation/README.md)
 
@@ -549,16 +566,16 @@ usage trend + support tickets + call signals + contact changes
 
 ## 8. Expansion and cross-selling
 
-Growing revenue from existing customers through more seats, higher tiers, more locations or additional products. It matters because expansion usually costs less to win than a new logo, and it is the term that pushes NRR above 100%.
+This stage grows revenue from existing customers: more seats, higher tiers, more locations or extra products. Expansion usually costs less to win than a new customer. It is also the part of the formula that pushes NRR above 100%.
 
 **Business objectives**
 - Find accounts with room to grow and a reason to grow now.
-- Route expansion signals to the right owner with context.
-- Sell additional products where the buying committee already trusts you.
+- Send expansion signals to the right owner, with context.
+- Sell more products where the buying group already trusts you.
 
 **Stakeholders:** account managers, CSMs, AEs, product, growth, finance.
 
-**Required data:** current contract and products, plan limits, usage against limits, account hierarchy (sites and business units), call signals, firmographic changes.
+**Required data:** current contract and products, plan limits, usage against those limits, account structure (sites and business units), call signals, changes in company facts.
 
 **Systems:** product analytics, billing, CRM, CS platform, conversation intelligence.
 
@@ -572,25 +589,27 @@ Growing revenue from existing customers through more seats, higher tiers, more l
 | Expansion signal conversion | Expansion opportunities won / expansion signals routed |
 | Product penetration | Customers with 2+ products / total customers |
 
+Whitespace is the revenue still available inside a customer you already have.
+
 **Common bottlenecks**
-- Plan limits hit with no alert to the account owner.
-- No account hierarchy, so other sites or divisions are invisible.
-- Expansion signals mentioned on calls but never recorded.
+- Customers hit their plan limits and the account owner is never told.
+- There is no record of how accounts connect, so other sites or divisions are invisible.
+- Expansion signals come up on calls but are never recorded.
 
 **Root-cause questions**
-- Which accounts are near their plan limits right now?
+- Which accounts are close to their plan limits right now?
 - How much of the whitespace is in accounts the team already owns?
 - Do expansion signals from calls get logged and acted on?
 
 **GTM engineering opportunities**
 - Plan-limit alerts tied to account owners and renewal dates.
-- Whitespace model by account: potential from firmographics minus current ARR.
-- Call-mentioned expansion signals (new team, new location, new use case) written to CRM.
+- A whitespace estimate for each account: potential based on company facts, minus current ARR.
+- Expansion signals mentioned on calls (new team, new location, new use) written to the CRM.
 
 **AI and automation opportunities**
-- Extracting expansion signals from calls and support conversations.
-- Account research for cross-sell into a new business unit.
-- **Not an agent:** whitespace and pricing math are deterministic calculations from contract and firmographic data. Quotes must come from CPQ with approved price books, never from an LLM.
+- Pull expansion signals from calls and support conversations.
+- Research a new business unit inside an existing customer for cross-selling.
+- **Not an agent:** whitespace and pricing math are fixed calculations from contract and company data. Quotes must come from CPQ with approved price lists, never from an LLM.
 
 **Example architecture**
 
@@ -600,19 +619,19 @@ usage vs plan limits + call signals + new sites detected
   -> expansion opportunity in CRM -> CPQ quote -> billing update
 ```
 
-**Validation:** track expansion signal conversion by signal type; reconcile expansion ARR between CRM and billing.
+**Validation:** track how often each type of expansion signal turns into a win. Check that expansion ARR matches between the CRM and billing.
 
 **Data-quality considerations**
-- Parent-child account links must be correct before whitespace is meaningful.
-- Distinguish expansion from price increases in ARR movement reports.
+- Parent-to-child account links must be correct before whitespace means anything.
+- Separate real expansion from price increases in reports on ARR changes.
 
-**Security and governance:** usage data shared with sales only at the level the customer agreement permits; pricing exceptions approved and logged.
+**Security and governance:** share usage data with sales only at the level the customer agreement allows. Approve and log any pricing exceptions.
 
 **Failure modes**
-- Aggressive upsell on accounts with low adoption, which raises churn risk.
-- Expansion credited twice across CRM and billing.
+- Pushing upsells on accounts that barely use the product, which raises churn risk.
+- The same expansion counted twice, once in the CRM and once in billing.
 
-**Business impact:** expansion ARR at lower acquisition cost, raising NRR and LTV.
+**Business impact:** expansion ARR at a lower cost to win, which raises NRR and LTV (lifetime value: the total gross profit a customer brings in).
 
 **Related projects:** [Conversation intelligence](../../projects/conversation-intelligence/README.md), [GTM learning engine](../../projects/gtm-learning-engine/README.md), [GTM ontology](../../projects/gtm-ontology/README.md)
 
@@ -620,16 +639,16 @@ usage vs plan limits + call signals + new sites detected
 
 ## 9. Advocacy and referrals
 
-Satisfied customers bringing in new customers through referrals, references, reviews and case studies. It matters because referred accounts arrive with trust already established, and because this stage closes the loop back to the ICP.
+This stage is happy customers bringing in new ones through referrals, reference calls, reviews and case studies. Referred accounts arrive already trusting you. This stage also closes the loop back to the ICP.
 
 **Business objectives**
-- Generate referred pipeline from successful customers.
-- Keep a pool of references available for late-stage deals.
-- Feed outcome data back to market intelligence.
+- Create referred pipeline from successful customers.
+- Keep a group of references ready for late-stage deals.
+- Feed results data back to market intelligence (stage 1).
 
 **Stakeholders:** CSMs, marketing, product marketing, sales, customer champions.
 
-**Required data:** customer health, outcomes achieved, referral source on new opportunities, reference requests and usage, review activity.
+**Required data:** customer health, results achieved, referral source on new opportunities, reference requests and how often each reference is used, review activity.
 
 **Systems:** CRM, referral tracking, review platforms, CS platform, marketing automation.
 
@@ -643,25 +662,27 @@ Satisfied customers bringing in new customers through referrals, references, rev
 | Reference load | Reference calls in period / approved references |
 | NPS | % promoters - % detractors |
 
+NPS (net promoter score) asks customers how likely they are to recommend you. Promoters score high, detractors score low.
+
 **Common bottlenecks**
-- Referral source not captured on new opportunities.
-- Same few references asked repeatedly until they decline.
-- Advocacy asked of customers who have not reached value.
+- Referral source is not recorded on new opportunities.
+- The same few references are asked again and again until they say no.
+- Customers are asked to advocate before they have gotten value.
 
 **Root-cause questions**
-- Which customers have reached their success criteria and have not been asked?
-- Do referred deals close faster and stay longer, and is that measured?
-- What do advocates have in common that the ICP should prioritize?
+- Which customers have reached their success criteria and have not been asked yet?
+- Do referred deals close faster and stay longer, and is anyone measuring that?
+- What do advocates have in common that the ICP should favor?
 
 **GTM engineering opportunities**
-- Advocacy-ready flag based on health, outcomes and tenure.
-- Required referral source field on opportunity creation.
+- An "advocacy-ready" flag based on health, results and how long they have been a customer.
+- A required referral source field when an opportunity is created.
 - Advocate traits fed back into ICP scoring.
 
 **AI and automation opportunities**
-- Drafting a case study outline from call transcripts and outcome data, for customer approval.
-- Matching a prospect to the most similar reference customer.
-- **Not an agent:** referral attribution is a deterministic field and rules. Testimonials, quotes and outcome numbers must come from the customer and be approved by them, never generated.
+- Draft a case study outline from call transcripts and results data, for the customer to approve.
+- Match a prospect to the most similar reference customer.
+- **Not an agent:** referral credit is a fixed field with fixed rules. Testimonials, quotes and result numbers must come from the customer and be approved by them. They are never generated.
 
 **Example architecture**
 
@@ -671,19 +692,19 @@ health + outcomes + tenure -> advocacy-ready flag -> CSM ask
   -> advocate traits -> ICP scoring (stage 1)
 ```
 
-**Validation:** compare cycle length, win rate and retention of referred vs non-referred cohorts; audit referral source fill rate.
+**Validation:** compare cycle length, win rate and retention for referred and non-referred cohorts. Check how often the referral source field is filled in.
 
 **Data-quality considerations**
-- Referral source from a picklist plus the referring account ID.
-- Reference usage logged per customer to prevent overuse.
+- Referral source comes from a dropdown list, plus the ID of the referring account.
+- Log each reference call per customer, so nobody gets overused.
 
-**Security and governance:** written consent before using a customer's name, logo or quote; track expiry of approvals.
+**Security and governance:** get written consent before using a customer's name, logo or quote. Track when each approval expires.
 
 **Failure modes**
-- Published claims that the customer never approved.
-- Feedback loop never built, so the ICP ignores what advocates have in common.
+- Publishing claims the customer never approved.
+- The feedback loop is never built, so the ICP ignores what advocates have in common.
 
-**Business impact:** lower CAC on referred pipeline and a sharper ICP that improves every left-side stage.
+**Business impact:** a lower CAC on referred pipeline, and a sharper ICP that improves every stage on the left side.
 
 **Related projects:** [GTM ontology](../../projects/gtm-ontology/README.md)
 
@@ -699,7 +720,7 @@ health + outcomes + tenure -> advocacy-ready flag -> CSM ask
 - [AI and agents](../05-ai-and-agents/README.md)
 - [Analytics and prediction](../06-analytics-and-prediction/README.md)
 - [Governance and operations](../07-governance-and-operations/README.md)
-- [Engineering method](../../THINKING.md)
+- [Engineering method](../../README.md)
 - [RouteHero](../../projects/routehero/README.md)
 - [GTM learning engine](../../projects/gtm-learning-engine/README.md)
 - [Conversation intelligence](../../projects/conversation-intelligence/README.md)

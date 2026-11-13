@@ -2,39 +2,46 @@
 
 - **Status:** accepted
 - **Date:** 2026-09 (Phase 1 architecture)
-- **Evidence status:** Design decision in a live application; runnable equivalent in [projects/gtm-ontology](../../projects/gtm-ontology/README.md)
 
 ## Context
 
-The same restaurant arrives from different sources and releases with slightly different names, addresses and phone formats. Duplicates inflate territory counts and split notes across rows. Wrong merges are worse: two businesses in one strip mall become one account, and the customer calls the wrong one.
+The same restaurant shows up from different sources and different monthly releases, with slightly different names, addresses and phone formats. Duplicates make territories look bigger than they are and scatter notes across several records. Wrong merges are worse: two businesses in one strip mall become one account, and the customer calls the wrong one.
 
 ## Business objective
 
-A canonical graph where one physical site is one row, with a low rate of wrong merges, because a wrong merge poisons every downstream score.
+One official list where each physical location is one record, with very few wrong merges, because one wrong merge spoils every score built on top of it.
 
 ## Options considered
 
-| Option | Duplicate rate | Wrong-merge rate | Labor |
+| Option | Duplicates left | Wrong merges | Work for people |
 |---|---|---|---|
-| Exact keys only | High | Near zero | None |
-| Auto-merge on fuzzy similarity | Low | High in dense retail | None, until cleanup |
-| Exact keys, then fuzzy with a confidence threshold and review below it | Low | Low | A review queue |
+| Merge only on exact matches | High | Near zero | None |
+| Merge automatically when records look similar | Low | High in busy retail areas | None, until the cleanup |
+| Exact matches first, then similar-looking matches with a confidence cutoff, and a person reviews anything below it | Low | Low | A review queue |
 
 ## Chosen approach
 
-Resolution in order: provider id, normalized E.164 phone, normalized website domain, trigram name similarity above 0.85 within 100 meters, then normalized address hash plus name similarity above 0.6. The probabilistic steps write a merge-candidate row for review instead of merging when confidence is below 0.9.
+Records are matched in this order:
+
+1. The data provider's own ID.
+2. Phone number, cleaned into one standard format (E.164, the international format).
+3. Website domain, cleaned into one standard format.
+4. Names that are more than 0.85 similar (on a 0 to 1 scale, using a letter-pattern comparison called trigram similarity) and within 100 meters of each other.
+5. A cleaned-up address that matches exactly, plus names more than 0.6 similar.
+
+Steps 4 and 5 find likely matches that are not certain. When their confidence is below 0.9, the system does not merge. It adds the pair to a review queue instead.
 
 ## Rationale
 
-Auto-merging addresses in strip malls produces wrong merges at a rate that poisons the graph. The review queue is cheaper than the cleanup.
+Auto-merging similar addresses in strip malls creates so many wrong merges that the whole list becomes unreliable. Running a review queue costs less than cleaning up afterward.
 
 ## Tradeoffs
 
-Someone has to work the queue. An unworked queue silently becomes duplicates.
+Someone has to work the queue. If nobody does, the unreviewed pairs quietly stay as duplicates.
 
 ## Validation plan
 
-Track queue size and age, reviewer accept rate per confidence band, and a sampled wrong-merge audit. Move the 0.9 threshold using the accept rate.
+Track how big the queue is and how old its items are, how often reviewers accept a suggested merge at each confidence level, and a spot-check of merges to count wrong ones. Use the accept rate to move the 0.9 cutoff.
 
 ## Observed results
 
@@ -42,5 +49,5 @@ Pending: no reviewer data yet.
 
 ## Reconsideration triggers
 
-- Reviewer accept rate above roughly 98% in a band: promote that band to auto-merge.
-- Queue age growing week over week: the threshold is too conservative for the available labor.
+- Reviewers accept roughly 98% or more of suggestions at a confidence level: let that level merge automatically.
+- Queue items getting older week after week: the cutoff is too cautious for the people available to review.

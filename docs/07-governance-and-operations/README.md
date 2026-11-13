@@ -1,32 +1,32 @@
 # Governance and operations for GTM systems
 
-GTM systems touch personal data, send messages on a company's behalf and write to the records that drive forecasts and compensation. That makes governance an engineering requirement, not paperwork: privacy rules, licensing terms, access control and reliability targets all shape what can be built. This page covers the operating practices that keep a GTM stack legal, trustworthy and maintainable after the person who built it moves on.
+GTM systems hold personal data, send messages in a company's name, and write to the records that drive forecasts and commissions. So governance is part of the build, not paperwork. Privacy law, data license terms, access control and reliability targets all shape what can be built. This page covers the habits that keep a GTM setup legal, trustworthy and easy to maintain after the person who built it moves on.
 
-**This is not legal advice.** Privacy and marketing rules vary by jurisdiction and change over time. The summaries below are high level; confirm current requirements with counsel and the primary texts before relying on them.
+**This is not legal advice.** Privacy and marketing rules differ by country and state, and they change over time. The summaries below are high level. Confirm current requirements with a lawyer and the original legal texts before relying on them.
 
 ## Privacy
 
 ### GDPR (EU and UK GDPR)
 
-Processing personal data, including business contact data such as a named work email, requires a lawful basis. For B2B outreach the basis most often relied on is legitimate interest, which requires a documented balancing test (a legitimate interest assessment): the purpose, why processing is necessary for it, and whether the person's rights override it. Other obligations that shape GTM systems:
+GDPR is the European privacy law, with a matching UK version. Using someone's personal data, including business contact data such as a named work email, requires a legal reason ("lawful basis"). For B2B outreach, the reason most companies rely on is "legitimate interest." That requires a written balancing test, called a legitimate interest assessment: what the purpose is, why you need the data for it, and whether the person's rights outweigh your interest. Other rules that shape GTM systems:
 
-- Transparency: when data is collected from a third party rather than the person, the person must be informed about the processing within the time limits the regulation sets.
-- Right to object to direct marketing: once someone objects, marketing to them must stop. Treat this as absolute.
-- Data subject rights: access, rectification, erasure. Systems need a way to find every copy of a person's data, which is an identity resolution problem.
-- Data minimization and retention: collect what the purpose needs and delete it when no longer needed.
-- Electronic marketing rules sit alongside GDPR (the ePrivacy framework and national laws such as the UK's PECR), and the treatment of B2B email differs by country.
+- Telling people: when you get someone's data from a third party instead of from them, you must tell them you are using it, within the deadlines the law sets.
+- Right to object to marketing: once someone objects, marketing to them must stop. Treat this as absolute.
+- People's data rights: they can ask to see, correct or delete their data. Your systems need a way to find every copy of one person's data, which means matching records for the same person across tools.
+- Collect less, keep it shorter: collect only what the purpose needs, and delete it when you no longer need it.
+- Separate email marketing rules sit alongside GDPR (the EU ePrivacy rules and national laws such as the UK's PECR). How they treat B2B email differs from country to country.
 
 ### CCPA / CPRA (California)
 
-California's law gives residents rights to know, delete, correct, and opt out of the sale or sharing of personal information, with obligations on businesses that meet its thresholds. Its temporary exemption for B2B contact data has expired, so business contacts are generally in scope. Other US states have passed comparable laws with different thresholds and details.
+California's law gives residents the right to know what data a business has on them, to delete it, to correct it, and to opt out of its sale or sharing. It applies to businesses above certain size thresholds. Its temporary exemption for B2B contact data has expired, so business contacts are generally covered now. Other US states have passed similar laws with different thresholds and details.
 
 ### CAN-SPAM (US commercial email)
 
-CAN-SPAM does not require prior opt-in for commercial email, but it does require, among other things: accurate header and sender information, non-deceptive subject lines, a valid physical postal address, a clear way to opt out, and honoring opt-outs promptly (within the deadline the law sets). The sender remains responsible when an agency or tool sends on its behalf.
+CAN-SPAM, the US commercial email law, does not require people to opt in before you email them. It does require, among other things: accurate sender and header information, subject lines that do not mislead, a valid physical mailing address, a clear way to opt out, and honoring opt-outs promptly (within the deadline the law sets). The company stays responsible even when an agency or tool sends on its behalf.
 
 ### Suppression and do-not-contact handling
 
-Most compliance failures in GTM are plumbing failures: someone opted out in one tool and was emailed from another.
+A suppression list is the list of people and companies you must not contact. Most GTM compliance failures are plumbing failures: someone opted out in one tool and then got emailed from another.
 
 | Practice | Implementation |
 |---|---|
@@ -37,22 +37,22 @@ Most compliance failures in GTM are plumbing failures: someone opted out in one 
 | Domain-level suppression | Customers, competitors and accounts that requested no contact are suppressed by domain |
 | Retain the suppression record | Keep the minimum needed to honor the request even after deleting other data |
 
-Test it: add a test address to the suppression list, trigger every send path, and confirm none send. Run this after every new tool or workflow goes live.
+Test it: add a test address to the suppression list, trigger every way the system can send, and confirm nothing goes out. Repeat this every time a new tool or workflow goes live.
 
 ## Compliance as a system property
 
-Turn rules into checks the system runs, so compliance does not depend on memory:
+Turn the rules into checks the system runs on its own, so compliance does not depend on someone remembering:
 
-- Required fields on contact creation: `source`, `lawful_basis` (where applicable), `collected_at`, `country`.
-- Region-aware routing: contacts in jurisdictions with stricter email rules go to sequences built for those rules.
-- Retention jobs that delete or anonymize records past their retention period, with a log of what was removed.
-- A data map: which systems hold personal data, what fields, why, and who owns each. It is needed for subject access requests anyway.
+- Required fields when a contact is created: `source`, `lawful_basis` (where it applies), `collected_at`, `country`.
+- Routing by region: contacts in places with stricter email rules go into sequences built for those rules.
+- Scheduled cleanup jobs that delete or anonymize records past their keep-by date, with a log of what was removed.
+- A data map: which systems hold personal data, which fields, why, and who owns each one. You need this anyway to answer requests from people asking what data you hold on them.
 
 ## Data licensing
 
-Many business-data sources restrict what you may do with their content. Common restrictions include: no caching beyond a short period, no storing results in your own database, no combining with other data, no redistributing to third parties, and display-only use inside the provider's own interface. Mapping and review APIs are frequent examples.
+Many business-data providers limit what you can do with their data. Common limits: you can only keep it for a short time, you cannot store it in your own database, you cannot mix it with other data, you cannot pass it on to anyone else, or you can only view it inside the provider's own app. Map and review-site data are frequent examples.
 
-Before building a shared database or a product on top of a source, check:
+Before building a shared database or a product on top of a data source, check:
 
 | Question | Why it matters |
 |---|---|
@@ -62,7 +62,7 @@ Before building a shared database or a product on top of a source, check:
 | Is attribution required? | Display obligations in the UI |
 | What happens at contract end? | Deletion obligations can remove your history |
 
-The [RouteHero project](../../projects/routehero/README.md) shows this evaluation in practice: it rejected Google Places and Yelp as the base for a shared location database because of storage and redistribution terms, and chose Overture Maps, an open dataset, instead. Record the decision and the terms reviewed in an architecture decision record ([decision examples](../../decision-examples/README.md)).
+The [RouteHero project](../../projects/routehero/README.md) shows this check in practice. It turned down Google Places and Yelp as the base for a shared location database because their terms limit storing and sharing the data. It chose Overture Maps, an open dataset, instead. Write down the decision and the terms you reviewed in a short decision record ([decision examples](../../decision-examples/README.md)).
 
 ## Access control
 
@@ -75,11 +75,13 @@ The [RouteHero project](../../projects/routehero/README.md) shows this evaluatio
 | Rotation | Keys rotated on a schedule and immediately when someone with access leaves |
 | Periodic review | Quarterly list of users and integrations with write access to core objects; remove what is unused |
 
-What goes wrong: an enrichment tool connected with a system administrator's credentials, which can then overwrite any field; a workflow export shared on Slack with an API key inside.
+In short: give every person and tool only the access it needs. API keys are the passwords tools use to connect to each other. A service account is a login that belongs to the company, not to an employee.
+
+What goes wrong: an enrichment tool gets connected using a system administrator's login, so it can overwrite any field. Or a workflow export with an API key inside gets shared in Slack.
 
 ## Audit logs
 
-Record who or what changed important data, when, from what value, and why.
+An audit log records who or what changed important data, when, from what value, to what value, and why.
 
 ```sql
 CREATE TABLE audit_event (
@@ -95,33 +97,33 @@ CREATE TABLE audit_event (
 );
 ```
 
-CRMs provide field history tracking on a limited number of fields; turn it on for owner, stage, amount, score tier and do-not-contact. For changes made by your own services, write to an audit table like the one above. The test: pick a random owner change from last month and explain it in under five minutes.
+CRMs can track change history on a limited number of fields. Turn it on for owner, stage, amount, score tier and do-not-contact. For changes made by your own automations, write to an audit table like the one above. The test: pick a random owner change from last month and explain it in under five minutes.
 
 ## Data integrity
 
-Integrity means the data reflects reality and stays internally consistent. Controls:
+Data integrity means the data matches reality and does not contradict itself. Controls:
 
-- Validation at the boundary (schema, types, allowed values); see [data architecture](../03-data-architecture/README.md#data-validation).
-- Referential checks: no contact roles pointing to deleted contacts, no opportunities on merged accounts.
-- Reconciliation: counts and sums between source and destination match (CRM closed-won amount vs billing bookings for the same period).
-- Lineage: derived fields store source and computation version, so a wrong score can be traced. See [the GTM ontology project](../../projects/gtm-ontology/README.md).
+- Check data as it comes in (format, types, allowed values). See [data architecture](../03-data-architecture/README.md#data-validation).
+- Check links between records: no contact roles pointing to deleted contacts, no opportunities sitting on merged accounts.
+- Reconcile: counts and totals match between systems, for example CRM closed-won amount vs billing bookings for the same period.
+- Track where numbers come from: calculated fields store their source and the version of the calculation, so a wrong score can be traced. See [the GTM ontology project](../../projects/gtm-ontology/README.md).
 
 ## Reliability and SLOs
 
-Set service level objectives for workflows that affect revenue. An SLO is a target for a measurable indicator over a window.
+Set reliability targets, called service level objectives (SLOs), for the workflows that affect revenue. An SLO is a target for something you can measure, over a set period.
 
-| Workflow | Indicator | Example target (illustrative) |
+| Workflow | Indicator | Example target |
 |---|---|---|
 | Inbound lead routing | Leads assigned within 5 minutes of creation | 99 percent over 30 days |
 | Opt-out propagation | Opt-outs applied in all send tools within 15 minutes | 99.9 percent over 30 days |
 | Nightly scoring job | Scores refreshed by 07:00 local | 28 of 30 days |
 | CRM sync | Changes reflected in warehouse within 1 hour | 99 percent |
 
-Error budget = 1 minus the target. If routing misses its budget, reliability work takes priority over new features in that workflow. Targets should reflect business cost: a delayed score refresh is an inconvenience; a missed opt-out is a legal and reputational problem, so its target is stricter.
+The error budget is 1 minus the target: the amount of failure you can accept. If routing uses up its budget, fixing reliability comes before new features in that workflow. Targets should match the business cost of failure. A late score refresh is an inconvenience. A missed opt-out is a legal and reputation problem, so its target is stricter.
 
 ## Change management
 
-Most GTM incidents start with a change: a new flow, an edited validation rule, a re-ordered routing rule, a prompt tweak.
+Most GTM incidents start with a change: a new flow, an edited validation rule, a reordered routing rule, a tweaked AI prompt.
 
 | Practice | Implementation |
 |---|---|
@@ -132,33 +134,35 @@ Most GTM incidents start with a change: a new flow, an edited validation rule, a
 | Rollback plan | Know how to revert before deploying; keep the previous version runnable |
 | Change log | Date, change, owner, reason and link to the review, visible to sales and marketing ops |
 
-Freeze non-urgent changes around quarter end, when routing or scoring changes can disrupt forecasts and compensation.
+The short version: test changes in a copy first, keep a history of every version (Git is the standard tool for this), have a second person review, compare old and new results before switching, and know how to undo.
+
+Freeze non-urgent changes around quarter end, when routing or scoring changes can throw off forecasts and commissions.
 
 ## AI data handling
 
-LLM steps add their own governance questions:
+AI steps raise their own governance questions:
 
-- **What data leaves your systems?** Send the minimum fields needed for the task. Strip or mask personal data that the task does not require.
-- **Provider terms.** Check the provider's data retention and training policies for the API tier you use, and record them in the vendor file.
-- **Output validation.** Model outputs go to a staging table, are validated against allowed values, and only then are written by code. See [AI and agents](../05-ai-and-agents/README.md).
-- **Evaluation records.** Keep the labeled set, the prompt version and the score for each release, so a regression can be traced to a change. See [the AI evaluation project](../../projects/ai-evaluation/README.md).
-- **Human review for irreversible actions.** Sends, merges and deletions proposed by an agent pass a human or a deterministic gate.
+- **What data leaves your systems?** Send only the fields the task needs. Remove or mask personal data the task does not require.
+- **Provider terms.** Check the AI provider's rules on how long they keep your data and whether they train on it, for the plan you use. Record them in the vendor file.
+- **Check AI output.** AI answers go to a holding table first, get checked against allowed values, and only then get written into systems by code. See [AI and agents](../05-ai-and-agents/README.md).
+- **Test records.** For each release, keep the test set, the prompt version and the score, so a drop in quality can be traced to a specific change. See [the AI evaluation project](../../projects/ai-evaluation/README.md).
+- **Human review for actions that cannot be undone.** Sends, merges and deletions proposed by an AI agent must pass a person or a fixed rule check.
 
 ## Incident handling
 
-When something breaks (a wrong mass assignment, a send to a suppressed segment, a sync that overwrote a field), the order is: stop the damage, assess scope, fix, communicate, learn.
+When something breaks (a wrong mass reassignment, a send to a suppressed group, a sync that overwrote a field), the order is: stop the damage, measure it, fix it, tell people, learn from it.
 
-1. **Stop:** pause the workflow or sequence. Every production workflow needs a documented kill switch.
-2. **Scope:** use the audit log and run log to list affected records and people.
-3. **Fix:** restore from audit `old_value`, a backup or a replay. Handle opt-outs and suppression breaches first.
-4. **Communicate:** tell affected owners (reps whose accounts moved, marketing if sends went out) what happened and what was done.
-5. **Learn:** a short blameless review: timeline, cause, why existing checks missed it, and one or two concrete follow-ups with owners and dates.
+1. **Stop:** pause the workflow or sequence. Every live workflow needs a documented off switch.
+2. **Scope:** use the audit log and run log to list the affected records and people.
+3. **Fix:** restore from the audit log's `old_value`, a backup or a replay. Handle opt-out and suppression breaches first.
+4. **Communicate:** tell the affected owners (reps whose accounts moved, marketing if emails went out) what happened and what was done.
+5. **Learn:** a short no-blame review covering the timeline, the cause, why existing checks missed it, and one or two concrete follow-ups with owners and dates.
 
-Track incident count and time to detect. Time to detect is usually the bigger lever: a broken workflow found in an hour affects far fewer records than one found at the monthly review.
+Track how many incidents happen and how long each took to spot. Time to spot is usually the bigger lever. A broken workflow found in an hour affects far fewer records than one found at the monthly review.
 
 ## Retention schedule
 
-Write down how long each data class is kept and why. Example structure (periods are placeholders to set with counsel):
+Write down how long each type of data is kept and why. Example layout (the periods are placeholders to set with a lawyer):
 
 | Data class | Retention | Action at expiry |
 |---|---|---|
@@ -171,16 +175,16 @@ Write down how long each data class is kept and why. Example structure (periods 
 
 ## Observability
 
-Observability answers "what happened, and why" without reading code.
+Observability means being able to answer "what happened, and why?" without reading code.
 
-- **Logs:** structured run logs with workflow, run id, inputs summary, outputs summary, status, duration and cost.
-- **Metrics:** success rate, latency, volume, DLQ depth, spend, per workflow.
-- **Alerts:** on failure, on silence (expected run did not happen), and on anomalies (volume or cost far off trailing average). Route each alert to a named owner, not a shared channel nobody watches.
+- **Logs:** a record of each run, with the workflow, run ID, a summary of inputs and outputs, status, duration and cost.
+- **Metrics:** per workflow, the success rate, speed, volume, spend, and the size of the dead-letter queue (DLQ: the pile of failed items waiting to be retried or fixed).
+- **Alerts:** when something fails, when something goes quiet (an expected run did not happen), and when something looks odd (volume or cost far off its recent average). Send each alert to a named owner, not a shared channel nobody watches.
 - **Dashboards:** one page per layer, matching the monitors in [architecture layers](../03-data-architecture/architecture-layers.md).
 
 ## Vendor evaluation
 
-Score vendors against weighted criteria decided before demos, so the evaluation is not driven by the best presentation.
+Score vendors against weighted criteria chosen before the demos, so the decision is not won by the best presentation.
 
 | Criterion | Weight | What to check | Score 1 to 5 |
 |---|---|---|---|
@@ -192,11 +196,11 @@ Score vendors against weighted criteria decided before demos, so the evaluation 
 | Security | 10 | SSO, scoped keys, audit logs, security attestations | |
 | Exit cost | 5 | Data export, contract length, what you lose on leaving | |
 
-Weighted score = sum(weight x score) / 5, out of 100. Weights are examples; set them per decision. Always run a paid or free pilot on a sample of your own records; vendor-reported coverage on their benchmark set tells you little about your segment.
+Weighted score = sum(weight x score) / 5, out of 100. The weights are examples. Set them for each decision. Always run a pilot, paid or free, on a sample of your own records. A vendor's coverage claims on their own test set tell you little about your market.
 
 ## Technical debt in GTM stacks
 
-GTM debt accumulates faster than in product codebases because many people can create automation and few review it.
+Technical debt is the pile of shortcuts and leftovers that make a system harder to change. It builds up faster in GTM tools than in product code, because many people can create automations and few people review them.
 
 | Debt type | Symptom | Remedy |
 |---|---|---|
@@ -206,11 +210,11 @@ GTM debt accumulates faster than in product codebases because many people can cr
 | Undocumented logic | Routing nobody can explain | Move rules to code or one routing tool; document each rule |
 | Spreadsheet systems | Critical mappings in personal spreadsheets | Move into a governed table with an owner |
 
-Budget a fixed share of each quarter for debt reduction, and track it with countable items (fields removed, automations consolidated).
+Set aside a fixed share of each quarter for cleanup, and track it with things you can count (fields removed, automations combined).
 
 ## Documentation and runbooks
 
-Each production workflow needs a short runbook:
+A runbook is a short instruction sheet for running and fixing one workflow. Every live workflow needs one:
 
 ```
 Workflow: inbound-routing
@@ -227,23 +231,23 @@ Common failures and fixes:
 Replay: `replay --workflow inbound-routing --from <ts>`
 ```
 
-Keep runbooks next to the code or in the same system as the workflow, and review them when the workflow changes.
+Keep runbooks next to the code or in the same tool as the workflow, and update them when the workflow changes.
 
 ## Business continuity
 
 No GTM system should depend on one person. Practical checks:
 
-- Every integration runs on a service account owned by the company, with credentials in a shared secret store.
+- Every integration runs on a company-owned service account, with its credentials in a shared secret store.
 - Every workflow has an owner and a backup who has run it at least once.
-- Admin access to CRM, orchestration and sequencer tools is held by at least two people.
-- A documented handoff exists: system inventory, field ownership matrix, runbooks, open issues, vendor contacts and renewal dates.
-- Exports of configuration (flows, workflow definitions, scoring rules) are versioned, so a broken change can be rolled back.
+- At least two people have admin access to the CRM, automation and sequencer tools.
+- A written handoff exists: a list of systems, who owns which fields, runbooks, open issues, vendor contacts and renewal dates.
+- Settings exports (flows, workflow definitions, scoring rules) are saved with version history, so a bad change can be undone.
 
-Test continuity the simple way: have the backup owner handle the next incident or change without help, and fix whatever they could not find.
+Test continuity the simple way: have the backup owner handle the next incident or change without help, then fix whatever they could not find.
 
 ## Measuring governance
 
-Governance is working when these numbers move in the right direction: sends to suppressed contacts (target zero), time to fulfill data subject requests, share of integrations on service accounts with scoped keys, SLO attainment per workflow, count of fields and automations without an owner, and time to explain a random data change.
+Governance is working when these numbers move the right way: sends to suppressed contacts (target zero), time to fulfill people's data requests, share of integrations on service accounts with limited-access keys, SLO targets met per workflow, number of fields and automations with no owner, and time needed to explain a random data change.
 
 ## Related
 
@@ -256,4 +260,3 @@ Governance is working when these numbers move in the right direction: sends to s
 - [RouteHero project](../../projects/routehero/README.md)
 - [GTM ontology project](../../projects/gtm-ontology/README.md)
 - [Decision examples](../../decision-examples/README.md)
-- [IMPACT.md](../../IMPACT.md)
