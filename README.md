@@ -6,7 +6,7 @@ GTM means go-to-market: how a company finds, wins and keeps customers. I started
 
 ## How I think
 
-Most requests arrive as a solution: "we need an AI SDR", "build us a lead score", "clean up the CRM". My job is to find the business problem under the request, check what already exists, and pick the cheapest change that moves a number someone cares about. Here is the method, step by step, with a real decision from this repository for each step.
+Most requests arrive as a solution: "we need an AI SDR", "build us a lead score", "clean up the CRM". My job is to find the business problem under the request, check what already exists, and pick the most cost-effective change that moves a number someone cares about. Here is the method, step by step, with a real decision from this repository for each step.
 
 ```mermaid
 flowchart LR
